@@ -1,8 +1,5 @@
+#We are still in the development phase.
+#No support for use yet.
 # PhpCupcakeShop
- The Sprinkles of PHP Frameworks
-# Hi there, this project is not completed, we don't even have a proper readme yet.
-We are in about version 0.6
-There will be very little support if you use this framework already out of the box.
-
-However I decided to make my code public so others can utilize sections, 
-and to make it easier to receive feedback in my mostly-self-taught journey.
+##The Sprinkles of PHP Frameworks
+PhpCupcakeShop will be an option for a framework that provides a code-from-scratch feel.  With classes and methods out of the box, a developer should be able to start building pages right away.  With generic calls to the database, and straight forward variables to implement, this server-side software framework should provide a scalable opportunity for the potential enterprise.  Every software should be simple for the user and the developer, no having to jump through hoops to access certain elements or code.  PhpCupcakeShop takes advantage of the ability of PHP to use semantic coding.  Written from scratch, as a framework should be, PhpCupcakeShop should be compatible with external dependencies (without any dependencies itself!) To implement separation of duties, the framework follows a MVC (model-view-controller) model at its core.
