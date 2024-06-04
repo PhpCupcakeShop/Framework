@@ -1,0 +1,15 @@
+<?php
+use PhpCupcakes\Helpers\UrlHelper;
+use PhpCupcakes\Helpers\IconHelper;
+
+
+if (!isset($_SESSION['edit'])) {
+
+//do nothing
+} else {
+$editUrl = UrlHelper::routedUrl('edit', $type, $id);       /*linkhere*/
+$editIcon = IconHelper::renderIcon($editUrl,'edit', ['class' => 'text-danger']); 
+$deleteUrl = UrlHelper::routedUrl('delete', $type, $id);       /*linkhere*/
+$deleteIcon = IconHelper::renderIcon($deleteUrl,'trash', ['class' => 'text-danger']);
+echo '<div class="quickpadding">' . $editIcon . $deleteIcon . '</div>';
+}

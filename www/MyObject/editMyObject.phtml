@@ -1,0 +1,64 @@
+<?php
+    require_once '../../Framework/autoload.php';       /*linkhere*/
+use PhpCupcakes\Helpers\FormHelper;
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Models\MyObject;
+use PhpCupcakes\Config\ConfigVars;
+//use PhpCupcakes\Helpers\UrlHelper;
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhpCupcakeShop: Edit an Object</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere-->  
+</head>
+<body>
+    <div class="container">
+        <header>
+            <?php 
+            $h1 = 'PhpCupcakeShop';
+            echo LoadHtml::loadInclude('header', ['h1' => $h1]);
+            ?>
+        <div class="search bg-info"><?= LoadHtml::loadInclude('searchform'); ?></div>
+</header>
+    <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
+<?php 
+
+use PhpCupcakes\EditMode\EditLink;
+echo EditLink::displayEditModeNav();
+echo EditLink::displayEditLink();
+
+
+?></nav>
+    <div class="mainparent">
+<main>
+    <?php
+    require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';       /*linkhere*/
+
+    $object = MyObject::find($_GET['id']);
+    ob_start();
+    // Render the form open tag
+    $formOpen = FormHelper::renderFormOpen(ConfigVars::getSiteUrl().'/MyObject/update/'.$object->id, 'post', ['class' => 'form-horizontal']);       /*linkhere*/
+
+    // Render form fields
+    $nameInput = FormHelper::renderInput('text', 'name', $object->name, ['class' => 'form-control']);
+    $descriptionTextarea = FormHelper::renderTextarea('description', $object->description, ['class' => 'form-control']);
+
+    // Render the submit button
+    $submitButton = FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
+
+    // Render the form close tag
+    $formClose = FormHelper::renderFormClose();
+
+    // Combine all the form elements
+    $form = $formOpen . $nameInput . $descriptionTextarea . $submitButton . $formClose;
+    echo $form;
+    $displayObject = ob_get_clean();
+    echo $displayObject;
+    ?>
+    <a href="#" onclick="history.back()">back</a>
+</main></div>
+</div></body>
+</html>

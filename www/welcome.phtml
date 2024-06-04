@@ -1,0 +1,60 @@
+<?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/Framework/autoload.php';       /*linkhere*/
+    use PhpCupcakes\Helpers\LoadHtml;
+    use PhpCupcakes\Config\ConfigVars;
+    use PhpCupcakes\Config\Analytics;
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?= Analytics::Google() ?>
+    <title>PHPCupcakes Example</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
+    
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+</head>
+<body>
+    
+    <div class="container">
+<header>
+    <?php 
+    $h1 = 'PhpCupcakeShop';
+    echo LoadHtml::loadInclude('header', ['h1' => $h1]);
+   ?>
+<div class="search bg-info">
+    <?php
+echo LoadHtml::loadInclude('searchform'); 
+?>
+</div>
+</header>
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
+   
+<?php 
+
+use PhpCupcakes\EditMode\EditLink;
+echo EditLink::displayEditModeNav();
+echo EditLink::displayEditLink();
+
+
+?></nav>
+
+
+<div class="mainparent">
+    <main>
+   <h4>To begin, go into edit mode and add an object.</h4>
+    <?php
+
+$db = new mysqli("193.203.166.181", "u265408878_phpcupcakes", "SUQ0;3i~W", "u265408878_phpcupcakes")
+		or die("Hey loser, check your server connection.");
+    $sql = "SELECT * FROM objects";
+    $result = $db->query($sql);
+    while ($row = mysqli_fetch_array($result)) {
+        echo $row['name'];
+    }
+    ?>    
+</main>
+</div>
+</div>
+</body>
+</html>

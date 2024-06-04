@@ -1,0 +1,52 @@
+<?php
+require_once '../../Framework/autoload.php';       /*linkhere*/
+    use PhpCupcakes\Models\MyObject;
+    use PhpCupcakes\Helpers\LoadHtml;
+    use PhpCupcakes\Config\ConfigVars;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PHPCupcakes Example</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+</head>
+<body>
+    
+    <div class="container">
+        <header>
+            <?php 
+            $h1 = 'Update An Object';
+            echo LoadHtml::loadInclude('header', ['h1' => $h1]);
+            ?>
+        <div class="search bg-info"><?= LoadHtml::loadInclude('searchform'); ?></div>
+</header>
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
+<?php 
+
+use PhpCupcakes\EditMode\EditLink;
+echo EditLink::displayEditModeNav();
+echo EditLink::displayEditLink();
+
+
+?></nav>
+<div class="mainparent">
+    <main>
+    <?php
+    require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';       /*linkhere*/
+    
+
+    $myObject = MyObject::find($_GET['id']);
+    $myObject->id = $_GET['id'];
+    $myObject->name = $_POST['name'];
+    $myObject->description = $_POST['description'];
+    $myObject->save();
+    $lastInsertId = $myObject->id;
+    echo '' . $myObject->name . ' updated.';
+
+    ?>
+</main>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?php
+header("Content-type: text/css");
+$primary = "#6f42c1"; // Lavender purple
+$primary_light = "#8063c9"; // Lighter lavender purple
+$primary_dark = "#5a359f"; // Darker lavender purple
+$secondary = "#8f75da"; // Lighter lavender
+$secondary_light = "#a58ee2"; // Even lighter lavender
+$secondary_dark = "#7b60c2"; // Darker lavender
+$success = "#5cb85c"; // Green
+$success_light = "#80c780"; // Lighter green
+$success_dark = "#47a447"; // Darker green
+$info = "#5bc0de"; // Light blue
+$info_light = "#85d0e7"; // Lighter light blue
+$info_dark = "#31b0d5"; // Darker light blue
+$warning = "#f0ad4e"; // Orange
+$warning_light = "#f4c37d"; // Lighter orange
+$warning_dark = "#ec971f"; // Darker orange
+$danger = "#d9534f"; // Red
+$danger_light = "#e27c79"; // Lighter red
+$danger_dark = "#c9302c"; // Darker red
+$light = "#f8f9fa"; // Light gray
+$light_light = "#ffffff"; // White
+$light_dark = "#e9ecef"; // Slightly darker light gray
+$dark = "#343a40"; // Dark gray
+$dark_light = "#495057"; // Lighter dark gray
+$dark_dark = "#212529"; // Darker dark gray
+
+function generateColorCSS($colorName, $colorValue, $colorLight, $colorDark, $colorHover = null) {
+    $hoverColor = $colorHover ?? "rgba(255, 255, 255, 0.5)";
+    return "
+      .text-$colorName { color: $colorValue; }
+      .bg-$colorName { background-color: $colorValue; }
+      .btn-$colorName {
+        color: #fff;
+        background-color: $colorValue;
+        border-color: $colorValue;
+      }
+      .btn-$colorName:hover {
+        color: #fff;
+        background-color: $colorDark;
+        border-color: $colorDark;
+      }
+      .btn-outline-$colorName {
+        color: $colorValue;
+        border-color: $colorValue;
+      }
+      .btn-outline-$colorName:hover {
+        color: #fff;
+        background-color: $colorValue;
+        border-color: $colorValue;
+      }
+      .text-$colorName-light { color: $colorLight; }
+      .bg-$colorName-light { background-color: $colorLight; }
+      .text-$colorName-dark { color: $colorDark; }
+      .bg-$colorName-dark { background-color: $colorDark; }
+    ";
+  }
+
+$css = "
+  /* Color Utilities */
+  " . generateColorCSS('primary', $primary, $primary_light, $primary_dark) . "
+  " . generateColorCSS('secondary', $secondary, $secondary_light, $secondary_dark) . "
+  " . generateColorCSS('success', $success, $success_light, $success_dark) . "
+  " . generateColorCSS('info', $info, $info_light, $info_dark) . "
+  " . generateColorCSS('warning', $warning, $warning_light, $warning_dark) . "
+  " . generateColorCSS('danger', $danger, $danger_light, $danger_dark) . "
+  " . generateColorCSS('light', $light, $light_light, $light_dark) . "
+  " . generateColorCSS('dark', $dark, $dark_light, $dark_dark) . "
+";
+
+// Output the CSS
+echo $css;

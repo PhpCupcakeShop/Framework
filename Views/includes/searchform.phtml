@@ -1,0 +1,69 @@
+<?php
+
+use PhpCupcakes\DAL\CupcakeDAL;
+
+
+
+$result = CupcakeDAL::DbTableOptionFields();
+$searchTable = $result['searchTable'];
+$searchColumn = $result['searchColumn'];
+$tableColumnMap = $result['tableColumnMap'];
+
+if (isset($posturl)) {} else {$posturl = $result['posturl'];}
+?>
+
+
+<form id="searchForm" action="<?= $posturl ?>" method="get">
+    <label for="searchTerm">Search:</label>
+    <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter search term">
+    <label for="searchColumn">Search in:</label>
+    <select id="searchTable" name="searchTable">
+    <option value="all">Select a table</option>
+        <?php
+            foreach ($searchTable as $className) {
+            ?>
+            <option value="<?= $className ?>"><?= $className ?></option>
+            <?php
+            }
+        ?>
+        <option value="all">Search Entire Site</option>
+    </select>
+
+    <select id="searchColumn" name="searchColumn">
+        <option value="">Select a column</option>
+        <option value="all">Search all columns</option>
+    </select>
+
+    <input type="submit" name="search" value="go" />
+</form>
+<script>
+    let tableColumnMap = <?php echo json_encode($tableColumnMap); ?>;
+    
+var searchTableSelect = document.getElementById('searchTable');
+var searchColumnSelect = document.getElementById('searchColumn');
+
+searchTableSelect.addEventListener('change', function() {
+console.log('searchTable changed to:', this.value);
+var selectedTable = this.value;
+updateSearchColumnOptions(selectedTable);
+});
+
+function updateSearchColumnOptions(tableName) {
+console.log('Updating search column options for:', tableName);
+console.log('Column names:', tableColumnMap[tableName]);
+// Rest of the code
+
+searchColumnSelect.innerHTML = '<option value="">Select a column</option>';
+searchColumnSelect.innerHTML = '<option value="all">Search all columns</option>';
+
+    if (tableName in tableColumnMap) {
+        var columnNames = tableColumnMap[tableName];
+        columnNames.forEach(function(column) {
+            var option = document.createElement('option');
+            option.value = column;
+            option.text = column;
+            searchColumnSelect.add(option);
+        });
+    }
+}
+</script>

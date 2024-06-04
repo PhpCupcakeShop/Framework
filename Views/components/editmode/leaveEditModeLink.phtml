@@ -1,0 +1,4 @@
+<?php $redirect = urlencode($_SERVER['REQUEST_URI']); ?>
+<form method="post" action="<?= PhpCupcakes\Config\ConfigVars::getSiteUrl() ?>/editmode/off">    <!--linkhere-->
+    <input type="hidden" name="returnurl" value="<?= $redirect ?>">
+[<input class="false-link" type="submit" name="editmode" value="leave edit mode">]</form>
