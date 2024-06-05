@@ -23,4 +23,5 @@ PhpCupcakeShop will be an option for a framework that provides a code-from-scrat
 * Check code to PSR Standards.
 * Create bash files to quickly and easily build Models and Views with CRUD operations.
 * Write Documentation
+* Beta Test
 * Publish v1.0
