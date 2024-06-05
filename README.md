@@ -1,29 +1,24 @@
 # We are still in the development phase.
 # No support for use yet.
+#
 # PhpCupcakeShop
 ## Homemade cupcakes shine,
 ## Boxed mix still brings delight,
 ## Butter and milk's might.
-PhpCupcakeShop will be an option for a framework that provides a code-from-scratch feel.  With classes and methods out of the box, a developer should be able to start building pages right away.  With generic calls to the database, and straight forward variables to implement, this server-side software framework should provide a scalable opportunity for the potential enterprise.  Every software should be simple for the user and the developer, no having to jump through hoops to access certain elements or code.  PhpCupcakeShop takes advantage of the ability of PHP to use semantic coding.  Written from scratch, as a framework should be, PhpCupcakeShop should be compatible with external dependencies (without any dependencies itself!) To implement separation of duties, the framework follows a MVC (model-view-controller) model at its core.
-## Work still needed before completion:
-* Confirmation pages for CRUD operations.
-* Rename files to have special extensions so coders can tell the difference between their own, configurable files, and the code of the framework.
-* Make 404 and other similar pages.
-* Fix the search when no table is selected.
-* Add table name to post values in case of two like column names.
-* Make a url parameter helper
-* Protect Data
-* Make error handling logs
-* Fix a bug when there is nothing in the database, site is completely not functional.
-* Research accessibility in webdesign and implement it into views.
-* Find a way to organize meta tags so a digital marketer can edit fields easily, if feasible.
-* Sort by function when listing data.
-* Implement relational databasing and reassess framework for growth and scalability.
-* Sort views and make sure pages allow for clear seperation of duties.
-* Add configurable cron jobs for database backups
-* Implement a system for plugins and modules.
-* Check code to PSR Standards.
-* Create bash files to quickly and easily build Models and Views with CRUD operations.
-* Write Documentation
-* Beta Test
-* Publish v1.0
+PhpCupcakeShop will be an option for a framework that provides a code-from-scratch feel.  With classes and methods out of the box, a developer should be able to start building pages right away.  With generic calls to the database, and straightforward variables to implement, this server-side software framework should provide a scalable opportunity for the potential enterprise.  Every software should be simple for the user and the developer, not having to jump through hoops to access certain elements or code.  PhpCupcakeShop takes advantage of the ability of PHP to use semantic coding.  Written from scratch, as a framework should be, PhpCupcakeShop should be compatible with external dependencies (without any dependencies itself!) To implement the separation of duties, the framework follows an MVC (model-view-controller) model at its core.
+## Included Features
+* An .htaccess file with routing configured to have pretty URLs for any model file created.
+* A data access layer called the cupcakeDAL performs read/write/delete (CRUD) operations, and search functions, and organizes information into paged results.
+* Model template files to quickly build and perform operations on database tables.
+* Built-in functions for quickly building view files for all CRUD operations.
+* Edit Mode interface for users, (user interface plugin to be available with release), to quickly edit the site on the same site interface with special permissions.
+* Special helper classes to quickly build icons and forms.
+* Search functions to search specific tables and columns, or the whole site.
+* Makes use of an Auto-loader without any need for dependencies. (Yet should still be compatible.)
+## Features to be Included:
+* A way to organize relationships between the models.
+* Error handling and logging.
+* Custom 404 and other status response code pages.
+* Clear separation of code amongst roles in the development process.
+* Support for added plugins and modules.
+* Clear documentation with a list of all practical-to-list classes and methods.
