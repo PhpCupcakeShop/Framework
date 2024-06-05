@@ -1,7 +1,7 @@
 # We are still in the development phase.
-# No support for use yet.
+# None to limited support for use till version 1.0.
 ## demo available: demo.phpcupcake.shop
-# PhpCupcakeShop
+# PhpCupcakeShop v0.6
 ## Homemade cupcakes shine,
 ## Boxed mix still brings delight,
 ## Butter and milk's might.
