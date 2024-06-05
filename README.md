@@ -1,6 +1,6 @@
 # We are still in the development phase.
 # No support for use yet.
-## demo available here
+## demo available: demo.phpcupcake.shop
 # PhpCupcakeShop
 ## Homemade cupcakes shine,
 ## Boxed mix still brings delight,
