@@ -6,3 +6,21 @@ PhpCupcakeShop will be an option for a framework that provides a code-from-scrat
 ##Work still needed before completion:
 * Confirmation pages for CRUD operations.
 * Rename files to have special extensions so coders can tell the difference between their own, configurable files, and the code of the framework.
+* Make 404 and other similar pages.
+* Fix the search when no table is selected.
+* Add table name to post values in case of two like column names.
+* Make a url parameter helper
+* Protect Data
+* Make error handling logs
+* Fix a bug when there is nothing in the database, site is completely not functional.
+* Research accessibility in webdesign and implement it into views.
+* Find a way to organize meta tags so a digital marketer can edit fields easily, if feasible.
+* Sort by function when listing data.
+* Implement relational databasing and reassess framework for growth and scalability.
+* Sort views and make sure pages allow for clear seperation of duties.
+* Add configurable cron jobs for database backups
+* Implement a system for plugins and modules.
+* Check code to PSR Standards.
+* Create bash files to quickly and easily build Models and Views with CRUD operations.
+* Write Documentation
+* Publish v1.0
