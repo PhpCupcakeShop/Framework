@@ -6,33 +6,33 @@
 
 ## [Unreleased]
 
-> [ ] Cron Jobs.
+ [ ] More search and browse functions.
 
-> [ ] More search and browse functions.
+ [ ] Research screen reader accessibilty and incorporate.
 
-> [ ] Research screen reader accessibilty and incorporate.
+ [ ] Fix a bug when nothing in database.
 
-> [ ] Fix a bug when nothing in database.
+ [ ] Security Features.
 
-> [ ] Security Features.
+ [ ] URL Parameter Helper.
 
-> [ ] URL Parameter Helper.
+ [ ] Separation of Views and some sort of template engine.
 
-> [ ] Separation of Views and some sort of template engine.
+ [ ] A way to organize relationships between the models.
 
-> [ ] A way to organize relationships between the models.
+ [ ] Error handling and logging.
 
-> [ ] Error handling and logging.
+ [ ] Custom 404 and other status response code pages.
 
-> [ ] Custom 404 and other status response code pages.
+ [ ] Clear separation of code amongst roles in the development process.
 
-> [ ] Clear separation of code amongst roles in the development process.
+ [ ] Support for added plugins and modules.
 
-> [ ] Support for added plugins and modules.
+ [ ] Cron Jobs.
 
-> [ ] Bash files for easy site building.
+ [ ] Bash files for easy site building.
 
-> [ ] Clear documentation with a list of all practical-to-list classes and methods.
+ [ ] Clear documentation with a list of all practical-to-list classes and methods.
 
 ### Changed
 
@@ -51,18 +51,18 @@
 > [!NOTE]
 > These will go through many changes until v1.
 
-> [ ] An .htaccess file with routing configured to have pretty URLs for any model file created.
+ [ ] An .htaccess file with routing configured to have pretty URLs for any model file created.
 
-> [ ] A data access layer called the VanillaCupcakeDAL performs read/write/delete (CRUD) operations, and search functions, and organizes information into paged results.
+ [ ] A data access layer called the VanillaCupcakeDAL performs read/write/delete (CRUD) operations, and search functions, and organizes information into paged results.
 
-> [ ] Model template files to quickly build and perform operations on database tables.
+ [ ] Model template files to quickly build and perform operations on database tables.
 
-> [ ] Built-in functions for quickly building view files for all CRUD operations.
+ [ ] Built-in functions for quickly building view files for all CRUD operations.
 
-> [ ] Edit Mode interface for users, (user interface plugin to be available with release), to quickly edit the site on the same site interface with special permissions.
+ [ ] Edit Mode interface for users, (user interface plugin to be available with release), to quickly edit the site on the same site interface with special permissions.
 
-> [x] Special helper classes to quickly build icons and forms.
+ [x] Special helper classes to quickly build icons and forms.
 
-> [ ] Search functions to search specific tables and columns, or the whole site.
+ [ ] Search functions to search specific tables and columns, or the whole site.
 
-> [x] Makes use of an auto-loader without any need for dependencies. (Yet should still be compatible.)
+ [x] Makes use of an auto-loader without any need for dependencies. (Yet should still be compatible.)
