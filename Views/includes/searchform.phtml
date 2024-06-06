@@ -1,10 +1,10 @@
 <?php
 
-use PhpCupcakes\DAL\CupcakeDAL;
+use PhpCupcakes\DAL\VanillaCupcakeDAL;
 
 
 
-$result = CupcakeDAL::DbTableOptionFields();
+$result = VanillaCupcakeDAL::DbTableOptionFields();
 $searchTable = $result['searchTable'];
 $searchColumn = $result['searchColumn'];
 $tableColumnMap = $result['tableColumnMap'];

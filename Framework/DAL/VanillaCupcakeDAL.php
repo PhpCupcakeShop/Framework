@@ -9,13 +9,13 @@ use PhpCupcakes\Config\ConfigVars;
 use PhpCupcakes\Helpers\FormHelper;
 
 /**
- * Class CupcakeDAL
+ * Class VanillaCupcakeDAL
  * @package PhpCupcakes\DAL
  *
  * This class provides data access layer functionality for the cupcake application.
  * It handles database operations such as displaying tables, searching, and pagination.
  */
-class CupcakeDAL
+class VanillaCupcakeDAL
 {
         /**
      * Saves an object to the database.
@@ -26,74 +26,65 @@ class CupcakeDAL
      */
     public static function save($object)
     {
+        //Setting variables.
+        //Gets a connection to the database within its own class.
         $connection = self::getConnection();
-
+        //Sets the passed array in the function as $properties.
         $properties = get_object_vars($object);
+        //Pulls the key out of key => value in the array and they are the table columns.
         $columns = array_keys($properties);
+        //Loops through values within the array, so what will be the rows in the table.
         $values = array_fill(0, count($columns), "?");
 
+        //Makes an attempt so it will spit out an error below if this doesn't work.
         try {
+            //If the ID is set...
             if (isset($properties["id"])) {
+                //Creates part of the sql statement for the columns and rows that need updating.
                 $set = array_map(function ($column) {
                     return "$column = ?";
                 }, $columns);
+                //Finishes the part of sql statement with commas.
                 $set = implode(", ", $set);
+                //Creates the entire sql statemtent.
                 $sql = "UPDATE {$object->getTableName()} SET $set WHERE id = ?";
+                //Creates the parameters to bind them after the if/else.
                 $params = array_merge(array_values($properties), [
-                    $properties["id"],
+                    $properties["id"],    
                 ]);
+            //If the ID isn't set...
             } else {
-                // Check if the table exists, and create it if it doesn't
+                // Check if the table exists, and create it if it doesn't.
                 $tableExists = self::tableExists($object->getTableName());
                 if (!$tableExists) {
                     self::createTable($object);
                 }
-
+                //Creates sql statement.
                 $sql =
                     "INSERT INTO {$object->getTableName()} (" .
                     implode(", ", $columns) .
                     ") VALUES (" .
                     implode(", ", $values) .
                     ")";
+                //Creates parameters for binding.
                 $params = array_values($properties);
             }
-
+            //Prepares the sql statement...
             $statement = $connection->prepare($sql);
+            //... and then binds the parameters and executes the statments.
             $statement->execute($params);
-
+            //If there is a new ID return that, else return the original id.
             if (!isset($properties["id"])) {
                 $object->id = $connection->lastInsertId();
             } else {
                 $object->id = $properties["id"];
             }
             return $object;
+        //If a database error above will say so here.
         } catch (PDOException $e) {
             throw new Exception("Error saving object: " . $e->getMessage());
         }
-        $connection->close();
-    }
-
-    /**
-     * Checks if a table exists in the database.
-     *
-     * @param string $tableName The name of the table to check.
-     * @return bool True if the table exists, false otherwise.
-     */
-    private static function tableExists($tableName)
-    {
-        $connection = self::getConnection();
-        $sql = "SHOW TABLES LIKE ?";
-
-        try {
-            $statement = $connection->prepare($sql);
-            $statement->execute([$tableName]);
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
-            return $result !== false;
-        } catch (PDOException $e) {
-            throw new Exception(
-                "Error checking table existence: " . $e->getMessage()
-            );
-        }
+        //Close the connection always mmmkay?
         $connection->close();
     }
 
@@ -106,9 +97,12 @@ class CupcakeDAL
     private static function createTable($object)
     {
         $connection = self::getConnection();
+        //Gathers the array passed through the variable.
         $properties = get_object_vars($object);
+        //Gathers the table columns from above array.
         $columns = array_keys($properties);
 
+        //Gets any set data from the model file passed through the function.
         $columnDefinitions = array_map(function ($column) use ($object) {
             $metadata = $object::$propertyMetadata[$column];
             $type = $metadata["type"];
@@ -117,12 +111,14 @@ class CupcakeDAL
             return "$column $type$length$extra";
         }, $columns);
 
+        //Creates SQL statement from the above definitions.
         $sql =
             "CREATE TABLE {$object->getTableName()} (" .
             implode(", ", $columnDefinitions) .
             ")";
 
         try {
+            //Executes SQL statement.
             $connection->exec($sql);
         } catch (PDOException $e) {
             throw new Exception("Error creating table: " . $e->getMessage());
@@ -139,18 +135,25 @@ class CupcakeDAL
     public static function find($class, $id)
     {
         $connection = self::getConnection();
+        //Sets the SQL statement and uses the table name from the method file.
         $sql = "SELECT * FROM {$class::getTableName()} WHERE id = ?";
 
         try {
+            //Prepares SQL statement.
             $statement = $connection->prepare($sql);
+            //Binds parameter and executes statement.
             $statement->execute([$id]);
+            //Gathers the result from the statment. 
+            //*Not really sure what the fetchObject does.
             $result = $statement->fetchObject($class);
+            //Returns the result of getting the object by its ID.
             return $result;
         } catch (PDOException $e) {
             throw new Exception("Error finding object: " . $e->getMessage());
         }
         $connection->close();
     }
+
     /**
      * Retrieves all objects of a given class from the database.
      *
@@ -160,10 +163,13 @@ class CupcakeDAL
     public static function findAll($class)
     {
         $connection = self::getConnection();
+        //Gets everything from the table name specified in the model file.
         $sql = "SELECT * FROM {$class::getTableName()}";
         try {
+            //Prepares and executes statement.
             $statement = $connection->prepare($sql);
             $statement->execute();
+            //Gets and returns the results
             $results = $statement->fetchAll(PDO::FETCH_CLASS, $class);
             return $results;
         } catch (PDOException $e) {
@@ -171,6 +177,7 @@ class CupcakeDAL
         }
         $connection->close();
     }
+
     /**
      * Retrieves all objects of a given class from the database with pagination.
      *
@@ -191,9 +198,11 @@ class CupcakeDAL
         // Calculate the offset for the current page
         $offset = ($currentPage - 1) * $itemsPerPage;
 
+        //Sets SQL statement for given table name from Model file, with a limit and offset.
         $sql = "SELECT * FROM {$class::getTableName()} ORDER BY id LIMIT :itemsPerPage OFFSET :offset";
 
         try {
+            //Prepares the SQL statement and binds the parameters.
             $statement = $connection->prepare($sql);
             $statement->bindParam(":offset", $offset, PDO::PARAM_INT);
             $statement->bindParam(
@@ -201,6 +210,7 @@ class CupcakeDAL
                 $itemsPerPage,
                 PDO::PARAM_INT
             );
+            //Executes statement gets and returns results.
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_CLASS, $class);
             return $results;
@@ -210,7 +220,46 @@ class CupcakeDAL
         $connection->close();
     }
 
+        /**
+     * Deletes an object from the database by its ID.
+     *
+     * @param string $class The class name of the object to be deleted.
+     * @param int $id The ID of the object to be deleted.
+     * @return void
+     */
+    public static function delete($class, $id)
+    {
+        $connection = self::getConnection();
+        $sql = "DELETE FROM {$class::getTableName()} WHERE id = ?";
+        try {
+            $statement = $connection->prepare($sql);
+            $statement->execute([$id]);
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting object: " . $e->getMessage());
+        }
+    }
+
+/*********Table Construction for admin portal */
+ 
+
     /**
+     * Renders an HTML table based on the provided data.
+     *
+     * @param string $className The class name associated with the data.
+     * @param array $fieldNames The field names to display in the table.
+     * @param array $data The data to be displayed in the table.
+     * @return void
+     */
+    private function renderTable($className, $fieldNames, $data)
+    {
+        ob_start();
+        include ConfigVars::getDocRoot() . '/admin_portal/Views/renderTable.php';
+        $table = ob_get_clean();
+        //need to change this to return table
+        echo $table;
+    }
+
+/**
      * displayTable Displays a table of data from the specified table.
      *
      * @param string $className The name of the class associated with the table.
@@ -230,6 +279,51 @@ class CupcakeDAL
             $this->renderTable($className, $fieldNames, $data);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
+        }
+    }
+
+    /**
+     * Displays a table with pagination.
+     *
+     * @param string $className The name of the class that will be used to render the table.
+     * @param string $tableName The name of the database table to display.
+     * @param int $currentPage The current page number for pagination.
+     * @param int $itemsPerPage The number of items to display per page.
+     * @return int The total number of rows in the table.
+     */
+    public function displayTablePaginated(
+        $className,
+        $tableName,
+        $currentPage,
+        $itemsPerPage
+    ) {
+        try {
+            $connection = self::getConnection();
+            // Get the total number of rows
+            $stmt = $connection->query("SELECT COUNT(*) FROM $tableName");
+            $totalRows = (int) $stmt->fetchColumn();
+
+            // Calculate the offset and limit for pagination
+            $offset = ($currentPage - 1) * $itemsPerPage;
+            $limit = $itemsPerPage;
+
+            // Fetch the data with pagination
+            $stmt = $connection->prepare(
+                "SELECT * FROM $tableName LIMIT :limit OFFSET :offset"
+            );
+            $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+            $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $fieldNames = $this->getFieldNamesForAdmin($stmt);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Render the table
+            $this->renderTable($className, $fieldNames, $data);
+
+            return $totalRows;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0;
         }
     }
 
@@ -254,7 +348,7 @@ class CupcakeDAL
     ) {
         try {
             $whereClause = "";
-            $fieldNames = $this->getTableColumns($tableName);
+            $fieldNames = $this->getColumnNames($tableName);
 
             if ($columnName === null || $columnName === "all") {
                 // Search all columns
@@ -317,51 +411,6 @@ class CupcakeDAL
     }
 
     /**
-     * Displays a table with pagination.
-     *
-     * @param string $className The name of the class that will be used to render the table.
-     * @param string $tableName The name of the database table to display.
-     * @param int $currentPage The current page number for pagination.
-     * @param int $itemsPerPage The number of items to display per page.
-     * @return int The total number of rows in the table.
-     */
-    public function displayTablePaginated(
-        $className,
-        $tableName,
-        $currentPage,
-        $itemsPerPage
-    ) {
-        try {
-            $connection = self::getConnection();
-            // Get the total number of rows
-            $stmt = $connection->query("SELECT COUNT(*) FROM $tableName");
-            $totalRows = (int) $stmt->fetchColumn();
-
-            // Calculate the offset and limit for pagination
-            $offset = ($currentPage - 1) * $itemsPerPage;
-            $limit = $itemsPerPage;
-
-            // Fetch the data with pagination
-            $stmt = $connection->prepare(
-                "SELECT * FROM $tableName LIMIT :limit OFFSET :offset"
-            );
-            $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
-            $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
-            $stmt->execute();
-            $fieldNames = $this->getFieldNamesForAdmin($stmt);
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Render the table
-            $this->renderTable($className, $fieldNames, $data);
-
-            return $totalRows;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return 0;
-        }
-    }
-
-    /**
      * Retrieves the field names for the provided database statement.
      *
      * @param PDOStatement $stmt The database statement object.
@@ -376,192 +425,6 @@ class CupcakeDAL
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    }
-
-    /**
-     * Renders an HTML table based on the provided data.
-     *
-     * @param string $className The class name associated with the data.
-     * @param array $fieldNames The field names to display in the table.
-     * @param array $data The data to be displayed in the table.
-     * @return void
-     */
-    private function renderTable($className, $fieldNames, $data)
-    {
-        ob_start(); ?>
-        <table border="2">
-        <thead><tr>
-            <?php foreach ($fieldNames as $fieldName) { ?>
-            <th><?= $fieldName ?></th>
-            <?php } ?>
-        <th>edit</th><th>delete</th></tr></thead>
-        <tbody>
-        <?php foreach ($data as $row) { ?>
-            <tr>
-            <?php foreach ($row as $key => $value) { ?>
-                <td><?= $value ?></td>
-                <?php } ?>
-            <td><button id="edit-btn-<?= $row[
-                "id"
-            ] ?>" class='edit-btn' data-id='<?= $row[
-    "id"
-] ?>'>Edit</button></td>
-        <script>
-          let toggleCustomFieldLink = document.getElementById('edit-btn-<?= $row[
-              "id"
-          ] ?>');
-          let customFieldElement = document.getElementById('edit-form-row-<?= $row[
-              "id"
-          ] ?>');
-            toggleCustomFieldLink.addEventListener('click', function(event) {
-              isCustomFieldVisible = !isCustomFieldVisible;
-              customFieldElement.style.display = isCustomFieldVisible ? 'block' : 'none';
-        })
-        </script>
-            <td><button class='delete-btn' data-id='<?= $row[
-                "id"
-            ] ?>'>Delete</button></td>
-            </tr>
-            <tr class='edit-form-row-<?= $row["id"] ?>' data-id='<?= $row[
-    "id"
-] ?>'>
-            <form class='edit-form' data-id='<?= $row["id"] ?>'>
-                <?php foreach ($fieldNames as $fieldName) {
-
-                    $metadata = $className::$propertyMetadata[$fieldName];
-                    $type = $metadata["formfield"];
-                    ?>
-                    <td>
-                        <?php
-                        if ($fieldName == "id") {
-                        } else {
-                             ?>
-                            <label for='<?= $fieldName ?>'><?= $fieldName ?>:</label>
-                            <?php
-                        }
-                        $formFunction = "render" . $type;
-                        echo FormHelper::$formFunction(
-                            $fieldName,
-                            $row[$fieldName],
-                            ["" => "required"]
-                        );
-                        ?>
-                    </td>
-                    <?php
-                } ?>
-                <td colspan="2"><button type='submit' class='btn btn-primary'>Save</button></td>
-            </form>
-            </tr>
-            <?php } ?>
-        </tbody>
-        </table>
-    
-    
-        <?php
-        $table = ob_get_clean();
-        //need to change this to return table
-        echo $table;
-    }
-
-    /**
-     * Retrieves a list of model class names from a specified namespace directory.
-     *
-     * @param string $namespaceDir The directory containing the model classes.
-     * @return \Generator An iterator that yields the class names.
-     */
-    public static function getModels($namespaceDir)
-    {
-        $folderPath = $namespaceDir;
-
-        $files = scandir($folderPath);
-        foreach ($files as $file) {
-            if ($file !== "." && $file !== "..") {
-                $filePath = $folderPath . "/" . $file;
-                if (is_file($filePath) && substr($file, -4) === ".php") {
-                    $className = substr($file, 0, -4);
-                    yield $className;
-                }
-            }
-        }
-    }
-
-    /**
-     * Retrieves the column names for a specified table.
-     *
-     * @param string $tableName The name of the table.
-     * @return array The column names.
-     */
-    public static function getColumnNames($tableName)
-    {
-        try {
-            $connection = self::getConnection();
-            $stmt = $connection->query("SELECT * FROM $tableName");
-            $fieldNames = self::getFieldNames($stmt);
-            return $fieldNames;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return [];
-        }
-    }
-
-    /**
-     * Retrieves the field names from a database statement.
-     *
-     * @param PDOStatement $stmt The database statement object.
-     * @return array The field names as an array.
-     */
-    private static function getFieldNames($stmt)
-    {
-        $fieldNames = array_keys($stmt->fetch(PDO::FETCH_ASSOC));
-        $stmt->execute(); // Reset the statement pointer
-        return $fieldNames;
-    }
-
-    /**
-     * Searches all tables in the database for a given search query and returns the
-     * paginated results along with the total number of pages and objects.
-     *
-     * @param string $searchQuery The search query to use.
-     * @param int $currentPage The current page number (default: 1).
-     * @param int $itemsPerPage The number of items to display per page (default: 10).
-     * @return array An associative array containing the paginated results, the total
-     *               number of pages, and the total number of objects.
-     */
-    public static function searchAllTables(
-        $searchQuery,
-        $currentPage = 1,
-        $itemsPerPage = 10
-    ) {
-        $searcher = new self();
-        $searchResults = $searcher->searchDatabase($searchQuery);
-
-        $totalResults = count($searchResults);
-        $totalPages = ceil($totalResults / $itemsPerPage);
-
-        $offset = ($currentPage - 1) * $itemsPerPage;
-        $paginatedResults = array_slice($searchResults, $offset, $itemsPerPage);
-
-        // Return the paginated results along with the total pages
-        return [
-            "results" => $paginatedResults,
-            "totalPages" => $totalPages,
-            "totalObjects" => $totalResults,
-        ];
-    }
-
-    /**
-     * Retrieves the column names for a given table.
-     *
-     * @param string $tableName The name of the table.
-     * @return array The column names for the specified table.
-     */
-    public static function getTableColumns($tableName)
-    {
-        $connection = self::getConnection();
-        $stmt = $connection->prepare("SHOW COLUMNS FROM $tableName");
-        $stmt->execute();
-        $columns = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        return $columns;
     }
 
     /**
@@ -636,32 +499,40 @@ class CupcakeDAL
         }
         return $results;
     }
+    
 
     /**
-     * Retrieves the total count of objects for a given class.
+     * Searches all tables in the database for a given search query and returns the
+     * paginated results along with the total number of pages and objects.
      *
-     * @param string $class The class name for which to retrieve the total count.
-     * @return int The total count of objects for the specified class.
-     * @throws \Exception If there is an error while executing the SQL query.
+     * @param string $searchQuery The search query to use.
+     * @param int $currentPage The current page number (default: 1).
+     * @param int $itemsPerPage The number of items to display per page (default: 10).
+     * @return array An associative array containing the paginated results, the total
+     *               number of pages, and the total number of objects.
      */
-    public static function getTotalofAll($class)
-    {
-        $connection = self::getConnection();
+    public static function searchAllTables(
+        $searchQuery,
+        $currentPage = 1,
+        $itemsPerPage = 10
+    ) {
+        $searcher = new self();
+        $searchResults = $searcher->searchDatabase($searchQuery);
 
-        $sql = "SELECT COUNT(*) AS total FROM {$class::getTableName()}";
+        $totalResults = count($searchResults);
+        $totalPages = ceil($totalResults / $itemsPerPage);
 
-        try {
-            $statement = $connection->prepare($sql);
-            $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return (int) $result["total"];
-        } catch (\PDOException $e) {
-            throw new \Exception(
-                "Error finding object amount: " . $e->getMessage()
-            );
-        }
-        $connection->close();
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $paginatedResults = array_slice($searchResults, $offset, $itemsPerPage);
+
+        // Return the paginated results along with the total pages
+        return [
+            "results" => $paginatedResults,
+            "totalPages" => $totalPages,
+            "totalObjects" => $totalResults,
+        ];
     }
+
 
     /**
      * Searches for objects in the database based on a given search term and column.
@@ -723,24 +594,6 @@ class CupcakeDAL
         }
         $connection->close();
     }
-    /**
-     * Deletes an object from the database by its ID.
-     *
-     * @param string $class The class name of the object to be deleted.
-     * @param int $id The ID of the object to be deleted.
-     * @return void
-     */
-    public static function delete($class, $id)
-    {
-        $connection = self::getConnection();
-        $sql = "DELETE FROM {$class::getTableName()} WHERE id = ?";
-        try {
-            $statement = $connection->prepare($sql);
-            $statement->execute([$id]);
-        } catch (PDOException $e) {
-            throw new Exception("Error deleting object: " . $e->getMessage());
-        }
-    }
 
     /**
      * Retrieves the total count of objects for a given class based on a search term.
@@ -791,9 +644,9 @@ class CupcakeDAL
     }
 
     /**
-     * A lot of complexity here.
      * A function to select tables and columns as options for search fields.
      * Dependent on Model file searchableByAdmin and isSearchable.
+     * A lot of complexity here.
      *
      *
      * @return array of needed values for specific tables and columns in db.
@@ -823,7 +676,7 @@ class CupcakeDAL
             $classNamespace = "PhpCupcakes\\Models\\" . $className;
 
             $tableName = $classNamespace::getTableName();
-            if (self::databaseSeeIfTable($tableName, DBNAME) == 1) {
+            if (self::tableExists($tableName) == true) {
                 $tableColumnMap[$tableName] = [];
                 // Get the column names
                 $columns = self::getColumnNames($tableName);
@@ -850,13 +703,138 @@ class CupcakeDAL
         ];
         $connection->close();
     }
+  
+    /******Smaller helper functions */
 
     /**
+     * Retrieves the total count of objects for a given class.
+     *
+     * @param string $class The class name for which to retrieve the total count.
+     * @return int The total count of objects for the specified class.
+     * @throws \Exception If there is an error while executing the SQL query.
+     */
+    public static function getTotalofAll($class)
+    {
+        $connection = self::getConnection();
+
+        $sql = "SELECT COUNT(*) AS total FROM {$class::getTableName()}";
+
+        try {
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            return (int) $result["total"];
+        } catch (\PDOException $e) {
+            throw new \Exception(
+                "Error finding object amount: " . $e->getMessage()
+            );
+        }
+        $connection->close();
+    }
+
+    /**
+     * Retrieves a list of model class names from a specified namespace directory.
+     *
+     * @param string $namespaceDir The directory containing the model classes.
+     * @return \Generator An iterator that yields the class names.
+     */
+    public static function getModels($namespaceDir)
+    {
+        $folderPath = $namespaceDir;
+
+        $files = scandir($folderPath);
+        foreach ($files as $file) {
+            if ($file !== "." && $file !== "..") {
+                $filePath = $folderPath . "/" . $file;
+                if (is_file($filePath) && substr($file, -4) === ".php") {
+                    $className = substr($file, 0, -4);
+                    yield $className;
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks if a table exists in the database.
+     *
+     * @param string $tableName The name of the table to check.
+     * @return bool True if the table exists, false otherwise.
+     */
+
+     private static function tableExists($tableName)
+     {
+         $connection = self::getConnection();
+         //Creates sql statement
+         $sql = "SHOW TABLES LIKE ?";
+ 
+         try {
+             //Prepares statement
+             $statement = $connection->prepare($sql);
+             //Executes statement and binds tablename parameter.
+             $statement->execute([$tableName]);
+             $result = $statement->fetch(PDO::FETCH_ASSOC);
+             //Returns the result as a true or false value.
+             return $result !== false;
+         } catch (PDOException $e) {
+             throw new Exception(
+                 "Error checking table existence: " . $e->getMessage()
+             );
+         }
+         $connection->close();
+     }
+ 
+    /** deprecating:
+     * Retrieves the column names for a given table.
+     *
+     * @param string $tableName The name of the table.
+     * @return array The column names for the specified table.
+
+    public static function getTableColumns($tableName)
+    {
+        $connection = self::getConnection();
+        $stmt = $connection->prepare("SHOW COLUMNS FROM $tableName");
+        $stmt->execute();
+        $columns = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $columns;
+    }
+     */
+    /**
+     * Retrieves the column names for a specified table.
+     *
+     * @param string $tableName The name of the table.
+     * @return array The column names.
+     */
+    public static function getColumnNames($tableName)
+    {
+        try {
+            $connection = self::getConnection();
+            $stmt = $connection->query("SELECT * FROM $tableName");
+            $fieldNames = self::getFieldNames($stmt);
+            return $fieldNames;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
+    /**
+     * Retrieves the field names from a database statement.
+     *
+     * @param PDOStatement $stmt The database statement object.
+     * @return array The field names as an array.
+     */
+    private static function getFieldNames($stmt)
+    {
+        $fieldNames = array_keys($stmt->fetch(PDO::FETCH_ASSOC));
+        $stmt->execute(); // Reset the statement pointer
+        return $fieldNames;
+    }
+
+    /** deprecating:
      * databaseSeeIfTable returns a boolean of 1 if said table exists.
      *
      * @param string $tableName.
      * @return boolean 1 if table exists. 0 if table needs made elsewhere.
-     */
     public static function databaseSeeIfTable($tableName, $dbname)
     {
         $bool = 1;
@@ -888,12 +866,18 @@ class CupcakeDAL
             echo "Error: " . $e->getMessage();
         }
     }
+     */
     /**
-     * Retrieves a database connection.  //TODO, include conn.inc.php instead of having conn info here
+     * Retrieves a database connection.
      *
      * @return PDO The database connection.
      */
-    private static function getConnection()
+
+    /*If working with more than one database, or here is an idea for scalability 
+        (that isn't good enough yet for scalability yet.) 
+    Add a getConnectionDbname() {} for each one, then you can use it above with 
+    an if statement and the value being passed through each method of this file. */
+     private static function getConnection()
     {
         try {
             //include ConfigVars::getDocRoot()."/Config/conn.inc.php";

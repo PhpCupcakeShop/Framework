@@ -6,7 +6,7 @@ require_once '../Framework/autoload.php';     /*linkhere*/
     use PhpCupcakes\Helpers\PaginationHelper;
     // use PhpCupcakes\Helpers\UrlHelper;
     use PhpCupcakes\Helpers\LoadHtml;
-    use PhpCupcakes\DAL\CupcakeDAL;
+    use PhpCupcakes\DAL\VanillaCupcakeDAL;
     use PhpCupcakes\Config\ConfigVars;
 
     //this list will have to be updated with new models until php comes out with a way to:
@@ -65,7 +65,7 @@ if ($searchTerm && $searchTable && $searchColumn) {
     ?><h5>Searching for <?= $dataColumn ?>s in <?= $_GET['searchTable'] ?> that matches '<?= $searchQuery ?>'</h5><?php
     
 
-    $tableViewer = new CupcakeDAL();
+    $tableViewer = new VanillaCupcakeDAL();
     $tableViewer->displayTableSearch($classNamespace, $tableName, $currentPage, $itemsPerPage, $dataColumn, $searchQuery);
 
     // Display the pagination links

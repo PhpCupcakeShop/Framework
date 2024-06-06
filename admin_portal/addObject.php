@@ -4,7 +4,7 @@ require_once '../Framework/autoload.php';    /*linkhere*/
 use PhpCupcakes\Helpers\FormHelper;
 use PhpCupcakes\Helpers\LoadHtml;
 use PhpCupcakes\Config\ConfigVars;
-use PhpCupcakes\DAL\CupcakeDAL;
+use PhpCupcakes\DAL\VanillaCupcakeDAL;
 
 ?>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ use PhpCupcakes\DAL\CupcakeDAL;
 </header>
     <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('adminnav'); ?>
         <?php
-        $addLinks = CupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');    /*linkhere*/
+        $addLinks = VanillaCupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');    /*linkhere*/
         foreach ($addLinks as $class) {
             $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.phtml?className='. $class;    /*linkhere*/
             ?>

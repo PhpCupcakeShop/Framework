@@ -1,7 +1,7 @@
 <?php
 namespace PhpCupcakes\Models; 
 
-use PhpCupcakes\DAL\CupcakeDAL;
+use PhpCupcakes\DAL\VanillaCupcakeDAL;
 
 class MyObject
 {
@@ -23,39 +23,39 @@ class MyObject
     public function save()
     {
        
-            CupcakeDAL::save($this);
+            VanillaCupcakeDAL::save($this);
    
     }
 
     public static function find($id)
     {
-        return CupcakeDAL::find(__CLASS__, $id);
+        return VanillaCupcakeDAL::find(__CLASS__, $id);
     }
 
     public static function findAll()
     {
-        return CupcakeDAL::findAll(__CLASS__);
+        return VanillaCupcakeDAL::findAll(__CLASS__);
     }
     public static function findAllPaginated($currentPage, $itemsPerPage)
     {
-        return CupcakeDAL::findAllPaginated(__CLASS__, $currentPage, $itemsPerPage);
+        return VanillaCupcakeDAL::findAllPaginated(__CLASS__, $currentPage, $itemsPerPage);
     }
     public static function getTotalofAll()
     {
-        return CupcakeDAL::getTotalofAll(__CLASS__);
+        return VanillaCupcakeDAL::getTotalofAll(__CLASS__);
     }
 
     public static function getTotalofSearch($searchTerm, $column = null)
     {
-        return CupcakeDAL::getTotalofSearch(__CLASS__, $searchTerm, $column);
+        return VanillaCupcakeDAL::getTotalofSearch(__CLASS__, $searchTerm, $column);
     }
 
     public static function search($searchTerm, $column = null, $currentPage = 1, $itemsPerPage = 10)
     {
-        return CupcakeDAL::search(__CLASS__, $searchTerm, $column, $currentPage, $itemsPerPage);
+        return VanillaCupcakeDAL::search(__CLASS__, $searchTerm, $column, $currentPage, $itemsPerPage);
     }
     public static function delete($id)
     {
-        CupcakeDAL::delete(__CLASS__, $id);
+        VanillaCupcakeDAL::delete(__CLASS__, $id);
     }
 }

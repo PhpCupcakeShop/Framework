@@ -14,7 +14,7 @@ spl_autoload_register(function ($Name) {
     } elseif (file_exists($modelFile)) {
         include $modelFile;
     } elseif (file_exists($configFile)) {
-        include $modelFile;
+        include $configFile;
     } else {
         echo 'Class file not found: ' . $classFile;
     }

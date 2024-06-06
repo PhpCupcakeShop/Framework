@@ -2,7 +2,7 @@
     <?php
     require_once '../Framework/autoload.php';      /*linkhere*/
     use PhpCupcakes\Config\ConfigVars;
-    use PhpCupcakes\DAL\CupcakeDAL;
+    use PhpCupcakes\DAL\VanillaCupcakeDAL;
     use PhpCupcakes\Helpers\PaginationHelper; 
     use PhpCupcakes\Helpers\LoadHtml; 
     use PhpCupcakes\Helpers\FormHelper;
@@ -31,7 +31,7 @@
 </header>
     <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('adminnav'); ?>
         <?php
-        $addLinks = CupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');     /*linkhere*/
+        $addLinks = VanillaCupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');     /*linkhere*/
         foreach ($addLinks as $class) {
             $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.php?class='. $class;     /*linkhere*/
             ?>
@@ -40,7 +40,7 @@
         }
         ?>
         <?php
-        $result = CupcakeDAL::dbTableOptionFields();
+        $result = VanillaCupcakeDAL::dbTableOptionFields();
         $browseTable = $result['searchTable'];
         ?><div style="float:right;">
         <?= FormHelper::renderFormOpen('index.php', $method = 'get') ?>
@@ -63,7 +63,7 @@
         //when adding plugins and modules and also www this will have to load $variable\Models\$class
         $className = 'PhpCupcakes\\Models\\' . $class;
         $tableName = call_user_func([$className, 'getTableName']);
-        $tableViewer = new CupcakeDAL();
+        $tableViewer = new VanillaCupcakeDAL();
         $tableViewer->displayTablePaginated($className, $tableName, $currentPage, $itemsPerPage);
 
         $totalObjects = $className::getTotalofAll(); 
@@ -74,7 +74,7 @@
             //when adding plugins and modules and also www this will have to load $variable\Models\$class
             $className = 'PhpCupcakes\\Models\\' . $class;
             $tableName = call_user_func([$className, 'getTableName']);
-            $tableViewer = new CupcakeDAL();
+            $tableViewer = new VanillaCupcakeDAL();
             $tableViewer->displayTablePaginated($className, $tableName, $currentPage, $itemsPerPage);
             $totalObjects = $className::getTotalofAll(); 
             PaginationHelper::displayPaginationLinks($totalObjects, $currentPage, $itemsPerPage);

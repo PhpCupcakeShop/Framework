@@ -6,7 +6,7 @@ require_once '../Framework/autoload.php';    /*linkhere*/
     use PhpCupcakes\Helpers\PaginationHelper;
     use PhpCupcakes\Helpers\UrlHelper;
     use PhpCupcakes\Helpers\LoadHtml;
-    use PhpCupcakes\DAL\CupcakeDAL;
+    use PhpCupcakes\DAL\VanillaCupcakeDAL;
     use PhpCupcakes\Config\ConfigVars;
 
 
@@ -54,7 +54,7 @@ if ($_GET['searchTable'] == 'all') {
 
     $searchQuery = $_GET['searchTerm'];
 
-    $result = CupcakeDAL::searchAllTables($searchQuery, $currentPage, $itemsPerPage);
+    $result = VanillaCupcakeDAL::searchAllTables($searchQuery, $currentPage, $itemsPerPage);
     $allResults = $result['results'];
     $totalObjects = $result['totalObjects'];
 
