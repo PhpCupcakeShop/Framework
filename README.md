@@ -1,6 +1,6 @@
 > [!CAUTION]
-> We are still in the development phase.
-> Support is Limited to None for use until version 1.0.
+> We are still in the developement phase.
+> Support Limited to None for use until version 1.0.
 
 # PhpCupcakeShop v0.6.1
 
