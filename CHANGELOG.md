@@ -1,4 +1,4 @@
-# 0.6.1 (6-6-2024)
+# 0.6.2 (6-7-2024)
 
 > All notable changes to be documented here.
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
@@ -16,8 +16,6 @@
 
  [ ] URL Parameter Helper.
 
- [ ] Separation of Views and some sort of template engine.
-
  [ ] A way to organize relationships between the models.
 
  [ ] Error handling and logging.
@@ -34,6 +32,22 @@
 
  [ ] Clear documentation with a list of all practical-to-list classes and methods.
 
+ ### Added 
+
+ > ViewsCRUD.md in the www/MyObject directory - This goes through the process of adding classes and methods to make your own files for CRUD operations.
+
+ > ModelFilesGuide.md in the Models directory - This goes through the process of making model files so the View files for CRUD operations work.
+
+ ### Changed
+
+ > Minor changes to most if not all the files in the www/MyObject directory. 
+
+ > Placed post values of www/MyObject/MyObjectAdded.phtml into a loop to update the table for any column names that are posted.
+
+ > [Admin Portal](https://demo.phpcupcake.shop/admin_portal) now has browse by table functionality. As well as small functional changes.
+
+# 0.6.1 (6-6-2024)
+
 ### Changed
 
 > The Framework/DAL/VanillaDAL.md file.
@@ -49,7 +63,10 @@
 ### Added
 
 > [!NOTE]
+
 > These will go through many changes until v1.
+
+ [ ] Separation of Views and some sort of template engine.
 
  [ ] An .htaccess file with routing configured to have pretty URLs for any model file created.
 

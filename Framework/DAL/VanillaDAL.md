@@ -38,7 +38,7 @@
 
 ### Displays a table with pagination.
 
-> displayTablePaginated($className,$tableName,$currentPage,$itemsPerPage);`
+> `displayTablePaginated($className,$tableName,$currentPage,$itemsPerPage);`
 
 ### Displays a table with pagination and search functionality.
 
@@ -73,6 +73,7 @@
 ### A function to select tables and columns as options for search fields.
 
 > `DbTableOptionFields();`
+
 > [!WARNING]
 > A lot of complexity here.
 > Dependent on Model file searchableByAdmin and isSearchable.
@@ -94,8 +95,8 @@
 ### Searches the database for the columns of a given table.
 
 > `getTableColumns($tableName);`
+
 > [!DANGER]
-> 
 > Deprecated. Use the one below.
 
 ### Retrieves the column names for a specified table.
@@ -110,7 +111,7 @@
 ### databaseSeeIfTable returns a boolean of 1 if said table exists.
 
 > `databaseSeeIfTable($tableName, $dbname);`
-> 
+
 > [!DANGER]
 > Deprecated. Use tableExists().
 

@@ -665,7 +665,7 @@ class VanillaCupcakeDAL
 
         $searchTable = [];
         $searchColumn = "";
-        $namespacedir = ConfigVars::getModelDir(); /*linkhere*/
+        $namespacedir = ConfigVars::getDocRoot().'/Models/'; /*linkhere*/
         $models = self::getModels($namespacedir);
 
         $tableColumnMap = [];

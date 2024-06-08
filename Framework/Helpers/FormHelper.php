@@ -117,7 +117,7 @@ class FormHelper
     public static function renderSubmit($value, $name, $attributes = [])
     {
         $attributesString = self::buildAttributesString($attributes);
-        return "<input type=\"submit\" value=\"$value\" $attributesString>";
+        return "<input type=\"submit\" value=\"$value\" name=\"$name\" $attributesString>";
     }
 
     /**

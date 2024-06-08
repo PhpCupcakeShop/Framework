@@ -27,13 +27,14 @@ use PhpCupcakes\DAL\VanillaCupcakeDAL;
         'posturl' => ConfigVars::getSiteUrl().'/admin_portal/search.phtml'    /*linkhere*/
     ];
     ?>
-    <div class="search bg-info"><?= LoadHtml::loadInclude('searchform', $searchFeatureVariables); ?></div>
+    <div class="search bg-info"><?php  // LoadHtml::loadInclude('searchform', $searchFeatureVariables); ?>
+    <div>
 </header>
     <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('adminnav'); ?>
         <?php
         $addLinks = VanillaCupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');    /*linkhere*/
         foreach ($addLinks as $class) {
-            $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.phtml?className='. $class;    /*linkhere*/
+            $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.php?className='. $class;    /*linkhere*/
             ?>
             <a href="<?= $link ?>"><?= $class ?></a>
             <?php
@@ -43,10 +44,22 @@ use PhpCupcakes\DAL\VanillaCupcakeDAL;
 <main>
     <?php
 
-    $className = $_GET['class'];
+
+
+
+if (isset($_POST['submitForm'])) {
+    $model = 'PhpCupcakes\\Models\\' . $_GET['className'];
+    $myObject = new $model();
+    $myObject->name = $_POST['name'];
+    $myObject->description = $_POST['description'];
+    $myObject->save(); 
+    $lastInsertId = $myObject->id;
+    echo 'The last inserted record has an id of: ' . $lastInsertId;
+} else {
+    $className = $_GET['className'];
 
     // Render the form open tag
-    echo FormHelper::renderFormOpen('addObject.php', 'post', ['class' => 'form-horizontal']);    /*linkhere*/
+    echo FormHelper::renderFormOpen('addObject.php?className='.$_GET['className'], 'post', ['class' => 'form-horizontal']);    /*linkhere*/
 
      //   if (isset($_GET['$className'])) { echo 'hi '; }
     
@@ -59,11 +72,11 @@ use PhpCupcakes\DAL\VanillaCupcakeDAL;
     }
 
     // Render the submit button
-    echo FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
+    echo FormHelper::renderSubmit('Submit', 'submitForm', ['class' => 'btn btn-primary']);
 
     // Render the form close tag
     echo FormHelper::renderFormClose();
-
+    }
     ?>
 </main></div>
 </div></body>

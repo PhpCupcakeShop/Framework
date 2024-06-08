@@ -43,7 +43,7 @@ class ConfigVars {
         if ($rootfolder == 0) {
             return self::getDocRoot();
         } else {
-            return self::getDocRoot().'/Models';    /*linkhere*/
+            return self::getDocRoot().'/Models/';    /*linkhere*/
         }
 
     }

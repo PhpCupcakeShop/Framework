@@ -3,6 +3,7 @@
 use PhpCupcakes\Helpers\FormHelper;
 use PhpCupcakes\Helpers\LoadHtml;
 use PhpCupcakes\Config\ConfigVars;
+use PhpCupcakes\Models\MyObject;
 
 ?>
 <!DOCTYPE html>
@@ -36,21 +37,20 @@ echo EditLink::displayEditLink();
     require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';       /*linkhere*/
 
     // Render the form open tag
-    $formOpen = FormHelper::renderFormOpen('added', 'post', ['class' => 'form-horizontal']);
+    echo FormHelper::renderFormOpen('added', 'post', ['class' => 'form-horizontal']);
 
     // Render form fields
-    $nameInput = FormHelper::renderInput('text', 'name', '', ['class' => 'form-control', 'placeholder'=> 'choose a name']);
-    $descriptionTextarea = FormHelper::renderTextarea('description', '', ['class' => 'form-control', 'placeholder'=> 'write a description']);
 
+    foreach (MyObject::$propertyMetadata as $columnName => $metadata) {
+        $renderFormField = 'render' . $metadata['formfield'];
+        $placeholder = $metadata['placeholder'];
+        echo FormHelper::$renderFormField($columnName, '', ['class' => 'form-control', 'placeholder'=> $placeholder]);
+    }
     // Render the submit button
-    $submitButton = FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
+    echo FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
 
     // Render the form close tag
-    $formClose = FormHelper::renderFormClose();
-
-    // Combine all the form elements
-    $form = $formOpen . $nameInput . $descriptionTextarea . $submitButton . $formClose;
-    echo $form;
+    echo FormHelper::renderFormClose();
     ?>
 </main></div>
 </div></body>

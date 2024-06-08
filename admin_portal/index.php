@@ -33,22 +33,27 @@
         <?php
         $addLinks = VanillaCupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');     /*linkhere*/
         foreach ($addLinks as $class) {
-            $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.php?class='. $class;     /*linkhere*/
+            $link = ConfigVars::getSiteUrl().'/admin_portal/addObject.php?className='. $class;     /*linkhere*/
             ?>
             <a href="<?= $link ?>">Add a <?= $class ?></a>
             <?php
         }
         ?>
         <?php
-        $result = VanillaCupcakeDAL::dbTableOptionFields();
-        $browseTable = $result['searchTable'];
         ?><div style="float:right;">
         <?= FormHelper::renderFormOpen('index.php', $method = 'get') ?>
         <select id="browseTable" name="browseTable">
-            <?= $browseTable ?>
+        <?php
+            $searchTable = VanillaCupcakeDAL::getModels(ConfigVars::getDocRoot().'/Models/');
+            foreach ($searchTable as $className) {
+                ?>
+                <option value="<?= $className ?>"><?= $className ?></option>
+                <?php
+                }
+        ?>
         </select>
         <?php
-        echo FormHelper::renderSubmit('go','browseTable');
+        echo FormHelper::renderSubmit('go','submit');
         echo FormHelper::renderFormClose();
         ?></div>
     </nav>

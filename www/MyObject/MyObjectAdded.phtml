@@ -35,15 +35,16 @@ echo EditLink::displayEditLink();
     <?php
     require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';       /*linkhere*/
     
-
-    // Create
     $myObject = new MyObject();
-    $myObject->name = $_POST['name'];
-    $myObject->description = $_POST['description'];
+    foreach (MyObject::$propertyMetadata as $columnName => $metadata) {
+    if ($columnName == 'id') {} else {
+        $myObject->$columnName = $_POST[$columnName];
+    }
+    }
     $myObject->save(); 
     $lastInsertId = $myObject->id;
-    echo 'The last inserted record has an id of: ' . $lastInsertId;
     ?>
+    <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $lastInsertId ?>">View your object here</a>.</p>
 </main>
 </div>
 </div>

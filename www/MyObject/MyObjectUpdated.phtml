@@ -37,7 +37,7 @@ echo EditLink::displayEditLink();
     
 
     $myObject = MyObject::find($_GET['id']);
-    $myObject->id = $_GET['id'];
+    $myObject->id = $_POST['id'];
     $myObject->name = $_POST['name'];
     $myObject->description = $_POST['description'];
     $myObject->save();

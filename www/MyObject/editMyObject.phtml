@@ -40,21 +40,19 @@ echo EditLink::displayEditLink();
     $object = MyObject::find($_GET['id']);
     ob_start();
     // Render the form open tag
-    $formOpen = FormHelper::renderFormOpen(ConfigVars::getSiteUrl().'/MyObject/update/'.$object->id, 'post', ['class' => 'form-horizontal']);       /*linkhere*/
+    echo FormHelper::renderFormOpen(ConfigVars::getSiteUrl().'/MyObject/update/'.$object->id, 'post', ['class' => 'form-horizontal']);       /*linkhere*/
 
     // Render form fields
-    $nameInput = FormHelper::renderInput('text', 'name', $object->name, ['class' => 'form-control']);
-    $descriptionTextarea = FormHelper::renderTextarea('description', $object->description, ['class' => 'form-control']);
+    echo FormHelper::renderHidden('id', $_GET['id']);
+    echo FormHelper::renderInput('text', 'name', $object->name, ['class' => 'form-control']);
+    echo FormHelper::renderTextarea('description', $object->description, ['class' => 'form-control']);
 
     // Render the submit button
-    $submitButton = FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
+    echo FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
 
     // Render the form close tag
-    $formClose = FormHelper::renderFormClose();
+    echo FormHelper::renderFormClose();
 
-    // Combine all the form elements
-    $form = $formOpen . $nameInput . $descriptionTextarea . $submitButton . $formClose;
-    echo $form;
     $displayObject = ob_get_clean();
     echo $displayObject;
     ?>

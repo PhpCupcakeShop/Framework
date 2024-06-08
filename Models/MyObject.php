@@ -10,20 +10,40 @@ class MyObject
     public $description;
 
     public static $propertyMetadata = [
-        'id' => ['type' => 'INT', 'length' => 11, 'extra' => 'AUTO_INCREMENT PRIMARY KEY', 'isSearchable'=> '0', 'searchableByAdmin'=> '1', 'formfield' => 'Hidden', 'placeholder' => ''],
-        'name' => ['type' => 'VARCHAR', 'length' => 255, 'isSearchable'=> '1', 'searchableByAdmin'=> '1', 'formfield' => 'Text', 'placeholder' => 'choose a name'],
-        'description' => ['type' => 'TEXT', 'isSearchable'=> '1', 'searchableByAdmin'=> '1', 'formfield' => 'Textarea', 'placeholder' => 'write a description']
+        'id' => ['type' => 'INT', 
+            'length' => 11, 
+            'extra' => 'AUTO_INCREMENT PRIMARY KEY', 
+            'isSearchable'=> '0', 
+            'searchableByAdmin'=> '1', 
+            'formfield' => 'Hidden', 
+            'placeholder' => null],
+        'name' => ['type' => 'VARCHAR', 
+            'length' => 255, 
+            'isSearchable'=> '1', 
+            'searchableByAdmin'=> '1', 
+            'formfield' => 'Text', 
+            'placeholder' => 'choose a name'],
+        'description' => ['type' => 'TEXT', 
+            'isSearchable'=> '1', 
+            'searchableByAdmin'=> '1', 
+            'formfield' => 
+            'Textarea', 
+            'placeholder' => 'write a description']
     ];
 
     public static function getTableName()
     {
         return 'objects';
     }
+    public static function getUserFriendlyName()
+    {
+        return 'My&nbsp;Object';
+    }
 
     public function save()
     {
        
-            VanillaCupcakeDAL::save($this);
+        VanillaCupcakeDAL::save($this);
    
     }
 

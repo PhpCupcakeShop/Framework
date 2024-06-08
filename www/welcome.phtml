@@ -11,7 +11,6 @@
     <?= Analytics::Google() ?>
     <title>PHPCupcakes Example</title>
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
-    
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
 </head>
 <body>
@@ -21,7 +20,7 @@
     <?php 
     $h1 = 'PhpCupcakeShop';
     echo LoadHtml::loadInclude('header', ['h1' => $h1]);
-   ?>
+    ?>
 <div class="search bg-info">
     <?php
 echo LoadHtml::loadInclude('searchform'); 
@@ -44,14 +43,6 @@ echo EditLink::displayEditLink();
     <main>
    <h4>To begin, go into edit mode and add an object.</h4>
     <?php
-
-$db = new mysqli("193.203.166.181", "u265408878_phpcupcakes", "SUQ0;3i~W", "u265408878_phpcupcakes")
-		or die("Hey loser, check your server connection.");
-    $sql = "SELECT * FROM objects";
-    $result = $db->query($sql);
-    while ($row = mysqli_fetch_array($result)) {
-        echo $row['name'];
-    }
     ?>    
 </main>
 </div>
