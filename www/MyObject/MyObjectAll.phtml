@@ -58,7 +58,7 @@ echo EditLink::displayEditLink();
         foreach ($objects as $object) {
             ob_start(); ?>
         <div style="display: flex; flex-direction: row; padding: 20px;">
-        <div class="quickpadding">Name: <a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $object->id ?>"><?= htmlspecialchars(
+        <div class="quickpadding">Name: <a href="<?= ConfigVars::getSiteUrl() ?>/view/MyObject/<?= $object->id ?>"><?= htmlspecialchars(
     $object->name
 ) ?></a></div>   <!--linkhere--> 
         <div class="quickpadding">Description: <?= htmlspecialchars(

@@ -23,10 +23,7 @@ use PhpCupcakes\Config\ConfigVars;
 <body>
     <div class="container">
         <header>
-            <?php 
-            $h1 = 'PhpCupcakeShop';
-            echo LoadHtml::loadInclude('header', ['h1' => $h1]);
-            ?>
+            <?= LoadHtml::loadInclude('header'); ?>
         <div class="search bg-info"><?= LoadHtml::loadInclude('searchform'); ?></div>
 </header>
     <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
@@ -46,7 +43,7 @@ echo EditLink::displayEditLink();
     $object = MyObject::find($_GET['id']);
     ob_start();
     // Render the form open tag
-    echo FormHelper::renderFormOpen(ConfigVars::getSiteUrl().'/MyObject/update/'.$object->id, 'post', ['class' => 'form-horizontal']);       /*linkhere*/
+    echo FormHelper::renderFormOpen(ConfigVars::getSiteUrl().'/update/MyObject/'.$object->id, 'post', ['class' => 'form-horizontal']);       /*linkhere*/
 
     // Render form fields
     echo FormHelper::renderHidden('id', $_GET['id']);

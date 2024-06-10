@@ -21,19 +21,16 @@ use PhpCupcakes\Config\ConfigVars;
 <body>
     <div class="container">
         <header>
-            <?php
-            $h1 = "My Object";
-            echo LoadHtml::loadInclude("header", ["h1" => $h1]);
-            ?>
-        <div class="search bg-info"><?= LoadHtml::loadInclude(
-            "searchform"
-        ) ?></div>
+            <?= LoadHtml::loadInclude("header"); ?>
+        <div class="search bg-info"><?= LoadHtml::loadInclude("searchform") ?></div>
 </header>
 <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
 <?php
+
 use PhpCupcakes\EditMode\EditLink;
 echo EditLink::displayEditModeNav();
 echo EditLink::displayEditLink();
+
 ?></nav>
     <div class="mainparent">
     <main>
@@ -42,13 +39,16 @@ echo EditLink::displayEditLink();
         ob_start();
         ?>
         <div style="display: flex; flex-direction: row; padding: 20px;">
-        <div class="quickpadding">Name: <a href="<?= UrlHelper::generateUrl(
-            "MyObject.phtml",
-            ["id" => $object->id]
-        ) ?>"><?= htmlspecialchars($object->name) ?></a></div> 
-        <div class="quickpadding">Description: <?= htmlspecialchars(
-            $object->description
-        ) ?></div>
+        <?php
+        foreach (MyObject::$propertyMetadata as $columnName => $metadata) {
+            if ($metadata['display'] == true) {
+            ?>
+        <div class="quickpadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
+            <?= htmlspecialchars($object->$columnName) ?></a></div> 
+        <?php
+            }
+        }
+        ?>
         <?php echo LoadHtml::loadComponent("editmode/displayEdit", [
             "id" => $object->id,
             "type" => "MyObject",

@@ -1,4 +1,4 @@
- # 0.7.0 (6-9-2024)
+ # 0.7.1 (6-D-2024)
 
  > All notable changes to be documented here.
 
@@ -6,15 +6,20 @@
 
  [ ] A way to organize relationships between the models.
 
- [ ] Entire admin portal. (Looking for advice/suggestions).
+ [ ] Levels of user authentication for edit mode.
 
  [ ] Support for added plugins and modules.
 
  [ ] Cron Jobs.
 
- [ ] Bash files for easy site building.
+ [ ] Batch files for easy site building.
+
+ > [!NOTE]
+ > Any help toward building batch files into languages for other OS' would be appreciated, and linked to.
 
  [ ] Clear documentation with a list of all practical-to-list classes and methods.
+
+ # 0.7.0 (6-9-2024)
 
  ## [Released]
 
@@ -24,7 +29,7 @@
 
  [x] More search and browse functions.
 
- [X] URL Parameter Helper.
+ [x] URL Parameter Helper.
 
  [x] Error handling and logging.
 
@@ -50,7 +55,7 @@
 
  - www\MyObject\addMyObject.phtml Fixed search form not appearing bug. (Used `<?php` instead of `<?=`).
 
- - Bug Fix with Search Feature.
+ - Bug Fix with Search Feature. Added an if statement for search only to appear if database has something.
 
  - Admin portal to go through many changes.
 

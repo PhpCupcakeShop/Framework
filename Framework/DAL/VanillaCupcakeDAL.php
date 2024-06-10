@@ -121,7 +121,6 @@ private static function createTable($object)
         $extra = isset($metadata["extra"]) ? " $metadata[extra]" : "";
         return "$column $type$length$extra";
     }, $columns);
-
     //Creates SQL statement from the above definitions.
     $sql =
         "CREATE TABLE {$object->getTableName()} (" .

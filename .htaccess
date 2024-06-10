@@ -11,13 +11,13 @@ RewriteRule ^editmode/on$ Framework/EditMode/session_edit.php?startsession=edit 
 RewriteRule ^editmode/off$ Framework/EditMode/session_edit.php?endsession=edit [L]
 
 
-RewriteRule ^([^/]+)/viewall$ www/$1/$1All.phtml [L]
-RewriteRule ^([^/]+)/viewall/sortby([^/]+)/page([0-9]+)/([0-9]+)perpage$ www/$1/$1s.phtml?sortby=$2&page=$3&items_per_page=$4 [L]
-RewriteRule ^([^/]+)/viewall/page([0-9]+)/([0-9]+)perpage$ www/$1/$1s.phtml?page=$2&items_per_page=$3 [L]
-RewriteRule ^([^/]+)/view/([0-9]+)$ www/$1/$1.phtml?id=$2 [L]
-RewriteRule ^([^/]+)/edit/([0-9]+)$ www/$1/edit$1.phtml?id=$2 [L]
-RewriteRule ^([^/]+)/update/([0-9]+)$ www/$1/$1\Updated.phtml?id=$2 [L]
-RewriteRule ^([^/]+)/add$ www/$1/add$1.phtml [L]
-RewriteRule ^([^/]+)/added$ www/$1/$1\Added.phtml [L]
-RewriteRule ^([^/]+)/delete/([0-9]+)$ www/$1/delete$1.phtml?id=$2 [L]
+RewriteRule ^viewall/([^/]+)$ www/$1/$1All.phtml [L]
+RewriteRule ^viewall/([^/]+)/sortby([^/]+)/page([0-9]+)/([0-9]+)perpage$ www/$1/$1s.phtml?sortby=$2&page=$3&items_per_page=$4 [L]
+RewriteRule ^viewall/([^/]+)/page([0-9]+)/([0-9]+)perpage$ www/$1/$1s.phtml?page=$2&items_per_page=$3 [L]
+RewriteRule ^view/([^/]+)/([0-9]+)$ www/$1/$1.phtml?id=$2 [L]
+RewriteRule ^edit/([^/]+)/([0-9]+)$ www/$1/edit$1.phtml?id=$2 [L]
+RewriteRule ^update/([^/]+)/([0-9]+)$ www/$1/$1\Updated.phtml?id=$2 [L]
+RewriteRule ^add/([^/]+)$ www/$1/add$1.phtml [L]
+RewriteRule ^added/([^/]+)$ www/$1/$1\Added.phtml [L]
+RewriteRule ^delete/([^/]+)/([0-9]+)$ www/$1/delete$1.phtml?id=$2 [L]
 

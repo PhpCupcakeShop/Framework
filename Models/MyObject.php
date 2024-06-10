@@ -8,6 +8,7 @@ class MyObject
     public $id;
     public $name;
     public $description;
+    public $row_birth;
 
     public static $propertyMetadata = [
         'id' => ['type' => 'INT', 
@@ -16,6 +17,7 @@ class MyObject
             'isSearchable'=> '0', 
             'searchableByAdmin'=> '0',  
             'isForm' => true,
+            'display' => false,
             'userFriendlyName' => 'id',
             'formfield' => 'Hidden', 
             'placeholder' => null,
@@ -26,7 +28,8 @@ class MyObject
             'isSearchable'=> '1', 
             'searchableByAdmin'=> '1',  
             'isForm' => true,
-            'userFriendlyName' => 'name',
+            'display' => true,
+            'userFriendlyName' => 'Name',
             'formfield' => 'Text', 
             'placeholder' => 'choose a name',
             'sortbyAsc' => true,
@@ -37,19 +40,23 @@ class MyObject
             'isSearchable'=> '1', 
             'searchableByAdmin'=> '1', 
             'isForm' => true,
-            'userFriendlyName' => 'description',
+            'display' => true,
+            'userFriendlyName' => 'Description',
             'formfield' => 
             'Textarea', 
             'placeholder' => 'write a description',
             'sortbyAsc' => false,
             'sortbyDesc' => false],
-        'CREATED_AT' => ['type' => 'DATETIME',
-            'extra' => 'DEFAULT CURRENT_TIMESTAMP',
+        'row_birth' => ['type' => 'TIMESTAMP',
+            'extra' => 'DEFAULT CURRENT_TIMESTAMP NOT NULL',
             'isSearchable'=> '0', 
             'searchableByAdmin'=> '0',
             'isForm' => false,
-            'sortbyAsc' => false,
-            'sortbyDesc' => false]
+            'display' => false,
+            'sortbyAsc' => true,
+            'userFriendlySortAsc' => 'oldest',
+            'sortbyDesc' => true,
+            'userFriendlySortDesc' => 'newest']
     ];
 
     public static function getTableName()

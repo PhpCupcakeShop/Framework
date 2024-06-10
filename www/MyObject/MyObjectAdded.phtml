@@ -53,14 +53,14 @@ echo EditLink::displayEditLink();
         $tableName = MyObject::getTableName();
         if ($columnName == "id") {
         } elseif ($metadata["isForm"] == false) {
-        } else {
+        } elseif ($metadata["isForm"] == true) {
             $myObject->$columnName = $_POST[$tableName . "-" . $columnName];
-        }
+        } else {}
     }
     $myObject->save();
     $lastInsertId = $myObject->id;
     ?>
-    <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $lastInsertId ?>">View your object here</a>.</p>
+    <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/view/MyObject/<?= $lastInsertId ?>">View your object here</a>.</p>
 </main>
 </div>
 </div>

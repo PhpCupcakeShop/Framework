@@ -1,0 +1,10 @@
+<br />
+ <br />
+Monday, 2024-06-10<br />
+Error finding all objects paginated: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CREATED_AT' in 'order clause'<br />
+ <br />
+Monday, 2024-06-10<br />
+Error finding all objects paginated: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CREATED_AT' in 'order clause'<br />
+ <br />
+Monday, 2024-06-10<br />
+Error creating table: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') DEFAULT CURRENT_TIMESTAMP)' at line 1

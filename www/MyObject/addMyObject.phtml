@@ -38,7 +38,7 @@ echo EditLink::displayEditLink();
     require_once ConfigVars::getFrameworkSrc() .
         "/EditMode/auth.inc.php"; /*linkhere*/
     // Render the form open tag
-    echo FormHelper::renderFormOpen("added", "post", [
+    echo FormHelper::renderFormOpen(ConfigVars::getWWW()."/added/MyObject", "post", [
         "class" => "form-horizontal",
     ]); // Render form fields
     foreach (MyObject::$propertyMetadata as $columnName => $metadata) {

@@ -40,7 +40,12 @@ echo EditLink::displayEditLink();
 <div class="mainparent">
     <main>
    <h4>To begin, go into edit mode and add an object.</h4>
-    <?php  ?>    
+    <?php 
+    if (isset($_SESSION['access_token'])) {
+    echo "Welcome, " . $_SESSION['username'] . "!";
+    echo "Your user id is ". $_SESSION['user_id'];
+    }
+    ?>    
 </main>
 </div>
 </div>

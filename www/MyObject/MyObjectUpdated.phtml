@@ -56,7 +56,7 @@ echo EditLink::displayEditLink();
     $lastInsertId = $myObject->id;
     echo "" . $myObject->name . " updated.";
     ?>
-    <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $lastInsertId ?>">View your object here</a>.</p>
+    <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/view/MyObject/<?= $lastInsertId ?>">View your object here</a>.</p>
 
 </main>
 </div>
