@@ -1,1 +1,1 @@
-<!--here you can put any files that need to be loaded before the <html> tag.-->
+<!--here you can put any files that need to be loaded before the <html lang="en"> tag.-->

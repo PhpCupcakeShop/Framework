@@ -1,5 +1,8 @@
 AddHandler application/x-httpd-php .html .php .php5 .phtml .htm .inc.php .htaccess 
 
+ErrorDocument 404 /404.phtml
+ErrorDocument 500 /500.phtml
+
 RewriteEngine On
 
 RewriteRule ^$ www/welcome.phtml [L]

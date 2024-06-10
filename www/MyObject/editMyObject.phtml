@@ -8,8 +8,14 @@ use PhpCupcakes\Config\ConfigVars;
 
 ?>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+ <head>
+ <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8">
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhpCupcakeShop: Edit an Object</title>
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere-->  
@@ -44,9 +50,11 @@ echo EditLink::displayEditLink();
 
     // Render form fields
     echo FormHelper::renderHidden('id', $_GET['id']);
-    echo FormHelper::renderInput('text', 'name', $object->name, ['class' => 'form-control']);
-    echo FormHelper::renderTextarea('description', $object->description, ['class' => 'form-control']);
+    echo FormHelper::renderInput('text', 'objects-name', htmlspecialchars($object->name), ['class' => 'form-control']);
+    echo FormHelper::renderTextarea('objects-description', htmlspecialchars($object->description), ['class' => 'form-control']);
 
+    //include the CSRF token
+    ?><input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><?php
     // Render the submit button
     echo FormHelper::renderSubmit('Submit', 'submit', ['class' => 'btn btn-primary']);
 

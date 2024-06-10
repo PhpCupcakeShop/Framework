@@ -114,6 +114,51 @@
 
  > `];`
 
+ ### Add Booleans to State if Browsable and User Friendly Names If So
+
+ 
+ > `public static $propertyMetadata = [`
+
+ > `    'id' => ['type' => 'INT',` 
+   
+ > `        'length' => 11,` 
+
+ > `        'extra' => 'AUTO_INCREMENT PRIMARY KEY',` 
+
+ > `        'isSearchable'=> '0',` 
+
+ > `        'searchableByAdmin'=> '1',`
+
+ > `        'sortbyAsc' => false,`
+
+ > `        'sortbyDesc' => false],`
+
+ > `    'name' => [ 'type' => 'VARCHAR',`
+ 
+ > `        'length' => 255,` 
+
+ > `        'isSearchable'=> '1',` 
+
+ > `        'searchableByAdmin'=> '1',`
+ 
+ > `        'userFriendlySortAsc' => 'name a-z',`
+
+ > `        'sortbyDesc' => true,`
+
+ > `        'userFriendlySortDesc' => 'name z-a'],`
+
+ > `    'description' => ['type' => 'TEXT',` 
+ 
+ > `        'isSearchable'=> '1',` 
+ 
+ > `        'searchableByAdmin'=> '1',`
+
+ > `        'sortbyAsc' => false,`
+
+ > `        'sortbyDesc' => false],`
+
+ > `];`
+
  ### Add Form Variables to Use with the FormHelper Class (Framework\Helpers)
  
  > `public static $propertyMetadata = [`
@@ -126,7 +171,11 @@
 
  > `        'isSearchable'=> '0',` 
 
- > `        'searchableByAdmin'=> '1',` 
+ > `        'searchableByAdmin'=> '1',`
+
+ > `        'sortbyAsc' => false,`
+
+ > `        'sortbyDesc' => false` 
  
  > `        'formfield' => 'Hidden',` 
  
@@ -138,7 +187,13 @@
 
  > `        'isSearchable'=> '1',` 
 
- > `        'searchableByAdmin'=> '1',` 
+ > `        'searchableByAdmin'=> '1',`
+ 
+ > `        'userFriendlySortAsc' => 'name a-z',`
+
+ > `        'sortbyDesc' => true,`
+
+ > `        'userFriendlySortDesc' => 'name z-a',` 
 
  > `        'formfield' => 'Text',` 
 
@@ -148,7 +203,11 @@
  
  > `        'isSearchable'=> '1',` 
  
- > `        'searchableByAdmin'=> '1',` 
+ > `        'searchableByAdmin'=> '1',`
+
+ > `        'sortbyAsc' => false,`
+
+ > `        'sortbyDesc' => false,` 
 
  > `         'formfield' =>` 
 
@@ -209,12 +268,26 @@
  > `}`
 
  ### Retrieves all objects of a given class from the database with pagination.
+
+ > [!DANGER]
+ > Deprecated.
  
  > `public static function findAllPaginated($currentPage, $itemsPerPage)`
 
  > `{`
 
  > `return VanillaCupcakeDAL::findAllPaginated(__CLASS__, $currentPage, $itemsPerPage);`
+
+ > `}`
+
+
+ ### Retrieves all objects of a given class from the database with pagination.
+ 
+ > `public static function findAllPaginateSorted($currentPage, $itemsPerPage)`
+
+ > `{`
+
+ > `return VanillaCupcakeDAL::findAllPaginateSorted(__CLASS__, $currentPage, $itemsPerPage);`
 
  > `}`
 
@@ -229,6 +302,9 @@
  > `}`
 
  ### Retrieves the total count of objects for a given class based on a search term.
+
+ > [!DANGER]
+ > Deprecated.
  
  > `public static function getTotalofSearch($searchTerm, $column = null)`
 
@@ -238,7 +314,17 @@
 
  > `}`
 
+ ### Searches for objects in the database based on a given search term and a column, or "all" for all columns.
+
+ > `public static function searchOneTable($searchQuery, $columnName, $currentPage = 1, $itemsPerPage = 10)`
+ > `{`
+ > `return VanillaCupcakeDAL::searchOneTable(__CLASS__, $searchQuery, $columnName, $currentPage = 1, $itemsPerPage = 10);`
+ > `}`
+
  ### Searches for objects in the database based on a given search term and column.
+
+ > [!DANGER]
+ > Deprecated.
  
  > `public static function search($searchTerm, $column = null, $currentPage = 1, $itemsPerPage = 10)`
 

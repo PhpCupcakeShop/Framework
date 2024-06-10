@@ -1,0 +1,30 @@
+<?php
+use PhpCupcakes\Config\ConfigVars;
+
+
+
+
+?>
+<form id="browseForm" action="<?= ConfigVars::getSiteUrl() ?>/MyObject/viewall" method="get">
+    <label for="browseColumn">Order by:</label>
+
+    <select id="browseColumn" name="browseColumn">
+        <option value="">Select a column</option>
+        <?php
+        foreach ($classNamespace::$propertyMetadata as $columnName => $metadata) {
+            if ($metadata['sortbyAsc'] == true) {
+            ?>
+            <option value="<?= $columnName ?>-ASC"><?= $metadata['userFriendlySortAsc'] ?></option>
+            <?php
+            }
+            if ($metadata['sortbyDesc'] == true) {
+            ?>
+            <option value="<?= $columnName ?>-DESC"><?= $metadata['userFriendlySortDesc'] ?></option>
+            <?php
+            }
+        }
+
+        ?>
+    </select>
+    <input type="submit" name="browse" value="go" />
+</form>

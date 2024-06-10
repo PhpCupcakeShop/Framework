@@ -4,12 +4,17 @@ use PhpCupcakes\DAL\VanillaCupcakeDAL;
 
 
 
-$result = VanillaCupcakeDAL::DbTableOptionFields();
+$result = VanillaCupcakeDAL::dbTableOptionFields();
 $searchTable = $result['searchTable'];
 $searchColumn = $result['searchColumn'];
 $tableColumnMap = $result['tableColumnMap'];
 
 if (isset($posturl)) {} else {$posturl = $result['posturl'];}
+
+if (!$searchTable) {
+    echo "Nothing in database to search yet.";
+} else {
+
 ?>
 
 
@@ -67,3 +72,5 @@ searchColumnSelect.innerHTML = '<option value="all">Search all columns</option>'
     }
 }
 </script>
+
+<?php } ?>

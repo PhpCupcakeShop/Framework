@@ -1,28 +1,12 @@
-# 0.6.2 (6-7-2024)
+ # 0.7.0 (6-9-2024)
 
-> All notable changes to be documented here.
-> The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-> and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+ > All notable changes to be documented here.
 
-## [Unreleased]
-
- [ ] More search and browse functions.
-
- [ ] Research screen reader accessibilty and incorporate.
-
- [ ] Fix a bug when nothing in database.
-
- [ ] Security Features.
-
- [ ] URL Parameter Helper.
+ ## [Unreleased]
 
  [ ] A way to organize relationships between the models.
 
- [ ] Error handling and logging.
-
- [ ] Custom 404 and other status response code pages.
-
- [ ] Clear separation of code amongst roles in the development process.
+ [ ] Entire admin portal. (Looking for advice/suggestions).
 
  [ ] Support for added plugins and modules.
 
@@ -32,54 +16,108 @@
 
  [ ] Clear documentation with a list of all practical-to-list classes and methods.
 
+ ## [Released]
+
+ [x] Research screen reader accessibilty and incorporate.
+
+ [x] Fix a bug when nothing in database.
+
+ [x] More search and browse functions.
+
+ [X] URL Parameter Helper.
+
+ [x] Error handling and logging.
+
+ [x] Security Features.
+
+ [x] Custom 404 and other status response code pages.
+
+ ### Added
+
+ - NPC Objects for testing purposes.
+
+ - URL Params Helper in Framework/Helpers/UrlParamsHelper.php
+
+ - Error logging added to each potential error with database queries/connections.
+
+ - Custom http status code error pages. (Included 404 and 500).
+
+ - Browse by table column feature with custom user friendly names.
+
+ ### Changed
+ 
+ - Framework\DAL\VanillaCupcakeDAL.php added a try/catch error statement in getFieldNamesFunction
+
+ - www\MyObject\addMyObject.phtml Fixed search form not appearing bug. (Used `<?php` instead of `<?=`).
+
+ - Bug Fix with Search Feature.
+
+ - Admin portal to go through many changes.
+
+ - Changes to www/MyObject Templates.
+
+ * Added tablename to post values for scalability.
+
+ * Minor changes to update and add save pages.
+
+ - Search feature has sort by relevancy. Search feature should be complete and free of bugs.
+
+ - Fixed search and view all so error messages no longer display if nothing in database.
+
+ ### Deprecated
+
+ - Many methods unused in Framework\DAL\VanillaCupcakeDAL.php Check Framework\DAL\VanillaDAL.md for specific deprecated methods.
+
+ # 0.6.2 (6-7-2024)
+
  ### Added 
 
- > ViewsCRUD.md in the www/MyObject directory - This goes through the process of adding classes and methods to make your own files for CRUD operations.
+ - ViewsCRUD.md in the www/MyObject directory - This goes through the process of adding classes and methods to make your own files for CRUD operations.
 
- > ModelFilesGuide.md in the Models directory - This goes through the process of making model files so the View files for CRUD operations work.
+ - ModelFilesGuide.md in the Models directory - This goes through the process of making model files so the View files for CRUD operations work.
 
  ### Changed
 
- > Minor changes to most if not all the files in the www/MyObject directory. 
+ - Minor changes to most if not all the files in the www/MyObject directory. 
 
- > Placed post values of www/MyObject/MyObjectAdded.phtml into a loop to update the table for any column names that are posted.
+ - Placed post values of www/MyObject/MyObjectAdded.phtml into a loop to update the table for any column names that are posted.
 
- > [Admin Portal](https://demo.phpcupcake.shop/admin_portal) now has browse by table functionality. As well as small functional changes.
+ - [Admin Portal](https://demo.phpcupcake.shop/admin_portal) now has browse by table functionality. As well as small functional changes.
 
 # 0.6.1 (6-6-2024)
 
 ### Changed
 
-> The Framework/DAL/VanillaDAL.md file.
+ - The Framework/DAL/VanillaDAL.md file.
 
-> Comments and notes added to the Framework/DAL/VanillaCupcakeDAL.php file.
+ - Comments and notes added to the Framework/DAL/VanillaCupcakeDAL.php file.
 
 ### Deprecated
 
-> Deprecated databaseSeeIfTable and getTableColumns in Framework/DAL/VanillaCupcakeDAL.php file.
+ - Deprecated databaseSeeIfTable and getTableColumns in Framework/DAL/VanillaCupcakeDAL.php file.
 
 # 0.6 (6-4-2024)
 
-### Added
+## [Released]
 
 > [!NOTE]
 
 > These will go through many changes until v1.
 
- [ ] Separation of Views and some sort of template engine.
-
- [ ] An .htaccess file with routing configured to have pretty URLs for any model file created.
+ [x] An .htaccess file with routing configured to have pretty URLs for any model file created.
 
  [ ] A data access layer called the VanillaCupcakeDAL performs read/write/delete (CRUD) operations, and search functions, and organizes information into paged results.
 
- [ ] Model template files to quickly build and perform operations on database tables.
+ [x] Model template files to quickly build and perform operations on database tables.
 
- [ ] Built-in functions for quickly building view files for all CRUD operations.
+ [x] Built-in functions for quickly building view files for all CRUD operations.
 
- [ ] Edit Mode interface for users, (user interface plugin to be available with release), to quickly edit the site on the same site interface with special permissions.
+ [ ] Clear separation of code amongst roles in the development process.
+
+ [x] Edit Mode interface for users, (user interface plugin to be available with release), to quickly edit the site on the same site interface with special permissions.
 
  [x] Special helper classes to quickly build icons and forms.
 
- [ ] Search functions to search specific tables and columns, or the whole site.
+ [x] Search functions to search specific tables and columns, or the whole site.
 
  [x] Makes use of an auto-loader without any need for dependencies. (Yet should still be compatible.)

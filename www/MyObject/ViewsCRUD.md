@@ -1,4 +1,4 @@
- # View CRUD Action Files 
+ # A GUIDE TO CRUD IN THE VIEWS
 
  ### The Following File explains the parts of the View Files based on the Model File and how to build them.
 
@@ -76,6 +76,30 @@
  
  > `require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';`
 
+ # CSRF Tokens
+
+ > These will be hidden in any form:
+
+ > `?><input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><?php`
+
+ > Then asked for on the form confirmation page:
+
+ > `if ($_SERVER['REQUEST_METHOD'] === 'POST') {`
+ 
+ > `if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {`
+
+ > `// CSRF token is invalid, reject the request`
+
+ > `http_response_code(400);`
+
+ > `echo "Invalid CSRF token";`
+
+ > `exit;`
+
+ > `}`
+
+ > `}`
+
  # addMyObject.phtml 
 
  ### Loading the FormHelper
@@ -97,11 +121,13 @@
 
  > `foreach (MyObject::$propertyMetadata as $columnName => $metadata) {`
 
+ > `$tableName = MyObject::getTableName();`
+
  > `$renderFormField = 'render' . $metadata['formfield'];`
 
  > `$placeholder = $metadata['placeholder'];`
 
- > `echo FormHelper::$renderFormField($columnName, '', ['class' => 'form-control', 'placeholder'=> $placeholder]);`
+ > `echo FormHelper::$renderFormField($tableName . '-' . $columnName, '', ['class' => 'form-control', 'placeholder'=> $placeholder]);`
 
  > `}`
 
@@ -127,9 +153,11 @@
  
  > `foreach (MyObject::$propertyMetadata as $columnName => $metadata) {`
 
+ > `$tableName = MyObject::getTableName();`
+
  > `if ($columnName == 'id') {} else {`
 
- > `$myObject->$columnName = $_POST[$columnName];`
+ > `$myObject->$columnName = $_POST[$tableName . '-' . $columnName];`
 
  > `}`
 
@@ -183,15 +211,15 @@
  
  > Displaying the object name: 
  
- > `<?= $object->name ?>`
+ > `<?= htmlspecialchars($object->name) ?>`
 
  > Passing to a url to be viewed on its own (be sure to load ConfigVars if using the getSiteUrl Function):
 
- > `<a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $object->id ?>"><?= $object->name ?></a>`
+ > `<a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $object->id ?>"><?= htmlspecialchars($object->name) ?></a>`
 
  > Displaying the Object Description
 
- > `<?= $object->description ?>`
+ > `<?= htmlspecialchars($object->description) ?>`
 
  ### Display the Edit Mode Icons from the Edit Mode Section Above
 
@@ -273,11 +301,11 @@
 
  ### Add the name as a Form Parameter
 
- > `echo FormHelper::renderInput('text', 'name', $object->name, ['class' => 'form-control']);`
+ > `echo FormHelper::renderInput('text', 'objects-name', htmlspecialchars($object->name), ['class' => 'form-control']);`
 
  ### Add the description as a Form Parameter
 
- > `echo FormHelper::renderTextarea('description', $object->description, ['class' => 'form-control']);`
+ > `echo FormHelper::renderTextarea('objects-description', htmlspecialchars($object->description), ['class' => 'form-control']);`
 
  ### Render the Submit Button
 
@@ -313,18 +341,17 @@
  > `$myObject = MyObject::find($_GET['id']);`
 
  ### Set the id By Post Value
-  [] (Test to be ran later to see what happens if get and post don't match.)
 
  > `$myObject->id = $_POST['id'];`
 
  ### Post All Other Parameters
 
  > [!Important]
- > Fill in according to your own database table columns.
+ > Fill in according to your own database table names and columns.
 
- > `$myObject->name = $_POST['name'];`
+ > `$myObject->name = $_POST['objects-name'];`
 
- > `$myObject->description = $_POST['description'];`
+ > `$myObject->description = $_POST['objects-description'];`
 
  ### Save to the Database
 

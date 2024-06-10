@@ -1,5 +1,12 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+ini_set('display_startup_errors', 1);
+// Generate a CSRF token and store it in the session
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 include("bootstrap.php");
 
 spl_autoload_register(function ($Name) {

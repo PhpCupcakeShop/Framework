@@ -1,12 +1,29 @@
 <?php
-    require_once '../../Framework/autoload.php';       /*linkhere*/
-    use PhpCupcakes\Models\MyObject;
-    use PhpCupcakes\Helpers\LoadHtml;
-    use PhpCupcakes\Config\ConfigVars;
+require_once "../../Framework/autoload.php"; /*linkhere*/
+use PhpCupcakes\Models\MyObject;
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Config\ConfigVars;
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (
+        !isset($_POST["csrf_token"]) ||
+        $_POST["csrf_token"] !== $_SESSION["csrf_token"]
+    ) {
+        // CSRF token is invalid, reject the request
+        http_response_code(400);
+        echo "Invalid CSRF token";
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+ <head>
+ <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8">
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHPCupcakes Example</title>
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
@@ -15,33 +32,32 @@
     
     <div class="container">
         <header>
-            <?php 
-            $h1 = 'Add to My Objects';
-            echo LoadHtml::loadInclude('header', ['h1' => $h1]);
-            ?>
-        <div class="search bg-info"><?php LoadHtml::loadInclude('searchform'); ?></div>
+            <?php echo LoadHtml::loadInclude("header"); ?>
+        <div class="search bg-info"><?php LoadHtml::loadInclude(
+            "searchform"
+        ); ?></div>
 </header>
-<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
-<?php 
-
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
+<?php
 use PhpCupcakes\EditMode\EditLink;
 echo EditLink::displayEditModeNav();
 echo EditLink::displayEditLink();
-
-
 ?></nav>
 <div class="mainparent">
     <main>
     <?php
-    require_once ConfigVars::getFrameworkSrc().'/EditMode/auth.inc.php';       /*linkhere*/
-    
+    require_once ConfigVars::getFrameworkSrc() .
+        "/EditMode/auth.inc.php"; /*linkhere*/
     $myObject = new MyObject();
     foreach (MyObject::$propertyMetadata as $columnName => $metadata) {
-    if ($columnName == 'id') {} else {
-        $myObject->$columnName = $_POST[$columnName];
+        $tableName = MyObject::getTableName();
+        if ($columnName == "id") {
+        } elseif ($metadata["isForm"] == false) {
+        } else {
+            $myObject->$columnName = $_POST[$tableName . "-" . $columnName];
+        }
     }
-    }
-    $myObject->save(); 
+    $myObject->save();
     $lastInsertId = $myObject->id;
     ?>
     <p>MyObject successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/MyObject/view/<?= $lastInsertId ?>">View your object here</a>.</p>

@@ -1,13 +1,17 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/Framework/autoload.php';       /*linkhere*/
-    use PhpCupcakes\Helpers\LoadHtml;
-    use PhpCupcakes\Config\ConfigVars;
-    use PhpCupcakes\Config\Analytics;
-
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Framework/autoload.php"; /*linkhere*/
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Config\ConfigVars;
+use PhpCupcakes\Config\Analytics;
 ?>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= Analytics::Google() ?>
     <title>PHPCupcakes Example</title>
     <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
@@ -17,33 +21,26 @@
     
     <div class="container">
 <header>
-    <?php 
-    $h1 = 'PhpCupcakeShop';
-    echo LoadHtml::loadInclude('header', ['h1' => $h1]);
+    <?php
+    echo LoadHtml::loadInclude("header");
     ?>
 <div class="search bg-info">
-    <?php
-echo LoadHtml::loadInclude('searchform'); 
-?>
+    <?php echo LoadHtml::loadInclude("searchform"); ?>
 </div>
 </header>
-<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude('nav'); ?>
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
    
-<?php 
-
+<?php
 use PhpCupcakes\EditMode\EditLink;
 echo EditLink::displayEditModeNav();
 echo EditLink::displayEditLink();
-
-
 ?></nav>
 
 
 <div class="mainparent">
     <main>
    <h4>To begin, go into edit mode and add an object.</h4>
-    <?php
-    ?>    
+    <?php  ?>    
 </main>
 </div>
 </div>
