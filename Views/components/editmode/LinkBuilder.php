@@ -20,6 +20,7 @@ foreach ($plugins as $key => $plugin) {
         $modelName = explode('\\', $modelfile);
         $modelfile = $modelName[1];
 
+
     ?> 
     <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace::getUserFriendlyName() ?></a> |
     <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/add/'.$modelfile; ?>">Add a <?= $classNamespace::getUserFriendlyName() ?></a>
@@ -48,6 +49,7 @@ foreach ($wwwModels as $wwwModel) {
     $modelfiles = FileFunctions::getModelsNamespace(ConfigVars::getDocRoot().'/Models/'.$wwwModel.'/Models');
     foreach ($modelfiles as $modelfile) {
     $classNamespace2 = $wwwModel.'\\'.$modelfile;
+        $modelfile = str_replace('Models\\', '', $modelfile); 
     ?> 
     <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$wwwModel.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace2::getUserFriendlyName() ?></a> |
     <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$wwwModel.'/add/'.$modelfile; ?>">Add a <?= $classNamespace2::getUserFriendlyName() ?></a>

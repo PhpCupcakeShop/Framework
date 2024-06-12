@@ -1,6 +1,12 @@
- # 0.7.2 (6-11-2024)
+ # 0.7.3 (6-2024)
 
  > All notable changes to be documented here.
+
+ ### BUG FIX
+
+ - LinkBuilder.php was not routing to Model Files correctly.
+
+# 0.7.2 (6-11-2024)
 
  ## [Unreleased]
 
