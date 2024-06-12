@@ -1,6 +1,10 @@
 <?php
-
+use PhpCupcakes\Config\ConfigVars;
 use PhpCupcakes\DAL\VanillaCupcakeDAL;
+
+
+
+if (VanillaCupcakeDAL::isDatabaseEmpty() == false) {
 
 $result = VanillaCupcakeDAL::dbTableOptionFields();
 $searchTable = $result['searchTable'];
@@ -9,6 +13,7 @@ $tableColumnMap = $result['tableColumnMap'];
 
 if (isset($posturl)) {} else {$posturl = $result['posturl'];}
 
+
 if (!$searchTable) {
     echo "Nothing in database to search yet.";
 } else {
@@ -16,7 +21,7 @@ if (!$searchTable) {
 ?>
 
 
-<form id="searchForm" action="<?= $posturl ?>" method="get">
+<form id="searchForm" action="<?= ConfigVars::getSiteUrl().'/search' ?> " method="get">
     <label for="searchTerm">Search:</label>
     <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter search term">
     <label for="searchColumn">Search in:</label>
@@ -25,7 +30,7 @@ if (!$searchTable) {
         <?php
             foreach ($searchTable as $className) {
             ?>
-            <option value="<?= $className ?>"><?= $className ?></option>
+            <option value="<?= $className ?>"><?= basename($className) ?></option>
             <?php
             }
         ?>
@@ -71,4 +76,9 @@ searchColumnSelect.innerHTML = '<option value="all">Search all columns</option>'
 }
 </script>
 
-<?php } ?>
+<?php } 
+} else {
+    echo "Search will be available once something is in the database.";
+}
+
+?>

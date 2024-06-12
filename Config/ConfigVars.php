@@ -4,7 +4,7 @@ namespace PhpCupcakes\Config;
 
 class ConfigVars {
 
-    private static $workingdirectory = '/demo';
+    private static $workingdirectory = '';
 
     public static function getSiteUrl()
     {
@@ -20,31 +20,34 @@ class ConfigVars {
 
         return $pathforall;
     }
-    public static function getFrameworkSrc($rootfolder = 1)  //change this to change all easily
+    public static function getFrameworkSrc()  //change this to change all easily
     {
-        if ($rootfolder == 0) {
-            return self::getDocRoot();
-        } else {
+    
             return self::getDocRoot().'/Framework';    /*linkhere*/
-        }
-
+   
     }
-    public static function getWWW($rootfolder = 1)  //change this to change all easily
+    public static function getWWW()  //change this to change all easily
     {
-        if ($rootfolder == 0) {
-            return self::getSiteUrl();
-        } else {
             return self::getSiteUrl().'/www';    /*linkhere*/
-        }
+  
 
     }
-    public static function getModelDir($rootfolder = 1)  //change this to change all easily
+    public static function getModelDir()  //change this to change all easily
     {
-        if ($rootfolder == 0) {
-            return self::getDocRoot();
-        } else {
-            return self::getDocRoot().'/Models/';    /*linkhere*/
-        }
+            return self::getDocRoot().'/Models';    /*linkhere*/
+ 
+
+    }
+    public static function myAppName()  //change this to change all easily
+    {
+            return 'MyApp';
+      
+
+    }
+    public static function searchModelParam()  //change this to change all easily
+    {
+            return 4;
+      
 
     }
 } 

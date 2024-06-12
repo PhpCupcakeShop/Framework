@@ -12,7 +12,18 @@ class UrlParamsHelper
     public function __construct()
     {
         $this->path = $_SERVER['REQUEST_URI'];
-        $this->segments = explode('/', trim($this->path, '/'));
+        $this->segments = $this->getPathSegments();
+    }
+
+    /**
+     * Get the path segments, excluding the GET parameters
+     * @return array
+     */
+    protected function getPathSegments()
+    {
+        $parts = explode('?', $this->path);
+        $pathPart = $parts[0];
+        return explode('/', trim($pathPart, '/'));
     }
 
     public function get($index)
@@ -20,9 +31,3 @@ class UrlParamsHelper
         return isset($this->segments[$index]) ? $this->segments[$index] : null;
     }
 }
-
-/**** This can be used in the following way: 
- * $urlHelper = new UrlParamsHelper();
- * $firstParam = $urlHelper->get(0);
- * $secondParam = $urlHelper->get(1); */
-

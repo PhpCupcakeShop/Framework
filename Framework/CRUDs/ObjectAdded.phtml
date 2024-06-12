@@ -1,0 +1,66 @@
+<?php
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Config\ConfigVars;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+ <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8">
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHPCupcakes Example</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+</head>
+<body>
+    
+    <div class="container">
+        <header>
+            <?php echo LoadHtml::loadInclude("header"); ?>
+        <div class="search bg-info"><?php LoadHtml::loadInclude(
+            "searchform"
+        ); ?></div>
+</header>
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
+<?php
+use PhpCupcakes\EditMode\EditLink;
+echo EditLink::displayEditModeNav();
+echo EditLink::displayEditLink();
+?></nav>
+<div class="mainparent">
+    <main>
+    <?php
+    require_once ConfigVars::getFrameworkSrc() .
+        "/EditMode/auth.inc.php"; /*linkhere*/
+
+            
+    use PhpCupcakes\Helpers\CheckFormToken;
+
+    if (CheckFormToken::checkCSRFToken() == true) {
+
+    $GeoBsnsMod = new $routedClassNamespace();
+    foreach ($routedClassNamespace::$propertyMetadata as $columnName => $metadata) {
+        $tableName = $routedClassNamespace::getTableName();
+        if ($columnName == "id") {
+        } elseif ($metadata["isForm"] == false) {
+        } elseif ($metadata["isForm"] == true) {
+            $GeoBsnsMod->$columnName = $_POST[$tableName . "-" . $columnName];
+        } else {}
+    }
+    $GeoBsnsMod->save();
+    $lastInsertId = $GeoBsnsMod->id;
+    ?>
+    <p>GeoBsnsMod successfully inserted into the database. <a href="<?= ConfigVars::getSiteUrl() ?>/admin/<?= $routedClassNamespaceRoot ?>/view/<?= basename($routedClassNamespace) ?>?id=<?= $lastInsertId ?>">View your object here</a>.</p>    
+    <?php
+
+}
+?>
+</main>
+</div>
+</div>
+</body>
+</html>

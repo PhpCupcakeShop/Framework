@@ -8,6 +8,8 @@ use PDOException;
 use PDOStatement;
 use PhpCupcakes\Config\ErrorReporting;
 use PhpCupcakes\Config\ConfigVars;
+use PhpCupcakes\Helpers\FileFunctions;
+use PhpCupcakes\Helpers\GetModels;
 
 /**
  * Class VanillaCupcakeDAL
@@ -98,12 +100,6 @@ class VanillaCupcakeDAL
  * @param object $object The object whose properties will be used to create the table.
  * @return void
  */
-/**
- * Creates a table based on the properties of the given object.
- *
- * @param object $object The object whose properties will be used to create the table.
- * @return void
- */
 private static function createTable($object)
 {
     //Gets a connection to the database within its own class.
@@ -126,6 +122,7 @@ private static function createTable($object)
         "CREATE TABLE {$object->getTableName()} (" .
         implode(", ", $columnDefinitions) .
         ")";
+    echo $sql;
 
     try {
         //Executes SQL statement.
@@ -133,16 +130,21 @@ private static function createTable($object)
 
         // Add FULLTEXT index for searchable columns
         $searchableColumns = array_filter($columns, function ($column) use ($object) {
-            return $object::$propertyMetadata[$column]['searchableByAdmin'] == '1';
+            return $object::$propertyMetadata[$column]['searchableByAdmin'] == true;
         });
 
         foreach ($searchableColumns as $column) {
-            $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$column}_fulltext`(`{$column}`)");
+            $columnType = $object::$propertyMetadata[$column]['type'];
+            if ($columnType === 'int') {
+                $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$column}_text`(CAST(`{$column}` AS CHAR))");
+            } else {
+                $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$column}_text`(`{$column}`)");
+            }
         }
 
         // Add FULLTEXT index for the entire searchable table
         $searchableColumnsStr = implode(",", $searchableColumns);
-        $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$object->getTableName()}_fulltext`($searchableColumnsStr)");
+        $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$object->getTableName()}_text`($searchableColumnsStr)");
     } catch (PDOException $e) {
         $msg = "Error creating table: " . $e->getMessage();
         ErrorReporting::logError($msg);
@@ -374,12 +376,12 @@ private static function createTable($object)
         $results = [];
         try {
             $connection = self::getConnection();
-
+    
             if ($searchTable === "all") {
                 // Search all tables
                 $stmt = $connection->query("SHOW TABLES");
                 $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
+    
                 foreach ($tables as $table) {
                     // Check if a FULLTEXT index exists on the searchable columns
                     $indexStmt = $connection->prepare(
@@ -388,22 +390,18 @@ private static function createTable($object)
                     $indexStmt->execute();
                     $indexes = $indexStmt->fetchAll(PDO::FETCH_ASSOC);
                     $indexedColumns = array_column($indexes, "Column_name");
-
+    
                     if (empty($indexedColumns)) {
                         continue; // Skip this table if there are no columns with a FULLTEXT index
                     }
-
+    
                     $sql = "SELECT * FROM `$table` ";
                     $sql .= "WHERE MATCH(`";
                     $sql .= implode("`, `", $indexedColumns);
                     $sql .= "`) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE)";
-
+    
                     $stmt = $connection->prepare($sql);
-                    $stmt->bindValue(
-                        ":searchTerm",
-                        $searchTerm,
-                        PDO::PARAM_STR
-                    );
+                    $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                     $stmt->execute();
                     $results = array_merge(
                         $results,
@@ -419,22 +417,21 @@ private static function createTable($object)
                 $indexStmt->execute();
                 $indexes = $indexStmt->fetchAll(PDO::FETCH_ASSOC);
                 $indexedColumns = array_column($indexes, "Column_name");
-
+    
                 if (empty($indexedColumns)) {
                     return []; // Return an empty result if there are no columns with a FULLTEXT index
                 }
-
+    
                 $sql = "SELECT * FROM `$searchTable` ";
                 $sql .= "WHERE MATCH(`";
                 $sql .= implode("`, `", $indexedColumns);
                 $sql .= "`) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE)";
-
+    
                 $stmt = $connection->prepare($sql);
-                $stmt->bindValue(":searchTerm", $searchTerm, PDO::PARAM_STR);
+                $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                 $stmt->execute();
                 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
-                //will someday make columns an array to search multiple.
                 // Check if a FULLTEXT index exists on the searchable columns for the specific table
                 $indexStmt = $connection->prepare(
                     "SHOW INDEX FROM `$searchTable` WHERE Index_type = 'FULLTEXT'"
@@ -442,35 +439,27 @@ private static function createTable($object)
                 $indexStmt->execute();
                 $indexes = $indexStmt->fetchAll(PDO::FETCH_ASSOC);
                 $indexedColumns = array_column($indexes, "Column_name");
-
+    
                 if (empty($indexedColumns)) {
                     return []; // Return an empty result if there are no columns with a FULLTEXT index
                 }
-
+    
                 // Check if the $searchColumn is in the list of indexed columns
                 if (in_array($searchColumn, $indexedColumns)) {
                     $sql = "SELECT * FROM `$searchTable` ";
                     $sql .= "WHERE MATCH(`$searchColumn`) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE)";
-
+    
                     $stmt = $connection->prepare($sql);
-                    $stmt->bindValue(
-                        ":searchTerm",
-                        $searchTerm,
-                        PDO::PARAM_STR
-                    );
+                    $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                     $stmt->execute();
                     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     // If the $searchColumn is not indexed, perform a standard WHERE clause search
                     $sql = "SELECT * FROM `$searchTable` ";
                     $sql .= "WHERE `$searchColumn` LIKE :searchTerm";
-
+    
                     $stmt = $connection->prepare($sql);
-                    $stmt->bindValue(
-                        ":searchTerm",
-                        "%$searchTerm%",
-                        PDO::PARAM_STR
-                    );
+                    $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                     $stmt->execute();
                     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 }
@@ -492,13 +481,13 @@ private static function createTable($object)
      */
     private function isColumnSearchable($table, $column)
     {
-        $models = self::getModels(ConfigVars::getModelDir());
+        $models = FileFunctions::getModels(ConfigVars::getModelDir());
         foreach ($models as $model) {
             if ($model::getTableName() == $table) {
                 $metadata = $model::$propertyMetadata;
                 if (
                     isset($metadata[$column]) &&
-                    $metadata[$column]["isSearchable"] == "1"
+                    $metadata[$column]["isSearchable"] == true
                 ) {
                     return true;
                 }
@@ -519,7 +508,7 @@ private static function createTable($object)
     {
         global $admin, $posturl;
 
-        if (isset($admin) && $admin == 1) {
+        if (isset($admin) && $admin == true) {
             $searchFactor = "searchableByAdmin";
             $posturl = $posturl;
         } else {
@@ -529,36 +518,42 @@ private static function createTable($object)
 
         $searchTable = [];
         $searchColumn = "";
-        $namespacedir = ConfigVars::getDocRoot() . "/Models/"; /*linkhere*/
-        $models = self::getModels($namespacedir);
+
+        
+        $classNames = GetModels::returnAllModelNamespaces();
+
+
+        //$myArray = [1, 2, 3];
+        //array_push($myArray, 4, 5, 6);
+        // $myArray is now [1, 2, 3, 4, 5, 6]
 
         $tableColumnMap = [];
 
-        foreach ($models as $className) {
-            // Get the table name
-            //implement other model folders somehow here.
-            $classNamespace = "PhpCupcakes\\Models\\" . $className;
-
-            $tableName = $classNamespace::getTableName();
+        foreach ($classNames as $className) {
+            $tableName = $className::getTableName();
+        
             if (self::tableExists($tableName) == true) {
                 $tableColumnMap[$tableName] = [];
                 // Get the column names
                 $columns = self::getColumnNames($tableName);
 
-                $searchTable[] = $className;
+                if (!$columns) {
+
+                } else {
+                    $searchTable[] = $className;
 
                 foreach ($columns as $column) {
                     if (
-                        $classNamespace::$propertyMetadata[$column][
+                        $className::$propertyMetadata[$column][
                             $searchFactor
-                        ] == "1"
+                        ] == true
                     ) {
                         $tableColumnMap[$className][] = $column;
                     }
                 }
             }
         }
-
+    }
         return [
             "searchTable" => $searchTable,
             "searchColumn" => $searchColumn,
@@ -595,27 +590,6 @@ private static function createTable($object)
         $connection->close();
     }
 
-    /**
-     * Retrieves a list of model class names from a specified namespace directory.
-     *
-     * @param string $namespaceDir The directory containing the model classes.
-     * @return \Generator An iterator that yields the class names.
-     */
-    public static function getModels($namespaceDir)
-    {
-        $folderPath = $namespaceDir;
-
-        $files = scandir($folderPath);
-        foreach ($files as $file) {
-            if ($file !== "." && $file !== "..") {
-                $filePath = $folderPath . "/" . $file;
-                if (is_file($filePath) && substr($file, -4) === ".php") {
-                    $className = substr($file, 0, -4);
-                    yield $className;
-                }
-            }
-        }
-    }
 
     /**
      * Checks if a table exists in the database.
@@ -684,7 +658,48 @@ private static function createTable($object)
             throw new Exception($msg);
         }
     }
+/**
+ * Checks if the database is empty by retrieving the available models.
+ *
+ * @return bool True if the database is empty, false otherwise.
+ */
+public static function isDatabaseEmpty()
+{
+    try {
+        // Get a connection to the database
+        $connection = self::getConnection();
 
+        // Retrieve the available models
+        
+        $models = iterator_to_array(FileFunctions::getManyModels([
+            ConfigVars::myAppName().'\\Models' => ConfigVars::getDocRoot() . "/Models",
+            'GeoBsnsMod\\Models' => ConfigVars::getDocRoot() . '/Plugins/GeoBsnsMod/Models',
+        ]));
+
+  
+        // Check if any of the tables corresponding to the available models have data
+        foreach ($models as $model) {
+            $tableName = $model::getTableName();
+            if (self::tableExists($tableName)) { 
+            $stmt = $connection->query("SELECT COUNT(*) FROM `$tableName`");
+            $rowCount = $stmt->fetchColumn();
+                $model;
+            if ($rowCount > 0) {
+                return false; // Database is not empty
+            }
+        } else {
+            return true;
+        }
+        }
+
+        return true; // Database is empty
+    } catch (PDOException $e) {
+        // Log the error and throw a new exception
+        $msg = "Error checking if database is empty: " . $e->getMessage();
+        ErrorReporting::logError($msg);
+        throw new Exception($msg);
+    }
+}
     /**
      * Retrieves a database connection.
      *

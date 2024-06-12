@@ -5,7 +5,7 @@ use PhpCupcakes\Config\ConfigVars;
 
 
 ?>
-<form id="browseForm" action="<?= ConfigVars::getSiteUrl() ?>/MyObject/viewall" method="get">
+<form id="browseForm" action="<?= ConfigVars::getSiteUrl().$_SERVER['REQUEST_URI'] ?>" method="get">
     <label for="browseColumn">Order by:</label>
 
     <select id="browseColumn" name="browseColumn">

@@ -1,53 +1,111 @@
-<?php
-require_once $_SERVER["DOCUMENT_ROOT"] . "/Framework/autoload.php"; /*linkhere*/
-use PhpCupcakes\Helpers\LoadHtml;
-use PhpCupcakes\Config\ConfigVars;
-use PhpCupcakes\Config\Analytics;
-?>
 <!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
+
   <meta charset="UTF-8">
-  <meta name="description" content="PHP Cupcake Shop Framework Demo">
- <meta name="keywords" content="PHP, Framework, Demo">
-  <meta name="author" content="aemegi">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?= Analytics::Google() ?>
-    <title>PHPCupcakes Example</title>
-    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
-    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+  <title>PhpCupcakeShop - Coming Soon</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Dancing+Script:wght@400..700&display=swap');
+    body {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: whitesmoke;
+    }
+
+    .left-section {
+      background-color: whitesmoke;
+      width: 50%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .php {
+      color: #8892bf;
+      font-size: 10rem;
+      margin-bottom: 1rem;
+    }
+
+    .cupcakeshop {
+      font-size: 5rem;
+      margin-bottom: 2rem;
+    }
+
+    .coming-soon {
+      color: chocolate;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .patreon-link {
+      color: #8892bf;
+      text-decoration: none;
+      font-size: 1.5rem;
+      padding: 20px;
+    }
+
+    .right-section {
+      width: 50%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .video {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-section, .right-section {
+        width: 100%;
+      }
+
+      .right-section {
+        height: 50vh;
+      }
+    }
+.dancing-script {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.chocolate {
+  font-family: "Chocolate Classical Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+#demo a {
+    color: #000;
+    text-decoration: wavy;
+}
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/27bceaeaa2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    
-    <div class="container">
-<header>
-    <?php
-    echo LoadHtml::loadInclude("header");
-    ?>
-<div class="search bg-info">
-    <?php echo LoadHtml::loadInclude("searchform"); ?>
-</div>
-</header>
-<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
-   
-<?php
-use PhpCupcakes\EditMode\EditLink;
-echo EditLink::displayEditModeNav();
-echo EditLink::displayEditLink();
-?></nav>
+  <div class="left-section">
+    <div class="php chocolate">PHP</div>
+    <div class="cupcakeshop dancing-script">cupcakeshop</div>
+    <div class="coming-soon chocolate">v0.7.2</div>
+  
 
+    <div id="demo" class="chocolate"><a href="https://demo.phpcupcake.shop/admin" class="chocolate">demo of progress on admin portal</a></div>
+    <a href="https://github.com/PhpCupcakeShop" class="chocolate patreon-link"><span class="fa-brands fa-github"></span>&nbsp;GitHub</a>
 
-<div class="mainparent">
-    <main>
-   <h4>To begin, go into edit mode and add an object.</h4>
-    <?php 
-    if (isset($_SESSION['access_token'])) {
-    echo "Welcome, " . $_SESSION['username'] . "!";
-    echo "Your user id is ". $_SESSION['user_id'];
-    }
-    ?>    
-</main>
-</div>
-</div>
+  </div>
+
 </body>
 </html>

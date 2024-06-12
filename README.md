@@ -2,7 +2,9 @@
  > We are still in the development phase.
  > Support Limited to None for use until version 1.0.
 
- # PhpCupcakeShop v0.7.0
+ # PhpCupcakeShop v0.7.2
+
+ ## Most Stable Version
 
  ### Homemade cupcakes shine,
 

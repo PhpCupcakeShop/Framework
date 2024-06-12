@@ -1,16 +1,36 @@
- # 0.7.1 (6-10-2024)
+ # 0.7.2 (6-11-2024)
 
  > All notable changes to be documented here.
 
  ## [Unreleased]
 
+ [ ] Make a drop down to view amount of items per page.
+
+ [ ] Put built routing into classes and functions.
+
+ [ ] Incorporate **searchable vs. searchable by admin** feature.
+
+ [ ] Fix auth.inc.php broken edit mode link.
+
+ [ ] Figure out dropdown form parameter in Model template files.
+
+ [ ] Turn link builder into a class.
+
+ [ ] Come up with an easy generic *scalable* routing system.
+
+ [ ] Route to index file if no welcome.phtml.
+
+ [ ] Incorporate the display feature of model files to only display table columns chosen.
+
+ [ ] Back link on some pages is needed or unneccessary to be fixed accordingly.
+
+ [ ] Flagging system with back up of deleted db entries, to be cron jobbed to delete fully. 
+
  [ ] A way to organize relationships between the models.
 
- [ ] Levels of user authentication for edit mode.
+ [ ] User authentication for admin portal.
 
  [ ] Support for added plugins and modules.
-
- [ ] Cron Jobs.
 
  [ ] Batch files for easy site building.
 
@@ -18,6 +38,40 @@
  > Any help toward building batch files into languages for other OS' would be appreciated, and linked to.
 
  [ ] Clear documentation with a list of all practical-to-list classes and methods.
+
+ ## [Released]
+ 
+ ### Added
+
+ - Moved sample site to be included admin portal and now site has a welcome page.
+
+ - More options to model files.
+
+ - Admin routing.
+
+ - Admin portal finished.
+
+ - Link builder created for auto navigation of viewing and adding db objects. It uses the model files to know which links to display.
+
+ ### Changed
+
+ - Changes to autoloader to implement plugins.
+
+ - One set of pages for all CRUD actions.
+
+ - More bug fixes to search when no rows in database.
+
+ - Working on OAuth github plugin, so users can be implemented from the start.
+
+ ### Deprecated
+ 
+ ~~[x] An .htaccess file with routing configured to have pretty URLs for any model file created.~~
+ 
+ # 0.7.1 (6-10-2024)
+
+ ### Changed
+
+ - Minor bug fixes throughout, made view templates more generic.
 
  # 0.7.0 (6-9-2024)
 

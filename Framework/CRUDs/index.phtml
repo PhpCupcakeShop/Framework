@@ -1,5 +1,4 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"] . "/Framework/autoload.php"; /*linkhere*/
 use PhpCupcakes\Helpers\LoadHtml;
 use PhpCupcakes\Config\ConfigVars;
 use PhpCupcakes\Config\Analytics;
@@ -38,9 +37,18 @@ echo EditLink::displayEditLink();
 
 
 <div class="mainparent">
-    <main><?= $firstParam ?>
-    <h4>404: Page Not Found.</h4>
-    <h5>If you feel you have reached this in error, please <a href="mailto:aemegi@icloud.com">contact webmaster</a>. Please include the URL.</h5> 
+    <main>
+   <h4>To begin, go into edit mode and add a(n) <?= $objectName ?> object.</h4>
+    <?php 
+    if (isset($_SESSION['access_token'])) {
+    echo "Welcome, " . $_SESSION['username'] . "!";
+    echo "Your user id is ". $_SESSION['user_id'];
+    }
+    ?>    
+
+    <?php
+
+    ?>
 </main>
 </div>
 </div>

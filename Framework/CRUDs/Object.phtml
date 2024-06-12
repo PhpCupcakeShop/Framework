@@ -1,0 +1,67 @@
+<?php
+use GeoBsnsMod\Models\Locations;
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Helpers\UrlHelper;
+use PhpCupcakes\Config\ConfigVars;
+?>
+    <!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Objects</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css">   <!--linkhere--> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <?= LoadHtml::loadInclude("header"); ?>
+        <div class="search bg-info"><?= LoadHtml::loadInclude("searchform") ?></div>
+</header>
+<nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
+<?php
+
+use PhpCupcakes\EditMode\EditLink;
+echo EditLink::displayEditModeNav();
+echo EditLink::displayEditLink();
+
+?></nav>
+    <div class="mainparent">
+    <main>
+        <?php
+        $object = $routedClassNamespace::find($_GET["id"]);
+        ob_start();
+        ?>
+        <div style="display: flex; flex-direction: row; padding: 20px;">
+        <?php
+        foreach ($object::$propertyMetadata as $columnName => $metadata) {
+            if ($metadata['display'] == true) {
+            ?>
+        <div class="quickpadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
+            <?= htmlspecialchars($object->$columnName) ?></a></div> 
+        <?php
+            }
+        }
+        ?>
+        <?php echo LoadHtml::loadComponent("editmode/displayEdit", [
+            "id" => $object->id,
+            "routedClassNamespace" => $routedClassNamespace,
+            "routedClassNamespaceRoot" => $routedClassNamespaceRoot,
+        ]); ?> 
+        </div>
+        <?php
+        $displayObject = ob_get_clean();
+        echo $displayObject;
+        ?>
+        <a href="#" onclick="history.back()">back</a>  <!--linkhere--> 
+
+</main>
+</div>
+</div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 <?php
-session_start();
 /*this would be a good file to copy/paste/edit for installing with your user authorization logic for CRUD operations*/
-if (isset($_GET['startsession']) && $_GET['startsession'] == "edit") {
+if (isset($_POST['startsession']) && $param2nth == "on") {
     $echo = '<br>You are now in edit mode.';
     echo $echo;
     $returnurl = urldecode($_POST['returnurl']);
@@ -12,7 +11,7 @@ if (isset($_GET['startsession']) && $_GET['startsession'] == "edit") {
     
 }
 
-if (isset($_GET['endsession']) && $_GET['endsession'] == "edit") {
+if (isset($_POST['endsession']) && $param2nth == "off") {
     $echo = '<br>You are now leaving edit mode.';
     echo $echo;
     //set this to be sure and...

@@ -24,11 +24,11 @@ class UrlHelper
             'editmode_on' => ConfigVars::getSiteUrl().'editmode/on',
             'editmode_off' => ConfigVars::getSiteUrl().'editmode/off',
             'view' => ConfigVars::getSiteUrl().'/'.$myObject . '/view/' .$id,
-            'edit' => ConfigVars::getSiteUrl().'/'.$myObject . '/edit/'. $id,
+            'edit' => ConfigVars::getSiteUrl(). '/edit/'.$myObject .'/'. $id,
             'update' => ConfigVars::getSiteUrl().'/'.$myObject . '/update/'.$id,
             'add' => ConfigVars::getSiteUrl().'/'.$myObject . '/add',
             'added' => ConfigVars::getSiteUrl().'/'.$myObject . '/added',
-            'delete' => ConfigVars::getSiteUrl().'/'.$myObject . '/delete/'.$id,
+            'delete' => ConfigVars::getSiteUrl().'/delete/'.$myObject . '/'.$id,
         ];
     
         $route = $routes[$route];

@@ -1,0 +1,37 @@
+<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'zip' cannot be part of FULLTEXT index<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error checking if database is empty: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u265408878_phpcupcakes.business_location_module' doesn't exist<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error creating table: SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 3072 bytes<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u265408878_phpcupcakes.business_location_module' doesn't exist<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'zip' cannot be part of FULLTEXT index<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' CAST(`store_number` AS SIGNED), CAST(`location_name` AS SIGNED), CAST(`gmaps...' at line 1<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Tuesday, 2024-06-11<br />
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list
