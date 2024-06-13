@@ -22,11 +22,13 @@
 
 ## [DOCS]
 
-### [A GUIDE TO CRUD IN THE VIEWS](https://github.com/PhpCupcakeShop/Framework/blob/main/www/MyObject/ViewsCRUD.md)
+### [CRUD OPS](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/CRUDOperations.md)
 
-### [MODEL FILES GUIDE](https://github.com/PhpCupcakeShop/Framework/blob/main/Models/ModelFilesGuide.md)
+### [MODEL FILES GUIDE](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/ModelFilesGuide.md)
 
-### [LIST OF METHODS IN THE VANILLA CUPCAKE DATA ACCESS LAYER](https://github.com/PhpCupcakeShop/Framework/blob/main/Framework/DAL/VanillaDAL.md)
+### [LIST OF METHODS IN THE VANILLA CUPCAKE DATA ACCESS LAYER](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/VanillaDAL.md)
+
+### [A GUIDE TO BUILDING THE FRONT END PAGES](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/ViewsCRUD.md)
 
 ## [HELPFUL EXTERNAL SITES]
 
