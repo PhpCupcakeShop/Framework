@@ -46,6 +46,10 @@
 
 ## [CONTRIBUTING]
 > If anyone would like to make an equivalent to my batch file to build model files in shell/Linux, or bash/MacOS and as long as it works, it would be linked to from here.
+
 > Tutorials external from the documentation would be appreciated as I would like to make the framework very easy for beginners.  More of my time can then be spent building more of the framework and the documentation can remain simple and straightforward. If any are made after version 1.0 release, please send me a link and I may link to it.
-> The process for support on modules and plugins is still in the making. There should be little rules to making a plugin, and the only one to date, is the directory structure for the Model Object and Model Relationship files.  
-[[buymeacoffee](https://buymeacoffee.com/aemegi)]
+
+> The process for support on modules and plugins is still in the making. There should be little rules to making a plugin, and the only one to date, is the directory structure for the Model Object and Model Relationship files.
+
+
+### [[buymeacoffee](https://buymeacoffee.com/aemegi)]
