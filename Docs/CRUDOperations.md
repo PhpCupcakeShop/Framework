@@ -147,7 +147,7 @@ Add the following to any page that you would like a user to be in "edit mode" to
 
 Hide the following in any form:
 
-> <input type="hidden" name="csrf_token" value="<?=  $_SESSION['csrf_token']  ?>"
+> `<input type="hidden" name="csrf_token" value="<?=  $_SESSION['csrf_token']  ?>`
 
 Then on the confirmation page include the following before any CRUD functions:
 
