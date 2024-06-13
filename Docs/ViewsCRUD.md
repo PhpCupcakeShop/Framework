@@ -2,6 +2,10 @@
 
 ### The Following File explains the parts of the View Files based on the Model File and how to build them.
 
+> [!TIP]
+> 
+> For a less extensive more technical guide, check out the CRUDOperations.md file.
+
 > [!NOTE]
 > This will not be a guide to using HTML on the page, just how to implement the PHP Classess and Methods of the framework.
 
