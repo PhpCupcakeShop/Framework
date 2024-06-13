@@ -20,6 +20,8 @@
 
 ### [CHANGELOG](https://github.com/PhpCupcakeShop/Framework/blob/main/CHANGELOG.md)
 
+### [Batch File to Build Corresponding Model Files](https://github.com/PhpCupcakeShop/ModelFileWriter)
+
 ## [DOCS]
 
 ### [CRUD OPS](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/CRUDOperations.md)
