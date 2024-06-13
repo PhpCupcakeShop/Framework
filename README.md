@@ -44,6 +44,6 @@
 
 ### [W3Schools: PHP](https://www.w3schools.com/php/default.asp)
 
-### [Buy Me a Coffee]
 
-[Click here to donate.](https://buymeacoffee.com/aemegi)
+
+[[buymeacoffee](https://buymeacoffee.com/aemegi)]
