@@ -21,7 +21,7 @@
 
 > [!NOTE]
 > 
-> These are to be placed in the models folder, under a Directory of your choosing, and then again in a folder names Models.  The first part of the Class namespace is the directory name of your choosing, then 'Models', then the name of the Class and File without the extension.
+> These are to be placed in the models folder, under a Directory of your choosing, and then again in a folder named Models.  The first part of the Class namespace is the directory name of your choosing, then 'Models', then the name of the Class and File without the extension.
 
 Every time a Class is used with an autoloader the `use` statement can load it according to the autoloaders instructions. So include this in any page the Class is used.
 
