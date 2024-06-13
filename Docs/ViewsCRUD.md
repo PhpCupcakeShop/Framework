@@ -41,9 +41,7 @@
 
 > `<?php`
 
-> `$h1 = 'My Website';`
-
-> `echo LoadHtml::loadInclude('header', ['h1' => $h1]);`
+> `echo LoadHtml::loadInclude('header');`
 
 > `?>`
 
