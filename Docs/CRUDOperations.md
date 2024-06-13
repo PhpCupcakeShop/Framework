@@ -1,4 +1,4 @@
-# CRUD Operations with PhpCupcake Shop
+# CRUD Operations with PhpCupcakeShop
 
 > [!TIP]
 > 
