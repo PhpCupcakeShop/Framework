@@ -47,7 +47,7 @@
 
  ### ADDED
 
- - prettylinktree plugin, [demo here](https://demo.phpcupcake.shop/Plugins/prettylinktree) . There should be documentation out shortly for using prettylinktree. For now use the include file linktree.phtml to include just the links built on a page.
+ - prettylinktree plugin, [demo here](https://demo.phpcupcake.shop/Plugins/prettylinktree/index.phtml) . There should be documentation out shortly for using prettylinktree. For now use the include file linktree.phtml to include just the links built on a page.
  
  # 0.7.3 (6-12-2024)
 
