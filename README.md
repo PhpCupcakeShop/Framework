@@ -4,13 +4,7 @@
 > 
 > Please don't hesitate to contact anyway.
 
-<<<<<<< Updated upstream
-# PhpCupcakeShop v0.7.3
-
-## Most Stable Version
-=======
  # PhpCupcakeShop v0.7.4
->>>>>>> Stashed changes
 
 ### Homemade cupcakes shine,
 
