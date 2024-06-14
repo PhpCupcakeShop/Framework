@@ -1,0 +1,133 @@
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/Framework/autoload.php';
+
+use prettylinktree\Models\LinkTree;
+use PhpCupcakes\Config\ConfigVars;
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Tree</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/vendor/linktree/assets/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css"> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css"> 
+    <style>
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.fab {
+    text-decoration: none;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+ul {
+    display: flex;
+    flex-direction: row;
+    
+  list-style-type: none; /* Remove bullets */
+}
+.quickpadding {
+  padding: 20px;
+}
+
+
+
+        /* Existing CSS styles */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-info">
+            <img src="../../www/assets/img/logo.png" width="300" style="border-radius: 50%;" alt="Profile Picture">
+            <h1>PhpCupcakeShop Links</h1>
+            <p>A Simple CMS linktree plugin for PhpCupcakeShop.</p>
+        </div>
+
+        <div class="links-container">
+            <form id="sort-order-form" method="POST" action="update_sort_order.php">
+                <label for="order[]">Drag and drop to reorder your links, and press update when done:</label>
+                <ul class="links-container" id="sortable-list">
+
+                    <?php
+                    $links = LinkTree::findAllSortedAuto();
+                    foreach ($links as $link) {
+                        ?>
+                        <li class="list-item quickpadding" data-id="<?= htmlspecialchars($link->id) ?>">
+                            <input type="hidden" name="order[]" value="<?= htmlspecialchars($link->id) ?>">
+                            <span class="<?= htmlspecialchars($link->icon) ?>" style="font-size: <?= htmlspecialchars($link->font_size) ?>px; color: <?= htmlspecialchars($link->icon_color) ?>"></span>
+                        </li>
+                    <?php } ?>
+                </ul>
+                <button class="btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>&copy; <?= date('Y') ?> PhpCupcakeShop</p>
+            <p><?php include 'vendor/linktree/components/nav.phtml'; ?></p>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $("#sortable-list").sortable({
+                stop: function() {
+                    updateSortOrder();
+                }
+            });
+            $("#sortable-list").disableSelection();
+        });
+
+        function updateSortOrder() {
+            var newOrder = [];
+            $("#sortable-list li").each(function() {
+                newOrder.push($(this).data("id"));
+            });
+
+            $.ajax({
+                url: "update_sort_order.php",
+                type: "POST",
+                data: { order: newOrder },
+                success: function(response) {
+                    console.log("Sort order updated successfully.");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating sort order: " + error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

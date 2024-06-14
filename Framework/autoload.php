@@ -37,56 +37,48 @@ class AutoloadFunctions {
     }
 }
 
-spl_autoload_register(function ($Name) {
-    $destroyName = str_replace('PhpCupcakes', '', $Name);
-    $destroyName = str_replace('Phpcupcakes', '', $destroyName);
-    $destroyName = str_replace('MyApp', '', $destroyName);
-    $classFile = $_SERVER['DOCUMENT_ROOT'] . '/Framework/'. str_replace('\\', '/', $destroyName) . '.php';       /*linkhere*/
+    spl_autoload_register(function ($Name) {
+    $className = str_replace('PhpCupcakes', '', $Name);
+        $baseDir = $_SERVER['DOCUMENT_ROOT'] . '/';
+        $classPath = str_replace('\\', '/', $className) . '.php';
+    
+        // Check the Framework directory first
+        $frameworkPath = $baseDir . 'Framework' . $classPath;
+        if (file_exists($frameworkPath)) {
+            include_once $frameworkPath;
+            return;
+        }    
 
-
-    $modules = AutoloadFunctions::getFoldersForAutoloader($_SERVER['DOCUMENT_ROOT'].'/Modules');
-
-    foreach ($modules as $moduleName) {
-        $attempt = str_replace('\\', '/', $Name);   
-    $moduleFile = $_SERVER['DOCUMENT_ROOT'] . '/Modules/'. $attempt . '.php';    /*linkhere*/
-    if (file_exists($moduleFile)) {
-        include $moduleFile;
-    }
-    }
-
-    $appmodels = AutoloadFunctions::getFoldersForAutoloader($_SERVER['DOCUMENT_ROOT'].'/Models');
-
-    foreach ($appmodels as $model) {
-        $attempt = str_replace('\\', '/', $Name);   
-    $modelFile = $_SERVER['DOCUMENT_ROOT'] . '/Models/'. $attempt . '.php';    /*linkhere*/
-    if (file_exists($modelFile)) {
-        include $modelFile;
-    }
-    }
-
-    $plugins = AutoloadFunctions::getFoldersForAutoloader($_SERVER['DOCUMENT_ROOT'].'/Plugins');
-    foreach ($plugins as $pluginName) {
-    $attempt = str_replace('\\', '/', $Name);
-    $pluginFile = $_SERVER['DOCUMENT_ROOT'] . '/Plugins/'. $attempt . '.php';       /*linkhere*/
-    if (file_exists($pluginFile)) {
-        include $pluginFile;
-    }
-    }
-
-    $modelFile = $_SERVER['DOCUMENT_ROOT'] . '/'. str_replace('\\', '/', $destroyName) . '.php';              /*linkhere*/
-    $configFile = $_SERVER['DOCUMENT_ROOT'] . '/'. str_replace('\\', '/', $destroyName) . '.php';       /*linkhere*/
-    //$classFile = str_replace('//', '/', $classFile);
-    if (file_exists($classFile)) {
-        include $classFile;
-    } elseif (file_exists($modelFile)) {
-        include $modelFile;
-    } elseif (file_exists($configFile)) {
-        include $configFile;
-    } elseif (isset($moduleFile)) {
-    } elseif (isset($pluginFile)) {
-    } else {
-        echo 'Class file not found: ' . $classFile;
-    }
-});
+        // Check the Config directory next
+        $configPath = $baseDir . $classPath;
+        if (file_exists($configPath)) {
+            include_once $configPath;
+            return;
+        }
+    
+        // Check the Modules directory next
+        $modulesPath = $baseDir . 'Modules/' . $classPath;
+        if (file_exists($modulesPath)) {
+            include_once $modulesPath;
+            return;
+        }
+    
+        // Check the Models directory
+        $modelsPath = $baseDir . 'Models/' . $classPath;
+        if (file_exists($modelsPath)) {
+            include_once $modelsPath;
+            return;
+        }
+    
+        // Check the Plugins directory
+        $pluginsPath = $baseDir . 'Plugins/' . $classPath;
+        if (file_exists($pluginsPath)) {
+            include_once $pluginsPath;
+            return;
+        }
+    
+        // If the class is not found in any of the directories, display an error
+        //echo 'Class file not found: ' . $className . ' @ ' . $modelsPath;
+    });
 
 include ($_SERVER['DOCUMENT_ROOT'] . "/Config/mybootstrap.php");

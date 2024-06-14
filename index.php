@@ -28,22 +28,24 @@ if (!$param1nth) {
 if (isset($param1nth) && !$param2nth) {
     switch ($param1nth) {
         case 'admin':
-            require $dir . 'www/admin/index.phtml';
+            require $dir . 'Framework/CRUDs/index.phtml';
         break;
-        case 'search': 
-            require $dir . 'Views/includes/search.php';
+        case 'reltest':
+            require $dir . 'Framework/CRUDs/ObjectRelationship.phtml';
         break;
 }
-} elseif (isset($param2nth) && $param1nth == 'admin') {
-    if (!$param3nth) {
-
-        $WWW = $dir.'Framework/CRUDs/index.phtml';
-        if (file_exists($WWW)) { require $WWW; }
-
-
-
-    } else {
-        if (isset($param4nth)) {
+} elseif (isset($param2nth) && $param1nth == 'admin' && !isset($param3nth)) {
+    switch ($param2nth) {
+        case 'search': 
+            require $dir . 'Framework/CRUDs/search.php';
+        break;
+        default: 
+            $WWW = $dir.'Framework/CRUDs/index.phtml';
+            if (file_exists($WWW)) { require $WWW; }
+        break;
+        }
+    }
+    if (isset($param4nth)) {
     switch ($param3nth) {
         case 'add':
             $addWWW = $dir.'Framework/CRUDs/addObject.phtml';
@@ -76,8 +78,6 @@ if (isset($param1nth) && !$param2nth) {
             if (file_exists($deleteWWW)) { require $deleteWWW; }
         break;
     }
-}
-}
 } elseif (isset($param2nth) && $param1nth == 'editmode') {
     switch ($param2nth) {
         case 'on':

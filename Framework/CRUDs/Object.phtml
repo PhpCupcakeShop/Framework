@@ -21,7 +21,7 @@ use PhpCupcakes\Config\ConfigVars;
     <div class="container">
         <header>
             <?= LoadHtml::loadInclude("header"); ?>
-        <div class="search bg-info"><?= LoadHtml::loadInclude("searchform") ?></div>
+        <div class="search bg-info"><?php // LoadHtml::loadInclude("searchform") ?></div>
 </header>
 <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
 <?php
@@ -42,7 +42,7 @@ echo EditLink::displayEditLink();
         foreach ($object::$propertyMetadata as $columnName => $metadata) {
             if ($metadata['display'] == true) {
             ?>
-        <div class="quickpadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
+        <div class="quickuglyspadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
             <?= htmlspecialchars($object->$columnName) ?></a></div> 
         <?php
             }

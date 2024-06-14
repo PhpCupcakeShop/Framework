@@ -1,0 +1,13 @@
+<br />
+ <br />
+Friday, 2024-06-14<br />
+Error saving object: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'sortOrder' cannot be null<br />
+ <br />
+Friday, 2024-06-14<br />
+Error saving object: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'sortOrder' cannot be null<br />
+ <br />
+Friday, 2024-06-14<br />
+Error saving object: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'icon_class' in 'field list'<br />
+ <br />
+Friday, 2024-06-14<br />
+Error saving object: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'icon_class' in 'field list'

@@ -1,0 +1,264 @@
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/Framework/autoload.php';
+
+use PhpCupcakes\Helpers\LoadHtml;
+use PhpCupcakes\Config\ConfigVars;
+use PhpCupcakes\Config\Analytics;
+?>
+    <!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+ <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="PHP Cupcake Shop Framework Demo">
+ <meta name="keywords" content="PHP, Framework, Demo">
+  <meta name="author" content="aemegi">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?= Analytics::Google() ?>
+  <title><?= ConfigVars::myAppName() ?> - prettylinktree</title>
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/Plugins/prettylinktree/assets/css/main.css"> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/colors.css">  <!--linkhere--> 
+    <link rel="stylesheet" href="<?= ConfigVars::getWWW() ?>/assets/css/styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       
+    <style>
+    
+    </style>
+</head>
+<body>
+
+
+
+<div class="container" style="position: relative; align-items: center;">
+
+
+
+        <?php
+        $icons = json_decode(file_get_contents('icons.json'), true);
+        ?>
+        <header>
+            <h1>Add a Link:</h1>
+        </header>
+        <div style="position: relative;">
+            <div id="topcenter">
+                <br>
+                <span class="icon-loading-spinner" id="icon-loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                <span id="selected-icon"></span>
+                <h4>Choose an icon:</h4>
+            </div>
+            <form action="PostToLinkTree.php" method="POST">
+                <div id="social-form-field">
+                    <div class="social-media-container">
+                        <input type="text" name="class" id="custom-icon-class" size="10" style="display: none;" value="fa-solid">&nbsp;&nbsp;
+                        <input type="text" name="custom_icon" id="custom-icon" size="30" style="display: none;" placeholder="fa-link">
+                        <input type="text" class="wide" size="35" name="social_media" id="social-media" list="social-media-list" placeholder="Start typing a social media site name...">
+                        <datalist id="social-media-list">
+                            <?php foreach ($icons as $icon): ?>
+                                <option value="<?php echo $icon['icon']; ?>">
+                                    <?php echo $icon['name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </datalist>
+                    </div>
+                    <div id="small-links-icon-picker">
+                        <small><small><small><span id="toggle-custom-field" class="false-link toggleIcon">Enter Custom Icon Instead</span> | <a target="_blank" href="https://fontawesome.com/search?o=r&m=free">font awesome</a></small></small></small>
+                    </div>
+                </div>
+
+                <h4>Choose a color:</h4>
+                <div style="position: relative; align-items: center;">
+                    <input type="color" id="icon-color-picker" name="color" value="#000000" style="width:50px;">
+                </div>
+
+                <h4>Choose a font-size:</h4>
+                <div style="position: relative; align-items: center;">
+                    <select id="font-size-select" name="fontSize">
+                        <option value="12">12px</option>
+                        <option value="14">14px</option>
+                        <option value="16">16px</option>
+                        <option value="18">18px</option>
+                        <option value="20">20px</option>
+                        <option value="28">28px</option>
+                        <option value="36">36px</option>
+                        <option value="48">48px</option>
+                        <option value="72">72px</option>
+                    </select>
+                </div>
+
+                <h4>Enter your profile url:</h4>
+                <div style="position: relative; align-items: center;">
+                    <input type="text" class="wide" name="url" placeholder="https://" id="url-input">
+                </div>
+                <div style="position: relative; align-items: center;">
+                    <input type="submit" name="submit" style="position: relative; font-weight: bold; margin: 50px; align-items: center; width: 300px; color: aliceblue; background-color: coral; border-color: coral; border-width: 5px; border-radius: 5%; padding: 10px;" value="Add Link To Tree">
+                </div>
+            </form>
+
+            <div class="footer">
+                <p>&copy; <?= date('Y') ?> PhpCupcakeShop</p>
+                <p><?php include 'vendor/linktree/components/nav.phtml'; ?></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          const inputElement = document.getElementById('social-media');
+          const selectedIconElement = document.getElementById('selected-icon');
+          const customFieldElement = document.getElementById('custom-icon');
+          const customFieldElementClass = document.getElementById('custom-icon-class');
+          const toggleCustomFieldLink = document.getElementById('toggle-custom-field');
+          const datalistElement = document.getElementById('social-media-list');
+          const iconData = <?php echo json_encode($icons); ?>;
+          const iconLoadingSpinner = document.getElementById('icon-loading-spinner');
+          const iconColorPicker = document.getElementById('icon-color-picker');
+
+          let isCustomFieldVisible = false;
+
+          
+
+          // Check if the custom field is initially visible
+          if (customFieldElement.style.display !== 'none') {
+              inputElement.style.display = 'none'; // Hide the social media input field
+              toggleCustomFieldLink.textContent = 'Enter Social Icon Instead'; // Set the initial link text
+          }
+
+          inputElement.addEventListener('input', function social() {
+              const inputValue = this.value.toLowerCase();
+              const selectedIcon = iconData.find(icon => icon.icon.toLowerCase() === inputValue);
+              if (selectedIcon) {
+                  selectedIconElement.className = `icon ${selectedIcon.icon.toLowerCase()}`;
+                  selectedIconElement.style.color = iconColorPicker.value;
+                  iconLoadingSpinner.style.display = 'block';
+                  // Simulate icon rendering
+                  setTimeout(() => {
+                      iconLoadingSpinner.style.display = 'none';
+                  }, 1);
+              } else {
+                  selectedIconElement.className = '';
+              }
+          });
+
+          toggleCustomFieldLink.addEventListener('click', function(event) {
+              isCustomFieldVisible = !isCustomFieldVisible;
+              customFieldElement.style.display = isCustomFieldVisible ? 'block' : 'none';
+              customFieldElementClass.style.display = isCustomFieldVisible ? 'block' : 'none';
+              inputElement.style.display = isCustomFieldVisible ? 'none' : 'block'; // Toggle the visibility of the social media input field
+              toggleCustomFieldLink.textContent = isCustomFieldVisible ? 'Enter Social Icon Instead' : 'Enter Custom Icon Instead'; // Update the link text
+
+              if (isCustomFieldVisible) {
+                  customFieldElement.value = inputElement.value.toLowerCase(); // Move the social media input value to the custom field in lowercase
+              } else {
+                  inputElement.value = customFieldElement.value.toLowerCase(); // Move the custom field value back to the social media input field in lowercase
+              }
+
+              selectedIconElement.className = ''; // Clear the selected icon
+              datalistElement.options.length = 0; // Clear the datalist options
+              iconLoadingSpinner.style.display = 'none'; // Hide the loading spinner
+          });
+          customFieldElement.addEventListener('input', function() {
+            const customIconValue = this.value.trim();
+            const customFieldElementClassValue = customFieldElementClass.value.trim();
+            if (customIconValue) {
+                selectedIconElement.className = `icon ${customIconValue.toLowerCase()} ${customFieldElementClassValue.toLowerCase()}`;
+                selectedIconElement.style.color = iconColorPicker.value;
+                iconLoadingSpinner.style.display = 'block';
+                // Simulate icon rendering
+                setTimeout(() => {
+                    iconLoadingSpinner.style.display = 'none';
+                }, 1);
+            } else {
+                selectedIconElement.className = `${customFieldElementClassValue.toLowerCase()}`;
+            }
+        });
+
+        customFieldElementClass.addEventListener('input', function() {
+            const customIconValue = customFieldElement.value.trim();
+            const customFieldElementClassValue = this.value.trim();
+            if (customFieldElementClassValue) {
+                selectedIconElement.className = `icon fa-${customIconValue.toLowerCase()} ${customFieldElementClassValue.toLowerCase()}`;
+                selectedIconElement.style.color = iconColorPicker.value;
+                iconLoadingSpinner.style.display = 'block';
+                // Simulate icon rendering
+                setTimeout(() => {
+                    iconLoadingSpinner.style.display = 'none';
+                }, 1);
+            } else {
+                selectedIconElement.className = `icon fa-${customIconValue.toLowerCase()}`;
+            }
+        });
+
+          iconColorPicker.addEventListener('input', function() {
+              const selectedColor = this.value;
+              selectedIconElement.style.color = selectedColor;
+          });
+
+            const fontSizeSelect = document.getElementById('font-size-select');
+            const mainContent = document.getElementById('main-content');
+
+            fontSizeSelect.addEventListener('change', function() {
+              const selectedSize = this.value + 'px';
+              selectedIconElement.style.fontSize = selectedSize;
+            });
+             // ... (rest of the JavaScript code)
+             
+
+             const formElement = document.querySelector('form');
+            const errorMessageElement = document.createElement('div');
+            errorMessageElement.style.color = 'red';
+            errorMessageElement.style.display = 'none';
+            formElement.parentNode.insertBefore(errorMessageElement, formElement);
+
+            formElement.addEventListener('submit', function(event) {
+                const selectedIconElement = document.getElementById('selected-icon');
+
+                // Check if the selected icon is empty
+                if (selectedIconElement.className === '') {
+                    errorMessageElement.textContent = 'Please select or enter a valid Font Awesome icon.';
+                    errorMessageElement.style.display = 'block';
+                    event.preventDefault(); // Prevent the form from being submitted
+                    return;
+                }
+
+                // Clear the error message
+                errorMessageElement.style.display = 'none';
+
+                // Allow the form to be submitted
+                this.submit();
+            });
+      });
+
+      
+  </script>
+  <script>
+
+        function submitForm() {
+            var urlInput = document.getElementById("url-input");
+            var url = urlInput.value;
+
+            // Check if the URL already starts with "https://"
+            if (!url.startsWith("https://")) {
+                url = "https://" + url;
+            }
+
+            // Create a form and submit it to the PHP script
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "PostToLinkTree.php");
+
+            var urlField = document.createElement("input");
+            urlField.setAttribute("type", "hidden");
+            urlField.setAttribute("name", "url");
+            urlField.setAttribute("value", url);
+
+            form.appendChild(urlField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+ 
+</body>
+</html>

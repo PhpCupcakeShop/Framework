@@ -1,0 +1,1 @@
+AddHandler application/x-httpd-php .php .php5 .phtml .html .htm

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
  # 0.7.3 (6-12-2024)
 
  > All notable changes to be documented here.
@@ -7,10 +8,13 @@
  - LinkBuilder.php was not routing to Model Files correctly.
 
 # 0.7.2 (6-11-2024)
+=======
+ # 0.7.4 (6-13-2024)
+>>>>>>> Stashed changes
 
+ > All notable changes to be documented here. 
+ 
  ## [Unreleased]
-
- [ ] Make a drop down to view amount of items per page.
 
  [ ] Put built routing into classes and functions.
 
@@ -20,7 +24,7 @@
 
  [ ] Figure out dropdown form parameter in Model template files.
 
- [ ] Turn link builder into a class.
+ [?] Turn link builder into a class.
 
  [ ] Come up with an easy generic *scalable* routing system.
 
@@ -36,8 +40,6 @@
 
  [ ] User authentication for admin portal.
 
- [ ] Support for added plugins and modules.
-
  [ ] Batch files for easy site building.
 
  > [!NOTE]
@@ -47,6 +49,26 @@
 
  ## [Released]
  
+ [x] Make a drop down to view amount of items per page.
+
+ [x] Support for added plugins and modules.
+
+ ### BUGS
+
+ - Advanced search in admin did not work with support for plugins and modules. Will be separating search between whole site and individual table according to placement on site.
+
+ ### ADDED
+
+ - prettylinktree plugin, [demo here](https://demo.phpcupcake.shop/Plugins/prettylinktree) . There should be documentation out shortly for using prettylinktree. For now use the include file linktree.phtml to include just the links built on a page.
+ 
+ # 0.7.3 (6-12-2024)
+
+ ### BUG FIX
+
+ - LinkBuilder.php was not routing to Model Files correctly.
+
+# 0.7.2 (6-11-2024)
+
  ### Added
 
  - Moved sample site to be included admin portal and now site has a welcome page.

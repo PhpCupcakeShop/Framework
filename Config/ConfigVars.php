@@ -40,7 +40,7 @@ class ConfigVars {
     }
     public static function myAppName()  //change this to change all easily
     {
-            return 'MyApp';
+            return 'PhpCupcakeShop';
       
 
     }

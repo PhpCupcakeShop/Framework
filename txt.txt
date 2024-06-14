@@ -1,0 +1,24 @@
+
+print_r($plugins);
+
+/*
+foreach ($plugins as $plugin) {
+    $modelfiles = FileFunctions::getModelsNamespace(ConfigVars::getDocRoot().'/Plugins/'.$plugin.'/Models');
+
+    foreach ($modelfiles as $modelfile) {
+        //take out the extra model out of $modelfile
+        $classNamespace = $plugin.'\\'.$modelfile;
+        /*
+        $modelName = explode('\\', $modelfile);
+        $modelfile = $modelName[1];
+        */
+
+    ?> 
+    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace::getUserFriendlyName() ?></a> |
+    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/add/'.$modelfile; ?>">Add a <?= $classNamespace::getUserFriendlyName() ?></a>
+
+    <?php
+/*    }
+
+}
+*/

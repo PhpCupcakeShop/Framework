@@ -1,0 +1,262 @@
+[
+    {
+      "name": "Facebook-f",
+      "icon": "fab fa-facebook-f"
+    },
+    {
+      "name": "Twitter",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "name": "Instagram",
+      "icon": "fab fa-instagram"
+    },
+    {
+      "name": "LinkedIn-in",
+      "icon": "fab fa-linkedin-in"
+    },
+    {
+      "name": "YouTube",
+      "icon": "fab fa-youtube"
+    },
+    {
+      "name": "Pinterest-p",
+      "icon": "fab fa-pinterest-p"
+    },
+    {
+      "name": "Snapchat",
+      "icon": "fab fa-snapchat-ghost"
+    },
+    {
+      "name": "Reddit-alien",
+      "icon": "fab fa-reddit-alien"
+    },
+    {
+      "name": "Twitch",
+      "icon": "fab fa-twitch"
+    },
+    {
+      "name": "Discord",
+      "icon": "fab fa-discord"
+    },
+    {
+      "name": "GitHub",
+      "icon": "fab fa-github"
+    },
+    {
+      "name": "Stack-Overflow",
+      "icon": "fab fa-stack-overflow"
+    },
+    {
+      "name": "Medium",
+      "icon": "fab fa-medium-m"
+    },
+    {
+      "name": "Behance",
+      "icon": "fab fa-behance"
+    },
+    {
+      "name": "Dribbble",
+      "icon": "fab fa-dribbble"
+    },
+    {
+      "name": "Vimeo",
+      "icon": "fab fa-vimeo-v"
+    },
+    {
+      "name": "SoundCloud",
+      "icon": "fab fa-soundcloud"
+    },
+    {
+      "name": "Spotify",
+      "icon": "fab fa-spotify"
+    },
+    {
+      "name": "Apple",
+      "icon": "fab fa-apple"
+    },
+    {
+      "name": "Android",
+      "icon": "fab fa-android"
+    },
+    {
+      "name": "Skype",
+      "icon": "fab fa-skype"
+    },
+    {
+      "name": "WhatsApp",
+      "icon": "fab fa-whatsapp"
+    },
+    {
+      "name": "Telegram",
+      "icon": "fab fa-telegram-plane"
+    },
+    {
+      "name": "Slack",
+      "icon": "fab fa-slack"
+    },
+    {
+      "name": "Flickr",
+      "icon": "fab fa-flickr"
+    },
+    {
+      "name": "Tumblr",
+      "icon": "fab fa-tumblr"
+    },
+    {
+      "name": "Vine",
+      "icon": "fab fa-vine"
+    },
+    {
+      "name": "TripAdvisor",
+      "icon": "fab fa-tripadvisor"
+    },
+    {
+      "name": "Yelp",
+      "icon": "fab fa-yelp"
+    },
+    {
+      "name": "Airbnb",
+      "icon": "fab fa-airbnb"
+    },
+    {
+      "name": "DeviantArt",
+      "icon": "fab fa-deviantart"
+    },
+    {
+      "name": "ResearchGate",
+      "icon": "fab fa-researchgate"
+    },
+    {
+      "name": "Academia",
+      "icon": "fab fa-academia"
+    },
+    {
+      "name": "Figma",
+      "icon": "fab fa-figma"
+    },
+    {
+      "name": "InVision",
+      "icon": "fab fa-invision"
+    },
+    {
+      "name": "CodePen",
+      "icon": "fab fa-codepen"
+    },
+    {
+      "name": "JSFiddle",
+      "icon": "fab fa-jsfiddle"
+    },
+    {
+      "name": "Bitbucket",
+      "icon": "fab fa-bitbucket"
+    },
+    {
+      "name": "GitLab",
+      "icon": "fab fa-gitlab"
+    },
+    {
+      "name": "Product-Hunt",
+      "icon": "fab fa-product-hunt"
+    },
+    {
+      "name": "Digg",
+      "icon": "fab fa-digg"
+    },
+    {
+      "name": "StumbleUpon",
+      "icon": "fab fa-stumbleupon"
+    },
+    {
+      "name": "Delicious",
+      "icon": "fab fa-delicious"
+    },
+    {
+      "name": "Foursquare",
+      "icon": "fab fa-foursquare"
+    },
+    {
+      "name": "LastFM",
+      "icon": "fab fa-lastfm"
+    },
+    {
+      "name": "SlideShare",
+      "icon": "fab fa-slideshare"
+    },
+    {
+      "name": "Xing",
+      "icon": "fab fa-xing"
+    },
+    {
+      "name": "VK",
+      "icon": "fab fa-vk"
+    },
+    {
+      "name": "Weibo",
+      "icon": "fab fa-weibo"
+    },
+    {
+      "name": "Renren",
+      "icon": "fab fa-renren"
+    },
+    {
+      "name": "QQ",
+      "icon": "fab fa-qq"
+    },
+    {
+      "name": "Baidu",
+      "icon": "fab fa-baidu"
+    },
+    {
+      "name": "TikTok",
+      "icon": "fab fa-tiktok"
+    },
+    {
+      "name": "Twitch",
+      "icon": "fab fa-twitch"
+    },
+    {
+      "name": "Mixer",
+      "icon": "fab fa-mixer"
+    },
+    {
+      "name": "Steam",
+      "icon": "fab fa-steam"
+    },
+    {
+      "name": "Xbox",
+      "icon": "fab fa-xbox"
+    },
+    {
+      "name": "PlayStation",
+      "icon": "fab fa-playstation"
+    },
+    {
+      "name": "Nintendo Switch",
+      "icon": "fab fa-nintendo-switch"
+    },
+    {
+      "name": "eBay",
+      "icon": "fab fa-ebay"
+    },
+    {
+      "name": "Etsy",
+      "icon": "fab fa-etsy"
+    },
+    {
+      "name": "Patreon",
+      "icon": "fab fa-patreon"
+    },
+    {
+      "name": "Kickstarter",
+      "icon": "fab fa-kickstarter"
+    },
+    {
+      "name": "Stripe",
+      "icon": "fab fa-stripe"
+    },
+    {
+      "name": "PayPal",
+      "icon": "fab fa-paypal"
+    }
+  ]

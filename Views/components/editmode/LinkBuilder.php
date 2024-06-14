@@ -3,56 +3,38 @@
 use PhpCupcakes\Helpers\FileFunctions;
 use PhpCupcakes\Config\ConfigVars;
 
-$wwwModels = FileFunctions::getFolders(ConfigVars::getDocRoot().'/Models');
+$directories = [
+    'Plugins' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Plugins'),
+    'Modules' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Modules'),
+    'Models' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Models'),
+];
 
-$plugins = FileFunctions::getFolders(ConfigVars::getDocRoot().'/Plugins');
+foreach ($directories as $dirName => $dirItems) {
+    if (is_array($dirItems) && !empty($dirItems)) {
+        foreach ($dirItems as $item) {
+            $modelsPath = ConfigVars::getDocRoot() . "/{$dirName}/{$item}/Models";
+            $modelFiles = FileFunctions::getModelsNamespace($modelsPath);
 
-$modules = FileFunctions::getFolders(ConfigVars::getDocRoot().'/Modules');
+            if (is_array($modelFiles) && !empty($modelFiles)) {
+                foreach ($modelFiles as $modelFile) {
+                    $namespaceParts = explode('\\', $modelFile);
+                    $modelClassName = end($namespaceParts);
+                    $modelNamespace = implode('\\', array_slice($namespaceParts, 0, -1));
 
+                    try {
+                        $modelClass = new ReflectionClass($modelNamespace . '\\' . $modelClassName);
+                        $userFriendlyName = $modelClass->getStaticPropertyValue('userFriendlyName');
+                    } catch (Exception $e) {
+                        $userFriendlyName = $modelClassName;
+                    }
 
-foreach ($plugins as $key => $plugin) {
-    $modelfiles = FileFunctions::getModelsNamespace(ConfigVars::getDocRoot().'/Plugins/'.$plugin.'/Models');
+                    $viewAllUrl = ConfigVars::getSiteUrl() . "/admin/{$item}/viewall/{$modelClassName}";
+                    $addUrl = ConfigVars::getSiteUrl() . "/admin/{$item}/add/{$modelClassName}";
 
-    foreach ($modelfiles as $modelfile) {
-        //take out the extra model out of $modelfile
-        $classNamespace = $plugin.'\\'.$modelfile;
-        
-        $modelName = explode('\\', $modelfile);
-        $modelfile = $modelName[1];
-
-
-    ?> 
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace::getUserFriendlyName() ?></a> |
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$plugin.'/add/'.$modelfile; ?>">Add a <?= $classNamespace::getUserFriendlyName() ?></a>
-
-    <?php
-    }
-}
-
-foreach ($modules as $module) {
-    $modelfiles = FileFunctions::getModelsNamespace(ConfigVars::getDocRoot().'/Plugins/'.$module.'/Models');
-    if (!$modelfiles) {} else {
-    foreach ($modelfiles as $modelfile) {
-        $classNamespace = $module.'\\'.$modelfile;
-    ?> 
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$module.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace::getUserFriendlyName() ?></a> |
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$module.'/add/'.$modelfile; ?>">Add a <?= $classNamespace::getUserFriendlyName() ?></a>
-
-    <?php
-    }
-    }
-}
-
-
-
-foreach ($wwwModels as $wwwModel) {
-    $modelfiles = FileFunctions::getModelsNamespace(ConfigVars::getDocRoot().'/Models/'.$wwwModel.'/Models');
-    foreach ($modelfiles as $modelfile) {
-    $classNamespace2 = $wwwModel.'\\'.$modelfile;
-        $modelfile = str_replace('Models\\', '', $modelfile); 
-    ?> 
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$wwwModel.'/viewall/'.$modelfile; ?>">View All <?= $classNamespace2::getUserFriendlyName() ?></a> |
-    <a href="<?= ConfigVars::getSiteUrl().'/admin/'.$wwwModel.'/add/'.$modelfile; ?>">Add a <?= $classNamespace2::getUserFriendlyName() ?></a>
-    <?php
+                    echo "<a href=\"{$viewAllUrl}\">View All {$userFriendlyName}</a> | ";
+                    echo "<a href=\"{$addUrl}\">Add a {$userFriendlyName}</a><br>";
+                }
+            }
+        }
     }
 }

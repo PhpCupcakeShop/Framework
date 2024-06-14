@@ -116,7 +116,7 @@ if (!empty($objects)) {
     foreach ($objects as $object) { ?>
         <div style="display: flex; flex-direction: row; padding: 20px;">
         <?php foreach ($object as $key => $value) { ?>
-            <div class="quickpadding"><?= $key ?>: <?= is_array($value)
+            <div class="quickuglypadding"><?= $key ?>: <?= is_array($value)
     ? implode(", ", $value)
     : $value ?></div>
             <?php if ($key == "id") {

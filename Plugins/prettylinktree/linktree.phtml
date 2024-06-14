@@ -1,0 +1,16 @@
+<?php
+use PrettyLinkTree\Models\LinkTree;
+?>
+
+<ul class="links-container" id="sortable-list">
+    <?php
+    $links = LinkTree::findAllSortedAuto();
+    foreach ($links as $link) {
+        ?><a href="<?= htmlspecialchars($link->url) ?>">
+        <li class="list-item quickpadding" data-id="<?= htmlspecialchars($link->id) ?>">
+            <input type="hidden" name="order[]" value="<?= htmlspecialchars($link->id) ?>">
+            
+            <span class="<?= htmlspecialchars($link->icon) ?>" style="font-size: <?= htmlspecialchars($link->font_size) ?>px; color: <?= htmlspecialchars($link->icon_color) ?>"></span>
+        </li></a>
+    <?php } ?>
+</ul>

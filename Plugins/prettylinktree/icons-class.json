@@ -1,0 +1,266 @@
+[
+    {
+      "name": "Facebook",
+      "class": "facebook-f"
+    },
+    {
+      "name": "Twitter",
+      "class": "twitter"
+    },
+    {
+      "name": "Instagram",
+      "class": "instagram"
+    },
+    {
+      "name": "LinkedIn",
+      "class": "linkedin-in"
+    },
+    {
+      "name": "YouTube",
+      "class": "youtube"
+    },
+    {
+      "name": "Pinterest",
+      "class": "pinterest-p"
+    },
+    {
+      "name": "Snapchat",
+      "class": "snapchat-ghost"
+    },
+    {
+      "name": "Reddit",
+      "class": "reddit-alien"
+    },
+    {
+      "name": "Twitch",
+      "class": "twitch"
+    },
+    {
+      "name": "Discord",
+      "class": "discord"
+    },
+    {
+      "name": "GitHub",
+      "class": "github"
+    },
+    {
+      "name": "Stack Overflow",
+      "class": "stack-overflow"
+    },
+    {
+      "name": "Medium",
+      "class": "medium-m"
+    },
+    {
+      "name": "Behance",
+      "class": "behance"
+    },
+    {
+      "name": "Dribbble",
+      "class": "dribbble"
+    },
+    {
+      "name": "Vimeo",
+      "class": "vimeo-v"
+    },
+    {
+      "name": "SoundCloud",
+      "class": "soundcloud"
+    },
+    {
+      "name": "Spotify",
+      "class": "spotify"
+    },
+    {
+      "name": "Apple",
+      "class": "apple"
+    },
+    {
+      "name": "Android",
+      "class": "android"
+    },
+    {
+      "name": "Google+",
+      "class": "google-plus-g"
+    },
+    {
+      "name": "Skype",
+      "class": "skype"
+    },
+    {
+      "name": "WhatsApp",
+      "class": "whatsapp"
+    },
+    {
+      "name": "Telegram",
+      "class": "telegram-plane"
+    },
+    {
+      "name": "Slack",
+      "class": "slack"
+    },
+    {
+      "name": "Flickr",
+      "class": "flickr"
+    },
+    {
+      "name": "Tumblr",
+      "class": "tumblr"
+    },
+    {
+      "name": "Vine",
+      "class": "vine"
+    },
+    {
+      "name": "TripAdvisor",
+      "class": "tripadvisor"
+    },
+    {
+      "name": "Yelp",
+      "class": "yelp"
+    },
+    {
+      "name": "Airbnb",
+      "class": "airbnb"
+    },
+    {
+      "name": "DeviantArt",
+      "class": "deviantart"
+    },
+    {
+      "name": "ResearchGate",
+      "class": "researchgate"
+    },
+    {
+      "name": "Academia",
+      "class": "academia"
+    },
+    {
+      "name": "Figma",
+      "class": "figma"
+    },
+    {
+      "name": "InVision",
+      "class": "invision"
+    },
+    {
+      "name": "CodePen",
+      "class": "codepen"
+    },
+    {
+      "name": "JSFiddle",
+      "class": "jsfiddle"
+    },
+    {
+      "name": "Bitbucket",
+      "class": "bitbucket"
+    },
+    {
+      "name": "GitLab",
+      "class": "gitlab"
+    },
+    {
+      "name": "Product Hunt",
+      "class": "product-hunt"
+    },
+    {
+      "name": "Digg",
+      "class": "digg"
+    },
+    {
+      "name": "StumbleUpon",
+      "class": "stumbleupon"
+    },
+    {
+      "name": "Delicious",
+      "class": "delicious"
+    },
+    {
+      "name": "Foursquare",
+      "class": "foursquare"
+    },
+    {
+      "name": "LastFM",
+      "class": "lastfm"
+    },
+    {
+      "name": "SlideShare",
+      "class": "slideshare"
+    },
+    {
+      "name": "Xing",
+      "class": "xing"
+    },
+    {
+      "name": "VK",
+      "class": "vk"
+    },
+    {
+      "name": "Weibo",
+      "class": "weibo"
+    },
+    {
+      "name": "Renren",
+      "class": "renren"
+    },
+    {
+      "name": "QQ",
+      "class": "qq"
+    },
+    {
+      "name": "Baidu",
+      "class": "baidu"
+    },
+    {
+      "name": "TikTok",
+      "class": "tiktok"
+    },
+    {
+      "name": "Twitch",
+      "class": "twitch"
+    },
+    {
+      "name": "Mixer",
+      "class": "mixer"
+    },
+    {
+      "name": "Steam",
+      "class": "steam"
+    },
+    {
+      "name": "Xbox",
+      "class": "xbox"
+    },
+    {
+      "name": "PlayStation",
+      "class": "playstation"
+    },
+    {
+      "name": "Nintendo Switch",
+      "class": "nintendo-switch"
+    },
+    {
+      "name": "eBay",
+      "class": "ebay"
+    },
+    {
+      "name": "Etsy",
+      "class": "etsy"
+    },
+    {
+      "name": "Patreon",
+      "class": "patreon"
+    },
+    {
+      "name": "Kickstarter",
+      "class": "kickstarter"
+    },
+    {
+      "name": "Stripe",
+      "class": "stripe"
+    },
+    {
+      "name": "PayPal",
+      "class": "paypal"
+    }
+  ]

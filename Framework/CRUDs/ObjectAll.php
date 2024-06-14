@@ -24,7 +24,7 @@ use PhpCupcakes\DAL\VanillaCupcakeDAL;
             <?php
             echo LoadHtml::loadInclude("header");
             ?>
-        <div class="search bg-info"><?= LoadHtml::loadInclude("searchform") ?></div>
+        <div class="search bg-info"><?php // LoadHtml::loadInclude("searchform") ?></div>
 </header>
 <nav class="bg-success-light text-dark"><?= LoadHtml::loadInclude("nav") ?>
 <?php
@@ -56,7 +56,7 @@ echo EditLink::displayEditLink();
             foreach ($object::$propertyMetadata as $columnName => $metadata) {
                 if ($metadata['display'] == true) {
                 ?>
-            <div class="quickpadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
+            <div class="quickuglypadding"><?= $metadata['userFriendlyName'] ?>:&nbsp;
                 <?php
                     if (!isset($metadata['isLink']) || $metadata['isLink'] == false) {
                         ?>

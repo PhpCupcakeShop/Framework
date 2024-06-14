@@ -122,7 +122,6 @@ private static function createTable($object)
         "CREATE TABLE {$object->getTableName()} (" .
         implode(", ", $columnDefinitions) .
         ")";
-    echo $sql;
 
     try {
         //Executes SQL statement.
@@ -212,7 +211,40 @@ private static function createTable($object)
         $connection->close();
     }
 
- 
+    /**
+ * Retrieves all objects of a given class from the database.
+ *
+ * @param string $class The class name of the objects to be retrieved.
+ * @param array $orderBy An associative array of column names and their sort order (e.g., ['name' => 'ASC']).
+ * @return array An array of retrieved objects.
+ */
+public static function findAllSortedAuto($class, array $orderBy = [])
+{
+    $connection = self::getConnection();
+    $sql = "SELECT * FROM {$class::getTableName()}";
+
+    if (!empty($orderBy)) {
+        $orderByClause = [];
+        foreach ($orderBy as $column => $direction) {
+            $orderByClause[] = "$column $direction";
+        }
+        $sql .= " ORDER BY " . implode(", ", $orderByClause);
+    }
+        
+    try {
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_CLASS, $class);
+        return $results;
+    } catch (PDOException $e) {
+        $msg = "Error finding all objects: " . $e->getMessage();
+        ErrorReporting::logError($msg);
+        throw new Exception($msg);
+    }
+
+    $connection->close();
+}
+
     /**
      * Retrieves all objects of a given class from the database with pagination.
      *
@@ -504,11 +536,12 @@ private static function createTable($object)
      *
      * @return array of needed values for specific tables and columns in db.
      */
+ 
     public static function dbTableOptionFields()
     {
         global $admin, $posturl;
 
-        if (isset($admin) && $admin == true) {
+        if (isset($admin) && $admin == 1) {
             $searchFactor = "searchableByAdmin";
             $posturl = $posturl;
         } else {
@@ -519,41 +552,42 @@ private static function createTable($object)
         $searchTable = [];
         $searchColumn = "";
 
-        
-        $classNames = GetModels::returnAllModelNamespaces();
 
 
-        //$myArray = [1, 2, 3];
-        //array_push($myArray, 4, 5, 6);
-        // $myArray is now [1, 2, 3, 4, 5, 6]
+
+        $models = GetModels::returnAllModelNamespaces();
+
+
+
+
 
         $tableColumnMap = [];
 
-        foreach ($classNames as $className) {
-            $tableName = $className::getTableName();
-        
+        foreach ($models as $className) {
+            // Get the table name
+            //implement other model folders somehow here.
+            $classNamespace = $className;
+
+            $tableName = $classNamespace::getTableName();
             if (self::tableExists($tableName) == true) {
                 $tableColumnMap[$tableName] = [];
                 // Get the column names
                 $columns = self::getColumnNames($tableName);
 
-                if (!$columns) {
-
-                } else {
-                    $searchTable[] = $className;
+                $searchTable[] = $className;
 
                 foreach ($columns as $column) {
                     if (
-                        $className::$propertyMetadata[$column][
+                        $classNamespace::$propertyMetadata[$column][
                             $searchFactor
-                        ] == true
+                        ] == "1"
                     ) {
                         $tableColumnMap[$className][] = $column;
                     }
                 }
             }
         }
-    }
+
         return [
             "searchTable" => $searchTable,
             "searchColumn" => $searchColumn,
@@ -631,6 +665,7 @@ private static function createTable($object)
         try {
             $connection = self::getConnection();
             $stmt = $connection->query("SELECT * FROM $tableName");
+            
             $fieldNames = self::getFieldNames($stmt);
             return $fieldNames;
         } catch (PDOException $e) {
@@ -671,10 +706,7 @@ public static function isDatabaseEmpty()
 
         // Retrieve the available models
         
-        $models = iterator_to_array(FileFunctions::getManyModels([
-            ConfigVars::myAppName().'\\Models' => ConfigVars::getDocRoot() . "/Models",
-            'GeoBsnsMod\\Models' => ConfigVars::getDocRoot() . '/Plugins/GeoBsnsMod/Models',
-        ]));
+        $models = iterator_to_array(GetModels::returnAllModelNamespaces());
 
   
         // Check if any of the tables corresponding to the available models have data

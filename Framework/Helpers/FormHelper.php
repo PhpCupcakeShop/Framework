@@ -27,6 +27,11 @@ class FormHelper
         $attributesString = self::buildAttributesString($attributes);
         return "<input type=\"hidden\" name=\"$name\" value=\"$value\" $attributesString>";
     }
+    public static function renderColor($name, $value = '', $attributes = [])
+    {
+        $attributesString = self::buildAttributesString($attributes);
+        return "<input type=\"color\" name=\"$name\" value=\"$value\" $attributesString>";
+    }
 
     /**
      * Render a textarea.
