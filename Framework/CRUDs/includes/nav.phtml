@@ -1,0 +1,82 @@
+
+<div class="row">
+    <div class="sidebar border border-right col-md-3 col-lg-2 p-1 bg-body-tertiary">
+      <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="sidebarMenuLabel">PhpCupcakeShop</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+        </div>
+   
+   
+   
+   
+        <div class="offcanvas-body d-md-flex flex-column p-1 pt-lg-3 overflow-y-auto">
+          <ul class="nav flex-column">
+
+
+
+
+<?php
+
+use PhpCupcakes\Helpers\FileFunctions;
+use PhpCupcakes\Config\ConfigVars;
+
+$directories = [
+    'Plugins' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Plugins'),
+    'Modules' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Modules'),
+    'Models' => FileFunctions::getFolders(ConfigVars::getDocRoot() . '/Models'),
+];
+
+foreach ($directories as $dirName => $dirItems) {
+
+
+    if (is_array($dirItems) && !empty($dirItems)) {
+        foreach ($dirItems as $item) {
+            $modelsPath = ConfigVars::getDocRoot() . "/{$dirName}/{$item}/Models";
+            $modelFiles = FileFunctions::getModelsNamespace($modelsPath);
+            echo '<span>'.$item.'</span>';
+
+            if (is_array($modelFiles) && !empty($modelFiles)) {
+                foreach ($modelFiles as $modelFile) {
+                    $namespaceParts = explode('\\', $modelFile);
+                    $modelClassName = end($namespaceParts);
+                    $modelNamespace = implode('\\', array_slice($namespaceParts, 0, -1));
+
+                    try {
+                        $modelClass = new ReflectionClass($modelNamespace . '\\' . $modelClassName);
+                        $userFriendlyName = $modelClass->getStaticPropertyValue('userFriendlyName');
+                    } catch (Exception $e) {
+                        $userFriendlyName = $modelClassName;
+                    }
+
+                    $viewAllUrl = ConfigVars::getSiteUrl() . "/admin/{$item}/viewall/{$modelClassName}";
+                    $addUrl = ConfigVars::getSiteUrl() . "/admin/{$item}/add/{$modelClassName}";
+
+                    echo "<li class='quickpadding nav-item'><a href=\"{$viewAllUrl}\">View All {$userFriendlyName}</a></li>";
+                    echo "<li class='quickpadding nav-item'><a href=\"{$addUrl}\">Add a {$userFriendlyName}</a></li>";
+                }
+            }
+
+            echo '<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase"></h6>';
+        }
+    }
+}
+
+?>
+
+
+          
+
+
+
+
+          </ul>
+        </div>
+        <span>Search:</span>
+  <div id="navbarSearch" class="">
+    <?php include ConfigVars::getDocRoot().'/Framework/CRUDs/includes/searchform.phtml'; ?>
+  </div>
+      </div>
+    </div>
+
+

@@ -30,9 +30,9 @@ class PaginationHelper
     
         // Display the page numbers
         for ($i = 1; $i <= $totalPages; $i++) {
-            $active = ($i == $currentPage) ? 'active' : '';
+            $active = ($i == $currentPage) ? 'disabled' : '';
             $url = self::generatePaginationUrl($_GET, ['page'=> $i,'items_per_page'=> $itemsPerPage]);
-            $link = ($i == $currentPage) ? $i : "<a class='page-link' href='$url'>$i</a>";
+            $link = ($i == $currentPage) ? "<span class='page-link'>$i</span>" : "<a class='page-link' href='$url'>$i</a>";
             echo "<li class='page-item $active'>$link</li>";
         }
     

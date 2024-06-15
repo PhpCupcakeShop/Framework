@@ -325,7 +325,36 @@ public static function findAllSortedAuto($class, array $orderBy = [])
             throw new Exception($msg);
         }
     }
+    /**
+     * Gets the related entities of a relational database tables values.
+     * 
+     *
+     * @param string $class The class name of the objects to be retrieved.
+     * @param int $id The id of the object to find all relations to.
+     * @param int $entity1 an identifier set in the model file for the data matched to the id above.
+     * @param int $entity2 an identifier set in the model file for what to retrieve.
+     */
 
+    
+     public static function getRelatedEntities($class, $id, $entity1, $entity2)
+     {
+         $entityTableName = $class::getTableNames($entity1);
+         $relationshipTableName = $class::getTableName();
+         $entity1IdColumnName = $class::getEntityIdColumnName($entity1);
+         $entity2IdColumnName = $class::getEntityIdColumnName($entity2);
+         $stmt = "SELECT * 
+                                    FROM {$entityTableName} as e
+                                    INNER JOIN {$relationshipTableName} as r ON e.id = r.{$entity2IdColumnName}
+                                    WHERE r.{$entity1IdColumnName} = :id";
+                                    echo $stmt;
+         $stmt = self::getConnection()->prepare($stmt);
+         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+         $stmt->execute();
+         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         return $result;
+     }
+ 
+ 
     /**
      * Searches all tables in the database for a given search query and returns the
      * paginated results along with the total number of pages and objects.
@@ -705,32 +734,31 @@ public static function isDatabaseEmpty()
         $connection = self::getConnection();
 
         // Retrieve the available models
-        
-        $models = iterator_to_array(GetModels::returnAllModelNamespaces());
+        $models = GetModels::returnAllModelNamespaces();
 
-  
         // Check if any of the tables corresponding to the available models have data
         foreach ($models as $model) {
             $tableName = $model::getTableName();
             if (self::tableExists($tableName)) { 
-            $stmt = $connection->query("SELECT COUNT(*) FROM `$tableName`");
-            $rowCount = $stmt->fetchColumn();
-                $model;
-            if ($rowCount > 0) {
-                return false; // Database is not empty
+                $stmt = $connection->query("SELECT COUNT(*) FROM `$tableName`");
+                $rowCount = $stmt->fetchColumn();
+                if ($rowCount > 0) {
+                    return false; // Database is not empty
+                }
+            } else {
+                return true;
             }
-        } else {
-            return true;
-        }
         }
 
-        return true; // Database is empty
     } catch (PDOException $e) {
         // Log the error and throw a new exception
         $msg = "Error checking if database is empty: " . $e->getMessage();
         ErrorReporting::logError($msg);
         throw new Exception($msg);
     }
+
+    // If we made it through the loop without finding any data, the database is empty
+    return true;
 }
     /**
      * Retrieves a database connection.

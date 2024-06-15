@@ -1,9 +1,9 @@
 <?php
-namespace PhpCupcakes\Models; 
+namespace Objects\Models; 
 
 use PhpCupcakes\DAL\VanillaCupcakeDAL;
 
-class MyObject
+class MyCategory
 {
     public $id;
     public $name;
@@ -29,6 +29,7 @@ class MyObject
             'searchableByAdmin'=> '1',  
             'isForm' => true,
             'display' => true,
+            'isLink' => true,
             'userFriendlyName' => 'Name',
             'formfield' => 'Text', 
             'placeholder' => 'choose a name',
@@ -61,11 +62,11 @@ class MyObject
 
     public static function getTableName()
     {
-        return 'objects';
+        return 'categories';
     }
     public static function getUserFriendlyName()
     {
-        return 'My&nbsp;Object';
+        return 'My&nbsp;Category';
     }
 
     public function save()

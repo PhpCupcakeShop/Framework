@@ -34,4 +34,10 @@ Tuesday, 2024-06-11<br />
 Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
  <br />
 Tuesday, 2024-06-11<br />
-Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list
+Error searching database: SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list<br />
+ <br />
+Saturday, 2024-06-15<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Saturday, 2024-06-15<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)

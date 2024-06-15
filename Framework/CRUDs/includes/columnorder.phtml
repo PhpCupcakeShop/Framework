@@ -11,7 +11,7 @@ use PhpCupcakes\Config\ConfigVars;
     <select id="browseColumn" name="browseColumn">
         <option value="">Select a column</option>
         <?php
-        foreach ($classNamespace::$propertyMetadata as $columnName => $metadata) {
+        foreach ($routedClassNamespace::$propertyMetadata as $columnName => $metadata) {
             if ($metadata['sortbyAsc'] == true) {
             ?>
             <option value="<?= $columnName ?>-ASC"><?= $metadata['userFriendlySortAsc'] ?></option>

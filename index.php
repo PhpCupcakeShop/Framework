@@ -30,8 +30,8 @@ if (isset($param1nth) && !$param2nth) {
         case 'admin':
             require $dir . 'Framework/CRUDs/index.phtml';
         break;
-        case 'reltest':
-            require $dir . 'Framework/CRUDs/ObjectRelationship.phtml';
+        case 'devpage':
+            require $dir . 'Framework/CRUDs/editObjectTemp.phtml';
         break;
 }
 } elseif (isset($param2nth) && $param1nth == 'admin' && !isset($param3nth)) {

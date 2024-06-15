@@ -88,9 +88,20 @@
 
 #demo a {
     color: #000;
-    text-decoration: wavy;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+}
+a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.quickpadding {
+  padding: 20px;
+}
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/27bceaeaa2.js" crossorigin="anonymous"></script>
@@ -99,12 +110,15 @@
   <div class="left-section">
     <div class="php chocolate">PHP</div>
     <div class="cupcakeshop dancing-script">cupcakeshop</div>
-    <div class="coming-soon chocolate">v0.7.2</div>
+    <div class="coming-soon chocolate">v0.7.4</div>
   
 
-    <div id="demo" class="chocolate"><a href="https://demo.phpcupcake.shop/admin" class="chocolate">demo of progress on admin portal</a></div>
+    <div id="demo" class="chocolate quickpadding"><a href="https://demo.phpcupcake.shop/admin" class="chocolate">demo of progress on admin portal</a></div>
+    <div class="chocolate quickpadding"><a href="https://demo.phpcupcake.shop/Plugins/prettylinktree/index.phtml" class="chocolate">demo of prettylinktree plugin</a></div>
     <a href="https://github.com/PhpCupcakeShop" class="chocolate patreon-link"><span class="fa-brands fa-github"></span>&nbsp;GitHub</a>
-
+    <footer>
+      <div class="chocolate" style="padding-top: 20px;">&copy; 2024 Licensed Under Apache 2.0 | <a class="link" href="https://aemegi.github.io">Creator's Website</a> | <a class="link" href="https://buymeacoffee.com/aemegi">buymeacoffee</a></div>
+    </footer>
   </div>
 
 </body>

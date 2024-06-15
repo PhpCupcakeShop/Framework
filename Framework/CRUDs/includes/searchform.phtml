@@ -21,10 +21,10 @@ if (!$searchTable) {
 ?>
 
 
-<form id="searchForm" action="<?= ConfigVars::getSiteUrl().'/search' ?> " method="get">
-    <label for="searchTerm">Search:</label>
+<form id="searchForm" action="<?= ConfigVars::getSiteUrl().'/admin/search' ?> " method="get">
+    <label for="searchTerm"></label>
     <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter search term">
-    <label for="searchColumn">Search in:</label>
+    <label for="searchColumn"></label>
     <select id="searchTable" name="searchTable">
     <option value="all">Select a table</option>
         <?php
