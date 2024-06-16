@@ -2,7 +2,7 @@
  > We are still in the development phase.
  > Support Limited to None for use until version 1.0.
 
- # PhpCupcakeShop v0.7.5
+ # PhpCupcakeShop v0.7.4
 
  ### Homemade cupcakes shine,
 
@@ -17,6 +17,10 @@
  ### [CHANGELOG](https://github.com/PhpCupcakeShop/Framework/blob/main/CHANGELOG.md)
 
  ## [DOCS]
+ > [!IMPORTANT]
+ > To get started in PHP you will need a development/testing server: [XAMPP](https://www.apachefriends.org/) is great for beginners, or just getting up quickly.
+
+ ### [GETTING STARTED](https://github.com/PhpCupcakeShop/Framework/blob/main/Docs/GettingStarted.md)
 
  ### [A GUIDE TO CRUD IN THE VIEWS](https://github.com/PhpCupcakeShop/Framework/blob/main/www/MyObject/ViewsCRUD.md)
 
@@ -26,12 +30,9 @@
 
  ## [HELPFUL EXTERNAL SITES]
 
- > [!IMPORTANT]
- > To get started in PHP you will need a development/testing server:
-
- ### [XAMPP](https://www.apachefriends.org/)
-
  > [!NOTE]
  > W3Schools I find the easiest to understand out of the reference sites out there:
 
  ### [W3Schools: PHP](https://www.w3schools.com/php/default.asp)
+
+ ## [buymeacoffee](https://buymeacoffee.com/aemegi)
