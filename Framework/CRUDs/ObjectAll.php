@@ -297,11 +297,21 @@ if (!VanillaCupcakeDAL::tableExists($table)) {
                 }
             }
             ?><td>
-            <?php echo LoadHtml::loadComponent("editmode/displayEdit", [
-                "id" => $object->id,
-                "routedClassNamespace" => $routedClassNamespace,
-                "routedClassNamespaceRoot" => $routedClassNamespaceRoot,
-            ]); ?> 
+
+<?php 
+        
+        $namespaceParts = explode('\\', $routedClassNamespace);
+        $firstParameter = $namespaceParts[0];
+        $thirdParameter = $namespaceParts[2];
+        
+        
+        
+        
+        echo LoadHtml::loadComponent("editmode/displayEdit", [
+            "id" => $object->id,
+            "routedClass" => $thirdParameter,
+            "routedClassNamespaceRoot" => $routedClassNamespaceRoot,
+        ]); ?> 
            </td>
             <?php
             $displayObject = ob_get_clean();

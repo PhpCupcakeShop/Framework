@@ -46,8 +46,11 @@ class ConfigVars {
     }
     public static function searchModelParam()  //change this to change all easily
     {
-            return 4;
-      
+
+        //my development server
+           // return 4;
+        //my testing server
+            return 7;
 
     }
 } 

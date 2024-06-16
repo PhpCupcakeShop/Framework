@@ -15,7 +15,7 @@ class MyObject
             'length' => 11, 
             'extra' => 'AUTO_INCREMENT PRIMARY KEY', 
             'isSearchable'=> false, 
-            'searchableByAdmin'=> true,  
+            'searchableByAdmin'=> false,  
             'isForm' => true,
             'display' => false,
             'userFriendlyName' => 'id',

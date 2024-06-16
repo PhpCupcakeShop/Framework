@@ -150,6 +150,49 @@ private static function createTable($object)
         throw new Exception($msg);
     }
 }
+
+
+
+    public static function fullTextIndex($object) {
+        try {
+
+            $connection = self::getConnection();
+                //Gathers the array passed through the variable.
+                $properties = get_object_vars($object);
+                //Gathers the table columns from above array.
+                $columns = array_keys($properties);
+    
+            // Add FULLTEXT index for searchable columns
+            $searchableColumns = array_filter($columns, function ($column) use ($object) {
+                return $object::$propertyMetadata[$column]['searchableByAdmin'] == true;
+            });
+    
+            foreach ($searchableColumns as $column) {
+                $columnType = $object::$propertyMetadata[$column]['type'];
+                if ($columnType === 'int') {
+                    $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$column}_text`(CAST(`{$column}` AS CHAR))");
+                } else {
+                    $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$column}_text`(`{$column}`)");
+                }
+            }
+    
+            // Add FULLTEXT index for the entire searchable table
+            $searchableColumnsStr = implode(",", $searchableColumns);
+            $connection->exec("ALTER TABLE {$object->getTableName()} ADD FULLTEXT INDEX `{$object->getTableName()}_text`($searchableColumnsStr)");
+        } catch (PDOException $e) {
+            $msg = "Error creating table: " . $e->getMessage();
+            ErrorReporting::logError($msg);
+            throw new Exception($msg);
+        }
+    }
+
+
+
+
+
+
+
+
     /**
      * Retrieves an object from the database by its ID.
      *
@@ -346,7 +389,7 @@ public static function findAllSortedAuto($class, array $orderBy = [])
                                     FROM {$entityTableName} as e
                                     INNER JOIN {$relationshipTableName} as r ON e.id = r.{$entity2IdColumnName}
                                     WHERE r.{$entity1IdColumnName} = :id";
-                                    echo $stmt;
+                                
          $stmt = self::getConnection()->prepare($stmt);
          $stmt->bindValue(':id', $id, PDO::PARAM_INT);
          $stmt->execute();
@@ -376,21 +419,24 @@ public static function findAllSortedAuto($class, array $orderBy = [])
             "all",
             "all"
         );
-
+    
         $totalResults = count($searchResults);
+    
         $totalPages = ceil($totalResults / $itemsPerPage);
-
+    
         $offset = ($currentPage - 1) * $itemsPerPage;
-        $paginatedResults = array_slice($searchResults, $offset, $itemsPerPage);
 
-        // Return the paginated results along with the total pages
+
+        $paginatedResults = array_slice($searchResults, $offset, $itemsPerPage); ///HERE!!!!!
+
+     
+        // Return the paginated results along with the total pages and the class namespace by table name
         return [
             "results" => $paginatedResults,
             "totalPages" => $totalPages,
             "totalObjects" => $totalResults,
         ];
     }
-
     public static function searchOneTable(
         $className,
         $searchQuery,
@@ -435,40 +481,50 @@ public static function findAllSortedAuto($class, array $orderBy = [])
         $searchColumn
     ) {
         $results = [];
+        $classNameSpaceByTableName = [];
         try {
             $connection = self::getConnection();
     
-            if ($searchTable === "all") {
-                // Search all tables
-                $stmt = $connection->query("SHOW TABLES");
-                $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    
-                foreach ($tables as $table) {
-                    // Check if a FULLTEXT index exists on the searchable columns
-                    $indexStmt = $connection->prepare(
-                        "SHOW INDEX FROM `$table` WHERE Index_type = 'FULLTEXT'"
-                    );
-                    $indexStmt->execute();
-                    $indexes = $indexStmt->fetchAll(PDO::FETCH_ASSOC);
-                    $indexedColumns = array_column($indexes, "Column_name");
-    
-                    if (empty($indexedColumns)) {
-                        continue; // Skip this table if there are no columns with a FULLTEXT index
-                    }
-    
-                    $sql = "SELECT * FROM `$table` ";
-                    $sql .= "WHERE MATCH(`";
-                    $sql .= implode("`, `", $indexedColumns);
-                    $sql .= "`) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE)";
-    
-                    $stmt = $connection->prepare($sql);
-                    $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
-                    $stmt->execute();
-                    $results = array_merge(
-                        $results,
-                        $stmt->fetchAll(PDO::FETCH_ASSOC)
-                    );
+         
+        if ($searchTable === "all") {
+            // Search all tables
+            $stmt = $connection->query("SHOW TABLES");
+            $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            foreach ($tables as $table) {
+                // Check if a FULLTEXT index exists on the searchable columns
+                $indexStmt = $connection->prepare(
+                    "SHOW INDEX FROM `$table` WHERE Index_type = 'FULLTEXT'"
+                );
+                $indexStmt->execute();
+                $indexes = $indexStmt->fetchAll(PDO::FETCH_ASSOC);
+                $indexedColumns = array_column($indexes, "Column_name");
+
+                if (empty($indexedColumns)) {
+                    continue; // Skip this table if there are no columns with a FULLTEXT index
                 }
+
+                $sql = "SELECT * FROM `$table` ";
+                $sql .= "WHERE MATCH(`";
+                $sql .= implode("`, `", $indexedColumns);
+                $sql .= "`) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE)";
+
+                $stmt = $connection->prepare($sql);
+                $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
+                $stmt->execute();
+                $tableResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($tableResults as $result) {
+                    $classNamespace = VanillaCupcakeDAL::returnModelNamespaceFromTableName($table);
+                    
+                    $results[] = array_merge($result, [$classNamespace]);
+                }
+                
+            }
+            return [
+                'results' => $results
+            ];
+        
+
             } elseif ($searchColumn === "all") {
                 // Search all columns of the specified table
                 // Check if a FULLTEXT index exists on the searchable columns for the specific table
@@ -492,6 +548,10 @@ public static function findAllSortedAuto($class, array $orderBy = [])
                 $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                 $stmt->execute();
                 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return [
+                    'results' => $results
+                ];
+            
             } else {
                 // Check if a FULLTEXT index exists on the searchable columns for the specific table
                 $indexStmt = $connection->prepare(
@@ -523,6 +583,10 @@ public static function findAllSortedAuto($class, array $orderBy = [])
                     $stmt->bindValue(":searchTerm", "%$searchTerm%", PDO::PARAM_STR);
                     $stmt->execute();
                     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    return [
+                        'results' => $results
+                    ];
+                
                 }
             }
         } catch (PDOException $e) {
@@ -530,7 +594,8 @@ public static function findAllSortedAuto($class, array $orderBy = [])
             ErrorReporting::logError($msg);
             throw new Exception($msg);
         }
-        return $results;
+        //$debug = "something wrong with looking up class namespace by table name"; 
+        return false;
     }
 
     /**
@@ -759,6 +824,47 @@ public static function isDatabaseEmpty()
 
     // If we made it through the loop without finding any data, the database is empty
     return true;
+}
+
+
+
+/**
+ * Checks through all model files to match the table name.
+ *
+ * @return string model file full namespace.
+ */
+public static function returnModelNamespaceFromTableName($tableName)
+{
+    try {
+        // Get a connection to the database
+        $connection = self::getConnection();
+
+        // Retrieve the available models
+        $models = GetModels::returnAllModelNamespaces();
+
+        // Check if any of the tables corresponding to the available models have data
+        foreach ($models as $model) {
+            $findingTableName = $model::getTableName();
+            if (self::tableExists($findingTableName)) { 
+               if ($tableName == $findingTableName) {
+                return $model;
+               }
+            } else {
+                return false;
+                $debug[] = 'error with returnModelNameSpaceFromTableName';
+            }
+        }
+
+    } catch (PDOException $e) {
+        // Log the error and throw a new exception
+        $msg = "Error: " . $e->getMessage();
+        ErrorReporting::logError($msg);
+        throw new Exception($msg);
+    }
+
+    // If we made it through the loop without finding any data, the database is empty
+    return false;
+    $debug[] = 'error with returnModelNameSpaceFromTableName';
 }
     /**
      * Retrieves a database connection.

@@ -4,6 +4,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Framework/autoload.php"; /*linkhere*/
 use PhpCupcakes\Config\ConfigVars;
 use PhpCupcakes\Config\Analytics;
 use PhpCupcakes\Helpers\GetModels;
+use PhpCupcakes\DAL\VanillaCupcakeDAL;
+use Objects\Models\MyCategory;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,12 +26,21 @@ use PhpCupcakes\Helpers\GetModels;
 <div class="mainparent">
     <main>
 <?php
+
+$myObject = new MyCategory();
+$myObject->fullTextIndex();
+
+/*
     $models = GetModels::returnAllModelNamespaces();
 
     foreach ($models as $model) {
         $model::findAll();
     }
 
+    $objectsTableName = VanillaCupcakeDAL::returnModelNamespaceFromTableName('objects');
+    echo $objectsTableName;
+
+    */
 ?>
 </main>
 </div>

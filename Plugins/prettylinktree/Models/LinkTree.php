@@ -22,7 +22,7 @@ class LinkTree
             'length' => 11, 
             'extra' => 'AUTO_INCREMENT PRIMARY KEY', 
             'isSearchable'=> false, 
-            'searchableByAdmin'=> true, 
+            'searchableByAdmin'=> false, 
             'isForm' => true, 
             'display' => false, 
             'userFriendlyName' => 'id', 
@@ -32,8 +32,8 @@ class LinkTree
             'sortbyDesc' => false], 
         'icon' => ['type' => 'VARCHAR', 
                 'length' => 255, 
-               'isSearchable'=> 'false', 
-               'searchableByAdmin'=> 'false', 
+               'isSearchable'=> 'true', 
+               'searchableByAdmin'=> 'true', 
                'isForm' => true, 
                'isLink' => true, 
                'display' => true, 
@@ -103,7 +103,7 @@ class LinkTree
             'sortOrder' => ['type' => 'INT', 
                 'length' => 11, 
                 'isSearchable'=> false, 
-                'searchableByAdmin'=> true, 
+                'searchableByAdmin'=> false, 
                 'isForm' => true, 
                 'display' => false, 
                 'userFriendlyName' => 'sortOrder', 
@@ -137,6 +137,11 @@ class LinkTree
     public function save() 
     { 
         VanillaCupcakeDAL::save($this); 
+    } 
+ 
+    public function fullTextIndex() 
+    { 
+        VanillaCupcakeDAL::fullTextIndex($this); 
     } 
  
     public static function find($id) 

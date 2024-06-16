@@ -31,7 +31,7 @@ if (isset($param1nth) && !$param2nth) {
             require $dir . 'Framework/CRUDs/index.phtml';
         break;
         case 'devpage':
-            require $dir . 'Framework/CRUDs/editObjectTemp.phtml';
+            require 'allclasses.php';
         break;
 }
 } elseif (isset($param2nth) && $param1nth == 'admin' && !isset($param3nth)) {

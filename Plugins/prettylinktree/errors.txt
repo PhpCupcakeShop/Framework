@@ -10,4 +10,10 @@ Friday, 2024-06-14<br />
 Error saving object: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'icon_class' in 'field list'<br />
  <br />
 Friday, 2024-06-14<br />
-Error saving object: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'icon_class' in 'field list'
+Error saving object: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'icon_class' in 'field list'<br />
+ <br />
+Saturday, 2024-06-15<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Saturday, 2024-06-15<br />
+Error connecting to database: SQLSTATE[HY000] [1045] Access denied for user 'u265408878_phpcupcakes'@'24.16.3.15' (using password: YES)

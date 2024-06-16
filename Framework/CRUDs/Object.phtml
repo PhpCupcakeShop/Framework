@@ -220,9 +220,21 @@ use PhpCupcakes\Helpers\LoadHtml;
             }
         }
         ?>
-        <?php echo LoadHtml::loadComponent("editmode/displayEdit", [
+
+
+
+        <?php 
+        
+        $namespaceParts = explode('\\', $routedClassNamespace);
+        $firstParameter = $namespaceParts[0];
+        $thirdParameter = $namespaceParts[2];
+        
+        
+        
+        
+        echo LoadHtml::loadComponent("editmode/displayEdit", [
             "id" => $object->id,
-            "routedClassNamespace" => $routedClassNamespace,
+            "routedClass" => $thirdParameter,
             "routedClassNamespaceRoot" => $routedClassNamespaceRoot,
         ]); ?> 
         </div>

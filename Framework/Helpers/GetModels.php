@@ -13,9 +13,8 @@ namespace PhpCupcakes\Helpers;
         $s = ConfigVars::searchModelParam();
         
         $debug = $s;
-        $s = $s + 3;
         $namespace = $segments[$s];
-        $debug = ' namespace: ' . $namespace;
+        $debug .= ' namespace: ' . $namespace;
         $baseNamespace = basename($namespaceDir);
     
         $files = scandir($folderPath);

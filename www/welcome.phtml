@@ -102,6 +102,20 @@ a:hover {
 .quickpadding {
   padding: 20px;
 }
+
+.false-link {
+    text-decoration: none; 
+    cursor: pointer;
+    border: 0px;
+    background-color: transparent;
+}
+  
+.false-link:hover  {
+    text-decoration: underline; 
+    cursor: pointer;
+    border: 0px;
+    background-color: transparent;
+  }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/27bceaeaa2.js" crossorigin="anonymous"></script>
@@ -113,7 +127,19 @@ a:hover {
     <div class="coming-soon chocolate">v0.7.4</div>
   
 
-    <div id="demo" class="chocolate quickpadding"><a href="https://demo.phpcupcake.shop/admin" class="chocolate">demo of progress on admin portal</a></div>
+    <div id="demo" class="chocolate quickpadding">
+    <?php $redirect = 'https://demo.phpcupcake.shop/admin'; 
+    use PhpCupcakes\Config\ConfigVars;?>
+    <form method="post" action="<?= PhpCupcakes\Config\ConfigVars::getSiteUrl() ?>/editmode/on">     <!--linkhere-->
+        <input type="hidden" name="returnurl" value="<?= $redirect ?>">
+        <input type="hidden" name="startsession" value="on">
+        <center><input class="chocolate false-link quickpadding" type="submit" name="editmode" value="Enter Admin Panel in Demo Edit Mode"></center>
+        <br><a  class="chocolate false-link quickpadding" href="<?= ConfigVars::getSiteUrl() ?>/Modules/OAuth/callback.php">Enter Admin Panel with GitHub Login Module</a>
+    </form>
+
+
+
+    </div>
     <div class="chocolate quickpadding"><a href="https://demo.phpcupcake.shop/Plugins/prettylinktree/index.phtml" class="chocolate">demo of prettylinktree plugin</a></div>
     <a href="https://github.com/PhpCupcakeShop" class="chocolate patreon-link"><span class="fa-brands fa-github"></span>&nbsp;GitHub</a>
     <footer>

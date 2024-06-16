@@ -40,4 +40,55 @@ Saturday, 2024-06-15<br />
 Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
  <br />
 Saturday, 2024-06-15<br />
-Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error finding total of all: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u265408878_phpcupcakes.categories' doesn't exist<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'id' cannot be part of FULLTEXT index<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1226] User 'u265408878_phpcupcakes' has exceeded the 'max_connections_per_hour' resource (current value: 500)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1045] Access denied for user 'user'@'localhost' (using password: NO)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error connecting to database: SQLSTATE[HY000] [1045] Access denied for user 'user'@'localhost' (using password: NO)<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error searching database: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpcupcakes.objects' doesn't exist<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error finding total of all: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpcupcakes.categories' doesn't exist<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'id' cannot be part of FULLTEXT index<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error finding total of all: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpcupcakes.linktree' doesn't exist<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'id' cannot be part of FULLTEXT index<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'sortOrder' cannot be part of FULLTEXT index<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error finding total of all: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpcupcakes.linktree' doesn't exist<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[HY000]: General error: 1283 Column 'sortOrder' cannot be part of FULLTEXT index<br />
+ <br />
+Sunday, 2024-06-16<br />
+Error creating table: SQLSTATE[42000]: Syntax error or access violation: 1061 Duplicate key name 'icon_text'

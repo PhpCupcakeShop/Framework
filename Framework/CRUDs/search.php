@@ -231,40 +231,65 @@ if ($_GET["searchTable"] == "all") {
     $searchQuery = $_GET["searchTerm"];
 
     $result = VanillaCupcakeDAL::searchAllTables(
-        $searchQuery,
-        $currentPage,
-        $itemsPerPage
-    );
-    $allResults = $result["results"];
-    $totalObjects = $result["totalObjects"];
-    ?><h5>Search for '<?= $searchQuery ?>' across all tables</h5><?php
-// Display the combined search results
+      $searchQuery,
+      $currentPage,
+      $itemsPerPage
+  );
+  
+  $allResults = $result["results"];
+  $totalObjects = $result["totalObjects"];
 
-foreach ($allResults as $result) { ?>
-    <div style="display: flex; flex-direction: row; row-wrap: wrap; padding: 20px;">
-    <?php foreach ($result as $key => $value) { ?>
-    
-        <div class="quickpadding"><?= $key ?>: <?= $value ?></div>
-        <?php //if ($key == "id") {
-            //echo LoadHtml::loadComponent("/editmode/displayEdit", [
-              //  "id" => $value,
-               // "routedClassNamespace" => $_GET["searchTable"],
-               // "routedClassNamespaceRoot" => $_GET["searchTable"],
-           // ]);
-        //}
-        } ?>
-    </div>
 
-          <?php }
+  // Display the combined search results
+  foreach ($allResults as $resultings) {
+    foreach ($resultings as $resulting) {
+      ?>
+      <div style="display: flex; flex-direction: row; row-wrap: wrap; padding: 20px;">
+        
+      <?php      
+         if (array_key_exists(0, $resulting)) {
+            $routedClassNamespace = $resulting[0];
+            unset($resulting[0]);
+            $resulting = array_merge([0 => $routedClassNamespace], $resulting);
+        }
+      foreach ($resulting as $key => $value) {
+          if ($key == 0) {
 
-      // Display the pagination links
-      PaginationHelper::displayPaginationLinks(
+            echo $value;
+
+
+             
+        $namespaceParts = explode('\\', $routedClassNamespace);
+        $firstParameter = $namespaceParts[0];
+        $thirdParameter = $namespaceParts[2];
+        
+        
+        
+           
+
+
+          } elseif ($key == "id") {
+            
+              echo LoadHtml::loadComponent("/editmode/displayEdit", [
+                  "id" => $value,
+                  "routedClass" => $thirdParameter,
+                  "routedClassNamespaceRoot" => $firstParameter
+              ]);
+          } else {
+         ?>  <div class="quickpadding"><?= $key ?>: <?= $value ?></div>
+          <?php 
+          }
+      } ?>
+      </div>
+      <?php
+  }
+}
+  // Display the pagination links
+  PaginationHelper::displayPaginationLinks(
       $totalObjects,
       $currentPage,
       $itemsPerPage
-      );
-
-
+  );
 
 
 
